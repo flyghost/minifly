@@ -174,7 +174,7 @@
 #endif
 
 /****************** USB OTG MISC CONFIGURATION ********************************/
-//ALIENTEK STM32������û�õ�VBUS,���Խ�ֹ���VBUS����ĵ�ѹ
+//ALIENTEK STM32开发板没用到VBUS,所以禁止检测VBUS上面的电压
 //#define VBUS_SENSING_ENABLED
 
 /****************** USB OTG MODE CONFIGURATION ********************************/

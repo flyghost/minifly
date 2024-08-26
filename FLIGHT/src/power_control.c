@@ -2,15 +2,15 @@
 #include "motors.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ¹¦ÂÊÊä³ö¿ØÖÆ´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * åŠŸçŽ‡è¾“å‡ºæŽ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -47,7 +47,7 @@ u16 limitThrust(int value)
 	return (u16)value;
 }
 
-void powerControl(control_t *control)	/*¹¦ÂÊÊä³ö¿ØÖÆ*/
+void powerControl(control_t *control)	/*åŠŸçŽ‡è¾“å‡ºæŽ§åˆ¶*/
 {
 	s16 r = control->roll / 2.0f;
 	s16 p = control->pitch / 2.0f;
@@ -61,7 +61,7 @@ void powerControl(control_t *control)	/*¹¦ÂÊÊä³ö¿ØÖÆ*/
 	{
 		motorPWM = motorPWMSet;
 	}
-	motorsSetRatio(MOTOR_M1, motorPWM.m1);	/*¿ØÖÆµç»úÊä³ö°Ù·Ö±È*/
+	motorsSetRatio(MOTOR_M1, motorPWM.m1);	/*æŽ§åˆ¶ç”µæœºè¾“å‡ºç™¾åˆ†æ¯”*/
 	motorsSetRatio(MOTOR_M2, motorPWM.m2);
 	motorsSetRatio(MOTOR_M3, motorPWM.m3);
 	motorsSetRatio(MOTOR_M4, motorPWM.m4);

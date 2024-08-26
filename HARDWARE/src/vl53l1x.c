@@ -4,22 +4,22 @@
 #include "vl53l1_api.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly	
- * vl53l1xµ×²ãÇý¶¯´úÂë  ÒÆÖ²ÓÚST¹Ù·½Çý¶¯¿â
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/10/25
- * °æ±¾£ºV1.0
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * vl53l1xåº•å±‚é©±åŠ¨ä»£ç   ç§»æ¤äºŽSTå®˜æ–¹é©±åŠ¨åº“
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/10/25
+ * ç‰ˆæœ¬ï¼šV1.0
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 VL53L1_Dev_t	dev;
 
 
-int vl53l1xSetParam(void)	/*ÉèÖÃvl53l1x ²ÎÊý*/
+int vl53l1xSetParam(void)	/*è®¾ç½®vl53l1x å‚æ•°*/
 {
 	int status;
 	

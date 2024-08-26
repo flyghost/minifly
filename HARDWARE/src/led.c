@@ -4,19 +4,19 @@
 #include "delay.h"
 
 /********************************************************************************
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * LEDÇı¶¯´úÂë
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * LEDé©±åŠ¨ä»£ç 
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-/*LED ¼«ĞÔ*/
+/*LED ææ€§*/
 #define LED_POL_POS 0
 #define LED_POL_NEG 1
 
@@ -38,14 +38,14 @@ static led_t leds[LED_NUM] =
     [LED_RED_R] 	= {GPIOC, GPIO_Pin_14, LED_POL_NEG},
 };
 
-/* LED³õÊ¼»¯ */
+/* LEDåˆå§‹åŒ– */
 void ledInit(void)
 {
     if(isInit)	return;
 
     GPIO_InitTypeDef GPIO_InitStructure;
 
-    /*Ê¹ÄÜledÊ±ÖÓ*/
+    /*ä½¿èƒ½ledæ—¶é’Ÿ*/
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -71,7 +71,7 @@ void ledInit(void)
 
 }
 
-/* LED²âÊÔ */
+/* LEDæµ‹è¯• */
 bool ledTest(void)
 {
     ledSet(LED_GREEN_L, 1);
@@ -93,7 +93,7 @@ bool ledTest(void)
     return isInit;
 }
 
-/*¹Ø±ÕËùÓĞLED*/
+/*å…³é—­æ‰€æœ‰LED*/
 void ledClearAll(void)
 {
     for(u8 i = 0; i < LED_NUM; i++)
@@ -102,7 +102,7 @@ void ledClearAll(void)
     }
 }
 
-/*´ò¿ªËùÓĞLED*/
+/*æ‰“å¼€æ‰€æœ‰LED*/
 void ledSetAll(void)
 {
     for(u8 i = 0; i < LED_NUM; i++)
@@ -110,7 +110,7 @@ void ledSetAll(void)
         ledSet((led_e)i, 1);
     }
 }
-/*LEDÉÁË¸1´Î*/
+/*LEDé—ªçƒ1æ¬¡*/
 void ledFlashOne(led_e led, u32 onTime, u32 offTime)
 {
     ledSet(led, 1);
@@ -119,7 +119,7 @@ void ledFlashOne(led_e led, u32 onTime, u32 offTime)
     delay_xms(offTime);
 }
 
-/* ÉèÖÃÄ³¸öLEDµÄ×´Ì¬ */
+/* è®¾ç½®æŸä¸ªLEDçš„çŠ¶æ€ */
 void ledSet(led_e led, bool value)
 {
     if (led > LED_NUM)

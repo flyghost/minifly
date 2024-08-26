@@ -3,31 +3,31 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ×ËÌ¬¹À²â´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å§¿æ€ä¼°æµ‹ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 typedef struct
 {
-	float vAccDeadband; /* ¼ÓËÙ¶ÈËÀÇø */
-	float accBias[3];	/* ¼ÓËÙ¶È Æ«ÖÃ(cm/s/s)*/
-	float acc[3];		/* ¹À²â¼ÓËÙ¶È µ¥Î»(cm/s/s)*/
-	float vel[3];		/* ¹À²âËÙ¶È µ¥Î»(cm/s)*/
-	float pos[3]; 		/* ¹À²âÎ»ÒÆ µ¥Î»(cm)*/
+	float vAccDeadband; /* åŠ é€Ÿåº¦æ­»åŒº */
+	float accBias[3];	/* åŠ é€Ÿåº¦ åç½®(cm/s/s)*/
+	float acc[3];		/* ä¼°æµ‹åŠ é€Ÿåº¦ å•ä½(cm/s/s)*/
+	float vel[3];		/* ä¼°æµ‹é€Ÿåº¦ å•ä½(cm/s)*/
+	float pos[3]; 		/* ä¼°æµ‹ä½ç§» å•ä½(cm)*/
 } estimator_t;
 
 void positionEstimate(sensorData_t* sensorData, state_t* state, float dt);	
-float getFusedHeight(void);	/*¶ÁÈ¡ÈÚºÏ¸ß¶È*/
-void estRstHeight(void);	/*¸´Î»¹À²â¸ß¶È*/
-void estRstAll(void);		/*¸´Î»ËùÓĞ¹À²â*/
+float getFusedHeight(void);	/*è¯»å–èåˆé«˜åº¦*/
+void estRstHeight(void);	/*å¤ä½ä¼°æµ‹é«˜åº¦*/
+void estRstAll(void);		/*å¤ä½æ‰€æœ‰ä¼°æµ‹*/
 
 #endif /* __STATE_ESTIMATOR_H */
 

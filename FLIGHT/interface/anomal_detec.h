@@ -3,28 +3,28 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * Òì³£¼ì²âÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * å¼‚å¸¸æ£€æµ‹é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 
 #define DETEC_ENABLED
 
-#define DETEC_FF_THRESHOLD 	0.05f	/* accZ½Ó½ü-1.0³Ì¶È ±íÊ¾Free Fall */
-#define DETEC_FF_COUNT 		50  	/* ×ÔÓÉÂäÌå¼ì²â¼ÆÊý 1000Hz²âÊÔÌõ¼þ */
+#define DETEC_FF_THRESHOLD 	0.05f	/* accZæŽ¥è¿‘-1.0ç¨‹åº¦ è¡¨ç¤ºFree Fall */
+#define DETEC_FF_COUNT 		50  	/* è‡ªç”±è½ä½“æ£€æµ‹è®¡æ•° 1000Hzæµ‹è¯•æ¡ä»¶ */
 
-#define DETEC_TU_THRESHOLD 	60		/* Åö×²¼ì²âãÐÖµ60¡ã*/
-#define DETEC_TU_COUNT 		100  	/* Åö×²¼ì²â¼ÆÊý 1000Hz²âÊÔÌõ¼þ */
+#define DETEC_TU_THRESHOLD 	60		/* ç¢°æ’žæ£€æµ‹é˜ˆå€¼60Â°*/
+#define DETEC_TU_COUNT 		100  	/* ç¢°æ’žæ£€æµ‹è®¡æ•° 1000Hzæµ‹è¯•æ¡ä»¶ */
 
-/*Òì³£¼ì²â*/
+/*å¼‚å¸¸æ£€æµ‹*/
 void anomalDetec(const sensorData_t *sensorData, const state_t *state, const control_t *control);
 
 #endif	/*__ANOMAL_DETEC_H*/

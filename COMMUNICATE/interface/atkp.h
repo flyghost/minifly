@@ -3,34 +3,34 @@
 #include <stdint.h>
 #include <stdbool.h>
 /********************************************************************************	 
- * ������ֻ��ѧϰʹ�ã�δ���������ɣ��������������κ���;
+ * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
  * ALIENTEK MiniFly
- * �ɿ�ͨѶЭ���ʽ����
- * ����ԭ��@ALIENTEK
- * ������̳:www.openedv.com
- * ��������:2017/5/12
- * �汾��V1.3
- * ��Ȩ���У�����ؾ���
- * Copyright(C) �������������ӿƼ����޹�˾ 2014-2024
+ * 飞控通讯协议格式代码
+ * 正点原子@ALIENTEK
+ * 技术论坛:www.openedv.com
+ * 创建日期:2017/5/12
+ * 版本：V1.3
+ * 版权所有，盗版必究。
+ * Copyright(C) 广州市星翼电子科技有限公司 2014-2024
  * All rights reserved
- * ˵��������ʽ���ֻ���������λ��ͨѶЭ���д
+ * 说明：本格式部分基于匿名上位机通讯协议编写
  *
- * �޸�˵��:
- * �汾V1.3 �����û�����(USERDATA)�ϴ����ܣ������û��ϴ���Ҫ���Ե����ݵ���λ����
- * ��λ��ʵʱ��ӡ���Σ������û����ԡ�
+ * 修改说明:
+ * 版本V1.3 增加用户数据(USERDATA)上传功能，方便用户上传需要调试的数据到上位机，
+ * 上位机实时打印波形，方便用户调试。
 ********************************************************************************/
 
-/*����֡ͷ*/
+/*上行帧头*/
 #define UP_BYTE1 0xAA
 #define UP_BYTE2 0xAA
 
-/*����֡ͷ*/
+/*下行帧头*/
 #define DOWN_BYTE1 0xAA
 #define DOWN_BYTE2 0xAF
 
 #define ATKP_MAX_DATA_SIZE 30
 
-/*ͨѶ���ݽṹ*/
+/*通讯数据结构*/
 typedef struct
 {
 	uint8_t msgID;
@@ -38,7 +38,7 @@ typedef struct
 	uint8_t data[ATKP_MAX_DATA_SIZE];
 }atkp_t;
 
-/*����ָ��ID*/
+/*上行指令ID*/
 typedef enum 
 {
 	UP_VERSION		= 0x00,
@@ -77,7 +77,7 @@ typedef enum
 }upmsgID_e;
 
 
-/*����ָ��*/
+/*下行指令*/
 #define  D_COMMAND_ACC_CALIB		0x01
 #define  D_COMMAND_GYRO_CALIB		0x02
 #define  D_COMMAND_MAG_CALIB		0x04
@@ -95,7 +95,7 @@ typedef enum
 #define  D_ACK_READ_PID				0x01
 #define  D_ACK_READ_VERSION			0xA0
 #define  D_ACK_RESET_PARAM			0xA1
-/*����ָ��ID*/
+/*下行指令ID*/
 typedef enum 
 {
 	DOWN_COMMAND	= 0x01,

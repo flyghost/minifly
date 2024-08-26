@@ -3,20 +3,20 @@
 #include "atkp.h"
 #include "radiolink.h"
 #include "usblink.h"
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "semphr.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * Êı¾İ´òÓ¡Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * æ•°æ®æ‰“å°é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -43,7 +43,7 @@ bool consoleTest(void)
 {
 	return isInit;
 }
-/* ÊäÈëÒ»¸ö×Ö·ûµ½console»º³åÇø*/
+/* è¾“å…¥ä¸€ä¸ªå­—ç¬¦åˆ°consoleç¼“å†²åŒº*/
 int consolePutchar(int ch)
 {
 	int i;
@@ -81,7 +81,7 @@ int consolePutchar(int ch)
 	}
 	return (u8)ch;
 }
-/* ÖĞ¶Ï·½Ê½ÊäÈëÒ»¸ö×Ö·ûµ½console»º³åÇø*/
+/* ä¸­æ–­æ–¹å¼è¾“å…¥ä¸€ä¸ªå­—ç¬¦åˆ°consoleç¼“å†²åŒº*/
 int consolePutcharFromISR(int ch) 
 {
 	BaseType_t higherPriorityTaskWoken;
@@ -98,7 +98,7 @@ int consolePutcharFromISR(int ch)
 
 	return ch;
 }
-/* ÊäÈëÒ»¸ö×Ö·û´®µ½console»º³åÇø*/
+/* è¾“å…¥ä¸€ä¸ªå­—ç¬¦ä¸²åˆ°consoleç¼“å†²åŒº*/
 int consolePuts(char *str)
 {
 	int ret = 0;

@@ -5,15 +5,15 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * »ñÈ¡Ò£¿ØÊı¾İÇı¶¯´úÂë
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * è·å–é¥æ§æ•°æ®é©±åŠ¨ä»£ç 
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -22,15 +22,15 @@
 
 typedef struct
 {
-	u8 ctrlMode		: 2;	/*bit0  1=¶¨¸ßÄ£Ê½ 0=ÊÖ¶¯Ä£Ê½   bit1  1=¶¨µãÄ£Ê½*/
-	u8 keyFlight 	: 1;	/*bit2 Ò»¼üÆğ·É*/
-	u8 keyLand 		: 1;	/*bit3 Ò»¼ü½µÂä*/
-	u8 emerStop 	: 1;	/*bit4 ½ô¼±Í£»ú*/
-	u8 flightMode 	: 1;	/*bit5 ·ÉĞĞÄ£Ê½ 1=ÎŞÍ· 0=ÓĞÍ·*/
-	u8 reserved		: 2;	/*bit6~7 ±£Áô*/
+	u8 ctrlMode		: 2;	/*bit0  1=å®šé«˜æ¨¡å¼ 0=æ‰‹åŠ¨æ¨¡å¼   bit1  1=å®šç‚¹æ¨¡å¼*/
+	u8 keyFlight 	: 1;	/*bit2 ä¸€é”®èµ·é£*/
+	u8 keyLand 		: 1;	/*bit3 ä¸€é”®é™è½*/
+	u8 emerStop 	: 1;	/*bit4 ç´§æ€¥åœæœº*/
+	u8 flightMode 	: 1;	/*bit5 é£è¡Œæ¨¡å¼ 1=æ— å¤´ 0=æœ‰å¤´*/
+	u8 reserved		: 2;	/*bit6~7 ä¿ç•™*/
 }commanderBits_t;
 
-/*¿ØÖÆÊı¾İ½á¹¹Ìå*/
+/*æ§åˆ¶æ•°æ®ç»“æ„ä½“*/
 typedef __packed struct
 {
 	float roll;       // deg
@@ -41,12 +41,12 @@ typedef __packed struct
 	u16 thrust;
 } ctrlVal_t;
 
-/*Êı¾İ»º´æ½á¹¹Ìå*/
+/*æ•°æ®ç¼“å­˜ç»“æ„ä½“*/
 typedef struct
 {
 	ctrlVal_t  tarVal[2];
 	bool activeSide;
-	u32 timestamp; 		/* FreeRTOS Ê±ÖÓ½ÚÅÄ*/
+	u32 timestamp; 		/* FreeRTOS æ—¶é’ŸèŠ‚æ‹*/
 } ctrlValCache_t;
 
 typedef enum
@@ -57,8 +57,8 @@ typedef enum
 
 typedef enum
 {
-	XMODE     = 0, /*XÄ£Ê½*/
-	CAREFREE  = 1, /*ÎŞÍ·Ä£Ê½*/
+	XMODE     = 0, /*Xæ¨¡å¼*/
+	CAREFREE  = 1, /*æ— å¤´æ¨¡å¼*/
 } YawModeType;
 
 typedef enum

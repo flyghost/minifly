@@ -3,20 +3,20 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ´«¸ĞÆ÷¿ØÖÆ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * ä¼ æ„Ÿå™¨æ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 //#define SENSORS_ENABLE_MAG_AK8963
-#define SENSORS_ENABLE_PRESSURE_BMP280	/*ÆøÑ¹¼ÆÊ¹ÓÃbmp280*/
+#define SENSORS_ENABLE_PRESSURE_BMP280	/*æ°”å‹è®¡ä½¿ç”¨bmp280*/
 
 #define BARO_UPDATE_RATE		RATE_50_HZ
 #define SENSOR9_UPDATE_RATE   	RATE_500_HZ
@@ -24,15 +24,15 @@
 
 	
 void sensorsTask(void *param);
-void sensorsInit(void);			/*´«¸ĞÆ÷³õÊ¼»¯*/
-bool sensorsTest(void);			/*´«¸ĞÆ÷²âÊÔ*/
-bool sensorsAreCalibrated(void);	/*´«¸ĞÆ÷Êı¾İĞ£×¼*/
-void sensorsAcquire(sensorData_t *sensors, const u32 tick);/*»ñÈ¡´«¸ĞÆ÷Êı¾İ*/
+void sensorsInit(void);			/*ä¼ æ„Ÿå™¨åˆå§‹åŒ–*/
+bool sensorsTest(void);			/*ä¼ æ„Ÿå™¨æµ‹è¯•*/
+bool sensorsAreCalibrated(void);	/*ä¼ æ„Ÿå™¨æ•°æ®æ ¡å‡†*/
+void sensorsAcquire(sensorData_t *sensors, const u32 tick);/*è·å–ä¼ æ„Ÿå™¨æ•°æ®*/
 void getSensorRawData(Axis3i16* acc, Axis3i16* gyro, Axis3i16* mag);
 bool getIsMPU9250Present(void);
 bool getIsBaroPresent(void);
 
-/* µ¥¶À²âÁ¿´«¸ĞÆ÷Êı¾İ */
+/* å•ç‹¬æµ‹é‡ä¼ æ„Ÿå™¨æ•°æ® */
 bool sensorsReadGyro(Axis3f *gyro);
 bool sensorsReadAcc(Axis3f *acc);
 bool sensorsReadMag(Axis3f *mag);

@@ -8,44 +8,44 @@
 #include "optical_flow.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ×ËÌ¬¹À²â´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3 
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å§¿æ€ä¼°æµ‹ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3 
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ĞŞ¸ÄËµÃ÷:
- * °æ±¾V1.3 Î»ÖÃ¹À²â´úÂëÒÆÖ²ÓÚinav-1.9.0
+ * ä¿®æ”¹è¯´æ˜:
+ * ç‰ˆæœ¬V1.3 ä½ç½®ä¼°æµ‹ä»£ç ç§»æ¤äºinav-1.9.0
 ********************************************************************************/
 
-#define ACC_LIMIT			(1000.f)/*¼ÓËÙ¶ÈÏŞ·ù µ¥Î»cm/s/s*/
-#define ACC_LIMIT_MAX		(1800.f)/*×î´ó¼ÓËÙ¶ÈÏŞ·ù µ¥Î»cm/s/s*/
-#define VELOCITY_LIMIT		(130.f)	/*ËÙ¶ÈÏŞ·ù µ¥Î»cm/s*/
-#define VELOCITY_LIMIT_MAX	(500.f)	/*×î´óËÙ¶ÈÏŞ·ù µ¥Î»cm/s*/
+#define ACC_LIMIT			(1000.f)/*åŠ é€Ÿåº¦é™å¹… å•ä½cm/s/s*/
+#define ACC_LIMIT_MAX		(1800.f)/*æœ€å¤§åŠ é€Ÿåº¦é™å¹… å•ä½cm/s/s*/
+#define VELOCITY_LIMIT		(130.f)	/*é€Ÿåº¦é™å¹… å•ä½cm/s*/
+#define VELOCITY_LIMIT_MAX	(500.f)	/*æœ€å¤§é€Ÿåº¦é™å¹… å•ä½cm/s*/
 
-#define GRAVITY_CMSS 		(980.f)	/*ÖØÁ¦¼ÓËÙ¶È µ¥Î»cm/s/s*/
+#define GRAVITY_CMSS 		(980.f)	/*é‡åŠ›åŠ é€Ÿåº¦ å•ä½cm/s/s*/
 #define INAV_ACC_BIAS_ACCEPTANCE_VALUE	(GRAVITY_CMSS * 0.25f)   // Max accepted bias correction of 0.25G - unlikely we are going to be that much off anyway
 
 
-static float wBaro = 0.35f;			/*ÆøÑ¹Ğ£ÕıÈ¨ÖØ*/
-static float wOpflowP = 1.0f;		/*¹âÁ÷Î»ÖÃĞ£ÕıÈ¨ÖØ*/
-static float wOpflowV = 2.0f;		/*¹âÁ÷ËÙ¶ÈĞ£ÕıÈ¨ÖØ*/
-static float wAccBias = 0.01f;		/*¼ÓËÙ¶ÈĞ£ÕıÈ¨ÖØ*/
+static float wBaro = 0.35f;			/*æ°”å‹æ ¡æ­£æƒé‡*/
+static float wOpflowP = 1.0f;		/*å…‰æµä½ç½®æ ¡æ­£æƒé‡*/
+static float wOpflowV = 2.0f;		/*å…‰æµé€Ÿåº¦æ ¡æ­£æƒé‡*/
+static float wAccBias = 0.01f;		/*åŠ é€Ÿåº¦æ ¡æ­£æƒé‡*/
 
-static bool isRstHeight = false;	/*¸´Î»¸ß¶È*/
-static bool isRstAll = true;		/*¸´Î»¹À²â*/
+static bool isRstHeight = false;	/*å¤ä½é«˜åº¦*/
+static bool isRstAll = true;		/*å¤ä½ä¼°æµ‹*/
 
-static float fusedHeight;			/*ÈÚºÏ¸ß¶È£¬Æğ·ÉµãÎª0*/
-static float fusedHeightLpf = 0.f;	/*ÈÚºÏ¸ß¶È£¬µÍÍ¨*/
-static float startBaroAsl = 0.f;	/*Æğ·Éµãº£°Î*/
+static float fusedHeight;			/*èåˆé«˜åº¦ï¼Œèµ·é£ç‚¹ä¸º0*/
+static float fusedHeightLpf = 0.f;	/*èåˆé«˜åº¦ï¼Œä½é€š*/
+static float startBaroAsl = 0.f;	/*èµ·é£ç‚¹æµ·æ‹”*/
 
 
-/*¹À²âÏµÍ³*/
+/*ä¼°æµ‹ç³»ç»Ÿ*/
 static estimator_t estimator = 
 {
 	.vAccDeadband = 4.0f,
@@ -69,14 +69,14 @@ static void inavFilterPredict(int axis, float dt, float acc)
     estimator.pos[axis] += estimator.vel[axis] * dt + acc * dt * dt / 2.0f;
     estimator.vel[axis] += acc * dt;
 }
-/*Î»ÖÃĞ£Õı*/
+/*ä½ç½®æ ¡æ­£*/
 static void inavFilterCorrectPos(int axis, float dt, float e, float w)
 {
     float ewdt = e * w * dt;
     estimator.pos[axis] += ewdt;
     estimator.vel[axis] += w * ewdt;
 }
-/*ËÙ¶ÈĞ£Õı*/
+/*é€Ÿåº¦æ ¡æ­£*/
 static void inavFilterCorrectVel(int axis, float dt, float e, float w)
 {
    estimator.vel[axis] += e * w * dt;
@@ -85,21 +85,21 @@ static void inavFilterCorrectVel(int axis, float dt, float e, float w)
 void positionEstimate(sensorData_t* sensorData, state_t* state, float dt) 
 {	
 	static float rangeLpf = 0.f;
-	static float accLpf[3] = {0.f};		/*¼ÓËÙ¶ÈµÍÍ¨*/	
+	static float accLpf[3] = {0.f};		/*åŠ é€Ÿåº¦ä½é€š*/	
 	float weight = wBaro;
 
-	float relateHight = sensorData->baro.asl - startBaroAsl;	/*ÆøÑ¹Ïà¶Ô¸ß¶È*/
+	float relateHight = sensorData->baro.asl - startBaroAsl;	/*æ°”å‹ç›¸å¯¹é«˜åº¦*/
 	
-	if(getModuleID()==OPTICAL_FLOW && isEnableVl53lxx==true)	/*¹âÁ÷Ä£¿é¿ÉÓÃ,ÇÒÊ¹ÓÃ¼¤¹â*/
+	if(getModuleID()==OPTICAL_FLOW && isEnableVl53lxx==true)	/*å…‰æµæ¨¡å—å¯ç”¨,ä¸”ä½¿ç”¨æ¿€å…‰*/
 	{
-		vl53lxxReadRange(&sensorData->zrange);	/*¶ÁÈ¡¼¤¹âÊı¾İ*/
+		vl53lxxReadRange(&sensorData->zrange);	/*è¯»å–æ¿€å…‰æ•°æ®*/
 	
 //		rangeLpf = sensorData->zrange.distance;
-		rangeLpf += (sensorData->zrange.distance - rangeLpf) * 0.1f;	/*µÍÍ¨ µ¥Î»cm*/		
+		rangeLpf += (sensorData->zrange.distance - rangeLpf) * 0.1f;	/*ä½é€š å•ä½cm*/		
 			
 		float quality = sensorData->zrange.quality;
 
-		if(quality < 0.3f)	/*µÍÓÚÕâ¸ö¿ÉĞĞ¶È£¬¼¤¹âÊı¾İ²»¿ÉÓÃ*/
+		if(quality < 0.3f)	/*ä½äºè¿™ä¸ªå¯è¡Œåº¦ï¼Œæ¿€å…‰æ•°æ®ä¸å¯ç”¨*/
 		{
 			quality = 0.f;
 		}else
@@ -107,19 +107,19 @@ void positionEstimate(sensorData_t* sensorData, state_t* state, float dt)
 			weight = quality;
 			startBaroAsl = sensorData->baro.asl - rangeLpf;
 		}
-		fusedHeight = rangeLpf * quality + (1.0f - quality) * relateHight;/*ÈÚºÏ¸ß¶È*/	
+		fusedHeight = rangeLpf * quality + (1.0f - quality) * relateHight;/*èåˆé«˜åº¦*/	
 	}
-	else	/*ÎŞ¹âÁ÷Ä£¿é*/
+	else	/*æ— å…‰æµæ¨¡å—*/
 	{
-		fusedHeight = relateHight;	/*ÈÚºÏ¸ß¶È*/
+		fusedHeight = relateHight;	/*èåˆé«˜åº¦*/
 	}
-	fusedHeightLpf += (fusedHeight - fusedHeightLpf) * 0.1f;	/*ÈÚºÏ¸ß¶È µÍÍ¨*/
+	fusedHeightLpf += (fusedHeight - fusedHeightLpf) * 0.1f;	/*èåˆé«˜åº¦ ä½é€š*/
 	
 	if(isRstHeight)
 	{	
 		isRstHeight = false;
 		
-		weight = 0.95f;		/*Ôö¼ÓÈ¨ÖØ£¬¿ìËÙµ÷Õû*/	
+		weight = 0.95f;		/*å¢åŠ æƒé‡ï¼Œå¿«é€Ÿè°ƒæ•´*/	
 		
 		startBaroAsl = sensorData->baro.asl;
 		
@@ -166,36 +166,36 @@ void positionEstimate(sensorData_t* sensorData, state_t* state, float dt)
 	/* Rotate vector to Earth frame - from Forward-Right-Down to North-East-Up*/
 	imuTransformVectorBodyToEarth(&accelBF);	
 	
-	estimator.acc[X] = applyDeadbandf(accelBF.x, estimator.vAccDeadband);/*È¥³ıËÀÇøµÄ¼ÓËÙ¶È*/
-	estimator.acc[Y] = applyDeadbandf(accelBF.y, estimator.vAccDeadband);/*È¥³ıËÀÇøµÄ¼ÓËÙ¶È*/
-	estimator.acc[Z] = applyDeadbandf(accelBF.z, estimator.vAccDeadband);/*È¥³ıËÀÇøµÄ¼ÓËÙ¶È*/
+	estimator.acc[X] = applyDeadbandf(accelBF.x, estimator.vAccDeadband);/*å»é™¤æ­»åŒºçš„åŠ é€Ÿåº¦*/
+	estimator.acc[Y] = applyDeadbandf(accelBF.y, estimator.vAccDeadband);/*å»é™¤æ­»åŒºçš„åŠ é€Ÿåº¦*/
+	estimator.acc[Z] = applyDeadbandf(accelBF.z, estimator.vAccDeadband);/*å»é™¤æ­»åŒºçš„åŠ é€Ÿåº¦*/
 	
 	for(u8 i=0; i<3; i++)
-		accLpf[i] += (estimator.acc[i] - accLpf[i]) * 0.1f;	/*¼ÓËÙ¶ÈµÍÍ¨*/
+		accLpf[i] += (estimator.acc[i] - accLpf[i]) * 0.1f;	/*åŠ é€Ÿåº¦ä½é€š*/
 		
-	bool isKeyFlightLand = ((getCommanderKeyFlight()==true)||(getCommanderKeyland()==true));	/*¶¨¸ß·É»òÕß½µÂä×´Ì¬*/
+	bool isKeyFlightLand = ((getCommanderKeyFlight()==true)||(getCommanderKeyland()==true));	/*å®šé«˜é£æˆ–è€…é™è½çŠ¶æ€*/
 	
-	if(isKeyFlightLand == true)		/*¶¨¸ß·É»òÕß½µÂä×´Ì¬*/
+	if(isKeyFlightLand == true)		/*å®šé«˜é£æˆ–è€…é™è½çŠ¶æ€*/
 	{
-		state->acc.x = constrainf(accLpf[X], -ACC_LIMIT, ACC_LIMIT);	/*¼ÓËÙ¶ÈÏŞ·ù*/
-		state->acc.y = constrainf(accLpf[Y], -ACC_LIMIT, ACC_LIMIT);	/*¼ÓËÙ¶ÈÏŞ·ù*/
-		state->acc.z = constrainf(accLpf[Z], -ACC_LIMIT, ACC_LIMIT);	/*¼ÓËÙ¶ÈÏŞ·ù*/
+		state->acc.x = constrainf(accLpf[X], -ACC_LIMIT, ACC_LIMIT);	/*åŠ é€Ÿåº¦é™å¹…*/
+		state->acc.y = constrainf(accLpf[Y], -ACC_LIMIT, ACC_LIMIT);	/*åŠ é€Ÿåº¦é™å¹…*/
+		state->acc.z = constrainf(accLpf[Z], -ACC_LIMIT, ACC_LIMIT);	/*åŠ é€Ÿåº¦é™å¹…*/
 	}else
 	{
-		state->acc.x = constrainf(estimator.acc[X], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*×î´ó¼ÓËÙ¶ÈÏŞ·ù*/
-		state->acc.y = constrainf(estimator.acc[Y], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*×î´ó¼ÓËÙ¶ÈÏŞ·ù*/
-		state->acc.z = constrainf(estimator.acc[Z], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*×î´ó¼ÓËÙ¶ÈÏŞ·ù*/
+		state->acc.x = constrainf(estimator.acc[X], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*æœ€å¤§åŠ é€Ÿåº¦é™å¹…*/
+		state->acc.y = constrainf(estimator.acc[Y], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*æœ€å¤§åŠ é€Ÿåº¦é™å¹…*/
+		state->acc.z = constrainf(estimator.acc[Z], -ACC_LIMIT_MAX, ACC_LIMIT_MAX);	/*æœ€å¤§åŠ é€Ÿåº¦é™å¹…*/
 	}		
 
 	
 	float errPosZ = fusedHeight - estimator.pos[Z];
 	
-	/* Î»ÖÃÔ¤¹À: Z-axis */
+	/* ä½ç½®é¢„ä¼°: Z-axis */
 	inavFilterPredict(Z, dt, estimator.acc[Z]);
-	/* Î»ÖÃĞ£Õı: Z-axis */
+	/* ä½ç½®æ ¡æ­£: Z-axis */
 	inavFilterCorrectPos(Z, dt, errPosZ, weight);	
 
-	if(getModuleID() == OPTICAL_FLOW)	/*¹âÁ÷Ä£¿é¿ÉÓÃ*/
+	if(getModuleID() == OPTICAL_FLOW)	/*å…‰æµæ¨¡å—å¯ç”¨*/
 	{		
 		float opflowDt = dt;
 		
@@ -209,18 +209,18 @@ void positionEstimate(sensorData_t* sensorData, state_t* state, float dt)
 		float wXYPos = wOpflowP * opWeightScaler;
 		float wXYVel = wOpflowV * sq(opWeightScaler);
 		
-		/* Î»ÖÃÔ¤¹À: XY-axis */
+		/* ä½ç½®é¢„ä¼°: XY-axis */
 		inavFilterPredict(X, opflowDt, estimator.acc[X]);
 		inavFilterPredict(Y, opflowDt, estimator.acc[Y]);
-		/* Î»ÖÃĞ£Õı: XY-axis */
+		/* ä½ç½®æ ¡æ­£: XY-axis */
 		inavFilterCorrectPos(X, opflowDt, opResidualX, wXYPos);
 		inavFilterCorrectPos(Y, opflowDt, opResidualY, wXYPos);
-		/* ËÙ¶ÈĞ£Õı: XY-axis */
+		/* é€Ÿåº¦æ ¡æ­£: XY-axis */
 		inavFilterCorrectVel(X, opflowDt, opResidualXVel, wXYVel);
 		inavFilterCorrectVel(Y, opflowDt, opResidualYVel, wXYVel);
 	}
 	
-	/*¼ÓËÙ¶ÈÆ«ÖÃĞ£Õı*/
+	/*åŠ é€Ÿåº¦åç½®æ ¡æ­£*/
 	Axis3f accelBiasCorr = {{ 0, 0, 0}};
 	
 	accelBiasCorr.z -= errPosZ  * sq(wBaro);
@@ -236,16 +236,16 @@ void positionEstimate(sensorData_t* sensorData, state_t* state, float dt)
 		estimator.accBias[Z] += accelBiasCorr.z * wAccBias * dt;
 	}	
 
-	if(isKeyFlightLand == true)		/*¶¨¸ß·É»òÕß½µÂä×´Ì¬*/
+	if(isKeyFlightLand == true)		/*å®šé«˜é£æˆ–è€…é™è½çŠ¶æ€*/
 	{
-		state->velocity.x = constrainf(estimator.vel[X], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*ËÙ¶ÈÏŞ·ù VELOCITY_LIMIT*/
-		state->velocity.y = constrainf(estimator.vel[Y], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*ËÙ¶ÈÏŞ·ù VELOCITY_LIMIT*/
-		state->velocity.z = constrainf(estimator.vel[Z], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*ËÙ¶ÈÏŞ·ù VELOCITY_LIMIT*/
+		state->velocity.x = constrainf(estimator.vel[X], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*é€Ÿåº¦é™å¹… VELOCITY_LIMIT*/
+		state->velocity.y = constrainf(estimator.vel[Y], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*é€Ÿåº¦é™å¹… VELOCITY_LIMIT*/
+		state->velocity.z = constrainf(estimator.vel[Z], -VELOCITY_LIMIT, VELOCITY_LIMIT);	/*é€Ÿåº¦é™å¹… VELOCITY_LIMIT*/
 	}else
 	{
-		state->velocity.x = constrainf(estimator.vel[X], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*×î´óËÙ¶ÈÏŞ·ù VELOCITY_LIMIT_MAX*/
-		state->velocity.y = constrainf(estimator.vel[Y], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*×î´óËÙ¶ÈÏŞ·ù VELOCITY_LIMIT_MAX*/
-		state->velocity.z = constrainf(estimator.vel[Z], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*×î´óËÙ¶ÈÏŞ·ù VELOCITY_LIMIT_MAX*/
+		state->velocity.x = constrainf(estimator.vel[X], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*æœ€å¤§é€Ÿåº¦é™å¹… VELOCITY_LIMIT_MAX*/
+		state->velocity.y = constrainf(estimator.vel[Y], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*æœ€å¤§é€Ÿåº¦é™å¹… VELOCITY_LIMIT_MAX*/
+		state->velocity.z = constrainf(estimator.vel[Z], -VELOCITY_LIMIT_MAX, VELOCITY_LIMIT_MAX);	/*æœ€å¤§é€Ÿåº¦é™å¹… VELOCITY_LIMIT_MAX*/
 	}
 	
 	state->position.x = estimator.pos[X];
@@ -253,19 +253,19 @@ void positionEstimate(sensorData_t* sensorData, state_t* state, float dt)
 	state->position.z = estimator.pos[Z];	
 }
 
-/*¶ÁÈ¡ÈÚºÏ¸ß¶È µ¥Î»cm*/	
+/*è¯»å–èåˆé«˜åº¦ å•ä½cm*/	
 float getFusedHeight(void)
 {
 	return fusedHeightLpf;
 }
 
-/*¸´Î»¹À²â¸ß¶È*/
+/*å¤ä½ä¼°æµ‹é«˜åº¦*/
 void estRstHeight(void)
 {
 	isRstHeight = true;
 }
 
-/*¸´Î»ËùÓĞ¹À²â*/
+/*å¤ä½æ‰€æœ‰ä¼°æµ‹*/
 void estRstAll(void)
 {
 	isRstAll = true;

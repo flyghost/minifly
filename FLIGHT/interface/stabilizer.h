@@ -5,15 +5,15 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ËÄÖá×ÔÎÈ¿ØÖÆ´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * å››è½´è‡ªç¨³æŽ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -31,24 +31,24 @@
 
 
 #define MAIN_LOOP_RATE 			RATE_1000_HZ
-#define MAIN_LOOP_DT			(u32)(1000/MAIN_LOOP_RATE)	/*µ¥Î»ms*/
+#define MAIN_LOOP_DT			(u32)(1000/MAIN_LOOP_RATE)	/*å•ä½ms*/
 
-#define ATTITUDE_ESTIMAT_RATE	RATE_250_HZ	//×ËÌ¬½âËãËÙÂÊ
+#define ATTITUDE_ESTIMAT_RATE	RATE_250_HZ	//å§¿æ€è§£ç®—é€ŸçŽ‡
 #define ATTITUDE_ESTIMAT_DT		(1.0/RATE_250_HZ)
 
-#define POSITION_ESTIMAT_RATE	RATE_250_HZ	//Î»ÖÃÔ¤¹ÀËÙÂÊ
+#define POSITION_ESTIMAT_RATE	RATE_250_HZ	//ä½ç½®é¢„ä¼°é€ŸçŽ‡
 #define POSITION_ESTIMAT_DT		(1.0/RATE_250_HZ)
 
-#define RATE_PID_RATE			RATE_500_HZ //½ÇËÙ¶È»·£¨ÄÚ»·£©PIDËÙÂÊ
+#define RATE_PID_RATE			RATE_500_HZ //è§’é€Ÿåº¦çŽ¯ï¼ˆå†…çŽ¯ï¼‰PIDé€ŸçŽ‡
 #define RATE_PID_DT				(1.0/RATE_500_HZ)
 
-#define ANGEL_PID_RATE			ATTITUDE_ESTIMAT_RATE //½Ç¶È»·£¨Íâ»·£©PIDËÙÂÊ
+#define ANGEL_PID_RATE			ATTITUDE_ESTIMAT_RATE //è§’åº¦çŽ¯ï¼ˆå¤–çŽ¯ï¼‰PIDé€ŸçŽ‡
 #define ANGEL_PID_DT			(1.0/ATTITUDE_ESTIMAT_RATE)
 
-#define VELOCITY_PID_RATE		POSITION_ESTIMAT_RATE //ËÙ¶È»·£¨ÄÚ»·£©PIDËÙÂÊ
+#define VELOCITY_PID_RATE		POSITION_ESTIMAT_RATE //é€Ÿåº¦çŽ¯ï¼ˆå†…çŽ¯ï¼‰PIDé€ŸçŽ‡
 #define VELOCITY_PID_DT			(1.0/POSITION_ESTIMAT_RATE)
 
-#define POSITION_PID_RATE		POSITION_ESTIMAT_RATE //Î»ÖÃ»·£¨Íâ»·£©PIDËÙÂÊ
+#define POSITION_PID_RATE		POSITION_ESTIMAT_RATE //ä½ç½®çŽ¯ï¼ˆå¤–çŽ¯ï¼‰PIDé€ŸçŽ‡
 #define POSITION_PID_DT			(1.0/POSITION_ESTIMAT_RATE)
 
 
@@ -62,6 +62,6 @@ float getBaroData(void);
 
 void getSensorData(sensorData_t* get);	
 void getStateData(Axis3f* acc, Axis3f* vel, Axis3f* pos);
-void setFastAdjustPosParam(u16 velTimes, u16 absTimes, float height);/*ÉèÖÃ¿ìËÙµ÷ÕûÎ»ÖÃ²ÎÊý*/
+void setFastAdjustPosParam(u16 velTimes, u16 absTimes, float height);/*è®¾ç½®å¿«é€Ÿè°ƒæ•´ä½ç½®å‚æ•°*/
 
 #endif /* __STABALIZER_H */

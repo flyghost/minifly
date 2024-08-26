@@ -7,20 +7,20 @@
 #include "spi.h"
 
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"		 
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÖĞ¶ÏÅäÖÃÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * ä¸­æ–­é…ç½®é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -37,26 +37,26 @@ extern void xPortSysTickHandler(void);
 
 /********************************************************
  *SysTick_Handler()
- *µÎ´ğ¶¨Ê±Æ÷ÖĞ¶Ï·şÎñº¯Êı
+ *æ»´ç­”å®šæ—¶å™¨ä¸­æ–­æœåŠ¡å‡½æ•°
 *********************************************************/
 void  SysTick_Handler(void)
 {
-	if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)	/*ÏµÍ³ÒÑ¾­ÔËĞĞ*/
+	if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)	/*ç³»ç»Ÿå·²ç»è¿è¡Œ*/
     {
         xPortSysTickHandler();	
     }else
 	{
-		sysTickCnt++;	/*µ÷¶È¿ªÆôÖ®Ç°¼ÆÊı*/
+		sysTickCnt++;	/*è°ƒåº¦å¼€å¯ä¹‹å‰è®¡æ•°*/
 	}
 }
 /********************************************************
 *getSysTickCnt()
-*µ÷¶È¿ªÆôÖ®Ç° ·µ»Ø sysTickCnt
-*µ÷¶È¿ªÆôÖ®Ç° ·µ»Ø xTaskGetTickCount()
+*è°ƒåº¦å¼€å¯ä¹‹å‰ è¿”å› sysTickCnt
+*è°ƒåº¦å¼€å¯ä¹‹å‰ è¿”å› xTaskGetTickCount()
 *********************************************************/
 u32 getSysTickCnt(void)
 {
-	if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)	/*ÏµÍ³ÒÑ¾­ÔËĞĞ*/
+	if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)	/*ç³»ç»Ÿå·²ç»è¿è¡Œ*/
 		return xTaskGetTickCount();
 	else
 		return sysTickCnt;
@@ -149,7 +149,7 @@ void  printHardFault(u32* hardfaultArgs)
 	motorsSetRatio(MOTOR_M4, 0);
 
 	ledClearAll();
-	ledSet(ERR_LED1, 1);	/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);	/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 
 	storeAssertSnapshotData(__FILE__, __LINE__);
@@ -168,7 +168,7 @@ void  MemManage_Handler(void)
 	motorsSetRatio(MOTOR_M4, 0);
 
 	ledClearAll();
-	ledSet(ERR_LED1, 1);/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 
 	storeAssertSnapshotData(__FILE__, __LINE__);
@@ -188,7 +188,7 @@ void  BusFault_Handler(void)
 	motorsSetRatio(MOTOR_M4, 0);
 
 	ledClearAll();
-	ledSet(ERR_LED1, 1);/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 
 	storeAssertSnapshotData(__FILE__, __LINE__);
@@ -208,7 +208,7 @@ void  UsageFault_Handler(void)
 	motorsSetRatio(MOTOR_M4, 0);
 
 	ledClearAll();
-	ledSet(ERR_LED1, 1);/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 
 	storeAssertSnapshotData(__FILE__, __LINE__);
@@ -226,7 +226,7 @@ void  DebugMon_Handler(void)
 static enum expModuleID lastModuleID = NO_MODULE;
 
 /************************************************************
-*¹âÁ÷Ä£¿éºÍµÆ»·Ä£¿é¹²ÓÃDMA1_Stream4, ÕâÀïĞèÒª·Ö¿ª´¦ÀíÒ»ÏÂ
+*å…‰æµæ¨¡å—å’Œç¯ç¯æ¨¡å—å…±ç”¨DMA1_Stream4, è¿™é‡Œéœ€è¦åˆ†å¼€å¤„ç†ä¸€ä¸‹
 *************************************************************/
 
 void  DMA1_Stream4_IRQHandler(void)

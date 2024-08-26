@@ -1,52 +1,52 @@
 #include "system.h"
 
 /********************************************************************************	 
- * ������ֻ��ѧϰʹ�ã�δ���������ɣ��������������κ���;
+ * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
  * ALIENTEK MiniFly
- * ϵͳ��ʼ������	
- * ����ϵͳ�͵ײ�Ӳ����ʼ��
- * ����ԭ��@ALIENTEK
- * ������̳:www.openedv.com
- * ��������:2017/5/12
- * �汾��V1.3
- * ��Ȩ���У�����ؾ���
- * Copyright(C) �������������ӿƼ����޹�˾ 2014-2024
+ * 系统初始化函数	
+ * 包括系统和底层硬件初始化
+ * 正点原子@ALIENTEK
+ * 技术论坛:www.openedv.com
+ * 创建日期:2017/5/12
+ * 版本：V1.3
+ * 版权所有，盗版必究。
+ * Copyright(C) 广州市星翼电子科技有限公司 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 static bool systemTest(void);
 
 
-/*�ײ�Ӳ����ʼ��*/
+/*底层硬件初始化*/
 void systemInit(void)
 {
 	u8 cnt = 0;
 	
-	nvicInit();			/*�ж����ó�ʼ��*/
-	extiInit();			/*�ⲿ�жϳ�ʼ��*/	
-	delay_init(96);		/*delay��ʼ��*/
-	ledInit();			/*led��ʼ��*/
-	ledseqInit();		/*led�����г�ʼ��*/
+	nvicInit();			/*中断配置初始化*/
+	extiInit();			/*外部中断初始化*/	
+	delay_init(96);		/*delay初始化*/
+	ledInit();			/*led初始化*/
+	ledseqInit();		/*led灯序列初始化*/
 	
-	commInit();			/*ͨ�ų�ʼ��  STM32 & NRF51822 */
-	atkpInit();			/*����Э���ʼ��*/
-	consoleInit();		/*��ӡ��ʼ��*/
+	commInit();			/*通信初始化  STM32 & NRF51822 */
+	atkpInit();			/*传输协议初始化*/
+	consoleInit();		/*打印初始化*/
 	printf("<--------------------->\n");
 	
-	configParamInit();	/*��ʼ�����ò���*/
-	pmInit();			/*��Դ������ʼ��*/
-	stabilizerInit();	/*��� ������ PID��ʼ��*/
-	expModuleDriverInit();/*��չģ��������ʼ��*/
+	configParamInit();	/*初始化配置参数*/
+	pmInit();			/*电源管理初始化*/
+	stabilizerInit();	/*电机 传感器 PID初始化*/
+	expModuleDriverInit();/*扩展模块驱动初始化*/
 	
 	if(systemTest() == true)
 	{	
-		while(cnt++ < 5)	/*��ʼ��ͨ�� �����̵ƿ���5��*/
+		while(cnt++ < 5)	/*初始化通过 左上绿灯快闪5次*/
 		{
 			ledFlashOne(LED_GREEN_L, 50, 50);
 		}			
 	}else
 	{		
-		while(1)		/*��ʼ������ ���Ϻ�Ƽ��1s����5��*/
+		while(1)		/*初始化错误 右上红灯间隔1s快闪5次*/
 		{
 			if(cnt++ > 4)
 			{
@@ -57,7 +57,7 @@ void systemInit(void)
 		}
 	}
 
-	watchdogInit(WATCHDOG_RESET_MS);	/*���Ź���ʼ��*/
+	watchdogInit(WATCHDOG_RESET_MS);	/*看门狗初始化*/
 	
 }
 static bool systemTest(void)

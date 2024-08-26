@@ -6,15 +6,15 @@
 #include "config_param.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ËÄÖá×ËÌ¬¿ØÖÆ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å››è½´å§¿æ€æ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -25,8 +25,8 @@ static attitude_t rateDesired;
 
 void stateControlInit(void)
 {
-	attitudeControlInit(RATE_PID_DT, ANGEL_PID_DT); /*³õÊ¼»¯×ËÌ¬PID*/	
-	positionControlInit(VELOCITY_PID_DT, POSITION_PID_DT); /*³õÊ¼»¯Î»ÖÃPID*/
+	attitudeControlInit(RATE_PID_DT, ANGEL_PID_DT); /*åˆå§‹åŒ–å§¿æ€PID*/	
+	positionControlInit(VELOCITY_PID_DT, POSITION_PID_DT); /*åˆå§‹åŒ–ä½ç½®PID*/
 }
 
 bool stateControlTest(void)
@@ -48,7 +48,7 @@ void stateControl(control_t *control, sensorData_t *sensors, state_t *state, set
 		}
 	}
 	
-	//½Ç¶È»·£¨Íâ»·£©
+	//è§’åº¦ç¯ï¼ˆå¤–ç¯ï¼‰
 	if (RATE_DO_EXECUTE(ANGEL_PID_RATE, tick))
 	{
 		if (setpoint->mode.z == modeDisable)
@@ -63,20 +63,20 @@ void stateControl(control_t *control, sensorData_t *sensors, state_t *state, set
 		
 		if(control->flipDir == CENTER)
 		{
-			attitudeDesired.yaw += setpoint->attitude.yaw/ANGEL_PID_RATE; /*ÆÚÍûYAW ËÙÂÊÄ£Ê½*/
+			attitudeDesired.yaw += setpoint->attitude.yaw/ANGEL_PID_RATE; /*æœŸæœ›YAW é€Ÿç‡æ¨¡å¼*/
 			if(attitudeDesired.yaw > 180.0f) 
 				attitudeDesired.yaw -= 360.0f;
 			if(attitudeDesired.yaw < -180.0f) 
 				attitudeDesired.yaw += 360.0f;
 		}
 			
-		attitudeDesired.roll += configParam.trimR;	//µş¼ÓÎ¢µ÷Öµ
+		attitudeDesired.roll += configParam.trimR;	//å åŠ å¾®è°ƒå€¼
 		attitudeDesired.pitch += configParam.trimP;		
 		
 		attitudeAnglePID(&state->attitude, &attitudeDesired, &rateDesired);
 	}
 	
-	//½ÇËÙ¶È»·£¨ÄÚ»·£©
+	//è§’é€Ÿåº¦ç¯ï¼ˆå†…ç¯ï¼‰
 	if (RATE_DO_EXECUTE(RATE_PID_RATE, tick))
 	{
 		if (setpoint->mode.roll == modeVelocity)
@@ -90,7 +90,7 @@ void stateControl(control_t *control, sensorData_t *sensors, state_t *state, set
 			attitudeControllerResetPitchAttitudePID();
 		}
 		extern u8 fstate;
-		if (control->flipDir != CENTER && fstate == 4)	/*¿Õ·­¹ı³ÌÖ»Ê¹ÓÃÄÚ»·PID*/
+		if (control->flipDir != CENTER && fstate == 4)	/*ç©ºç¿»è¿‡ç¨‹åªä½¿ç”¨å†…ç¯PID*/
 		{
 			rateDesired.pitch = setpoint->attitude.pitch;
 			rateDesired.roll = setpoint->attitude.roll;
@@ -107,9 +107,9 @@ void stateControl(control_t *control, sensorData_t *sensors, state_t *state, set
 		control->pitch = 0;
 		control->yaw = 0;
 		
-		attitudeResetAllPID();	/*¸´Î»×ËÌ¬PID*/	
-		positionResetAllPID();	/*¸´Î»Î»ÖÃPID*/
-		attitudeDesired.yaw = state->attitude.yaw;		/*¸´Î»¼ÆËãµÄÆÚÍûyawÖµ*/
+		attitudeResetAllPID();	/*å¤ä½å§¿æ€PID*/	
+		positionResetAllPID();	/*å¤ä½ä½ç½®PID*/
+		attitudeDesired.yaw = state->attitude.yaw;		/*å¤ä½è®¡ç®—çš„æœŸæœ›yawå€¼*/
 		
 		if(cnt++ > 1500)
 		{

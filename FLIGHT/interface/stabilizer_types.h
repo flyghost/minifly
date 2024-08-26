@@ -5,15 +5,15 @@
 #include "sensors_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ½á¹¹ÌåÀàĞÍ¶¨Òå	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * ç»“æ„ä½“ç±»å‹å®šä¹‰	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -23,7 +23,7 @@
 
 typedef struct  
 {
-	u32 timestamp;	/*Ê±¼ä´Á*/
+	u32 timestamp;	/*æ—¶é—´æˆ³*/
 
 	float roll;
 	float pitch;
@@ -32,7 +32,7 @@ typedef struct
 
 struct  vec3_s 
 {
-	u32 timestamp;	/*Ê±¼ä´Á*/
+	u32 timestamp;	/*æ—¶é—´æˆ³*/
 
 	float x;
 	float y;
@@ -113,9 +113,9 @@ typedef struct distanceMeasurement_s
 
 typedef struct zRange_s 
 {
-	uint32_t timestamp;	//Ê±¼ä´Á
-	float distance;		//²âÁ¿¾àÀë
-	float quality;		//¿ÉĞÅ¶È
+	uint32_t timestamp;	//æ—¶é—´æˆ³
+	float distance;		//æµ‹é‡è·ç¦»
+	float quality;		//å¯ä¿¡åº¦
 } zRange_t;
 
 /** Flow measurement**/
@@ -187,14 +187,14 @@ typedef struct
 	s16 pitch;
 	s16 yaw;
 	float thrust;
-	enum dir_e flipDir;		/*·­¹ö·½Ïò*/
+	enum dir_e flipDir;		/*ç¿»æ»šæ–¹å‘*/
 } control_t;
 
 typedef enum
 {
-	modeDisable = 0,/*¹Ø±ÕÄ£Ê½*/
-	modeAbs,		/*¾ø¶ÔÖµÄ£Ê½*/
-	modeVelocity	/*ËÙÂÊÄ£Ê½*/
+	modeDisable = 0,/*å…³é—­æ¨¡å¼*/
+	modeAbs,		/*ç»å¯¹å€¼æ¨¡å¼*/
+	modeVelocity	/*é€Ÿç‡æ¨¡å¼*/
 } mode_e;
 
 typedef struct
@@ -229,7 +229,7 @@ typedef struct
 #define RATE_1000_HZ 	1000
 
 #define MAIN_LOOP_RATE 	RATE_1000_HZ
-#define MAIN_LOOP_DT	(u32)(1000/MAIN_LOOP_RATE)	/*µ¥Î»ms*/
+#define MAIN_LOOP_DT	(u32)(1000/MAIN_LOOP_RATE)	/*å•ä½ms*/
 
 #define RATE_DO_EXECUTE(RATE_HZ, TICK) ((TICK % (MAIN_LOOP_RATE / RATE_HZ)) == 0)
 

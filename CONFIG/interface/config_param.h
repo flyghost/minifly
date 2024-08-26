@@ -4,15 +4,15 @@
 #include <stdbool.h>
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÅäÖÃ²ÎÊıÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * é…ç½®å‚æ•°é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 												
@@ -62,23 +62,23 @@ typedef struct
 
 typedef struct	
 {
-	u8 version;				/*Èí¼ş°æ±¾ºÅ*/
-	pidParam_t pidAngle;	/*½Ç¶ÈPID*/	
-	pidParam_t pidRate;		/*½ÇËÙ¶ÈPID*/	
-	pidParamPos_t pidPos;	/*Î»ÖÃPID*/
-//	accBias_t accBias;		/*¼ÓËÙ¶ÈĞ£×¼Öµ*/
-//	magBias_t magBias;		/*´ÅÁ¦¼ÆĞ£×¼Öµ*/
-	float trimP;			/*pitchÎ¢µ÷*/
-	float trimR;			/*rollÎ¢µ÷*/
-	u16 thrustBase;			/*ÓÍÃÅ»ù´¡Öµ*/
-	u8 cksum;				/*Ğ£Ñé*/
+	u8 version;				/*è½¯ä»¶ç‰ˆæœ¬å·*/
+	pidParam_t pidAngle;	/*è§’åº¦PID*/	
+	pidParam_t pidRate;		/*è§’é€Ÿåº¦PID*/	
+	pidParamPos_t pidPos;	/*ä½ç½®PID*/
+//	accBias_t accBias;		/*åŠ é€Ÿåº¦æ ¡å‡†å€¼*/
+//	magBias_t magBias;		/*ç£åŠ›è®¡æ ¡å‡†å€¼*/
+	float trimP;			/*pitchå¾®è°ƒ*/
+	float trimR;			/*rollå¾®è°ƒ*/
+	u16 thrustBase;			/*æ²¹é—¨åŸºç¡€å€¼*/
+	u8 cksum;				/*æ ¡éªŒ*/
 } configParam_t;
 
 
 extern configParam_t configParam;
 
-void configParamInit(void);	/*²ÎÊıÅäÖÃ³õÊ¼»¯*/
-void configParamTask(void* param);	/*²ÎÊıÅäÖÃÈÎÎñ*/
+void configParamInit(void);	/*å‚æ•°é…ç½®åˆå§‹åŒ–*/
+void configParamTask(void* param);	/*å‚æ•°é…ç½®ä»»åŠ¡*/
 bool configParamTest(void);
 
 void configParamGiveSemaphore(void);

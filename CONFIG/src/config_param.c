@@ -7,35 +7,35 @@
 #include "stmflash.h"
 #include "delay.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 #include "queue.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÅäÖÃ²ÎÊıÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * é…ç½®å‚æ•°é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 
-#define VERSION 13	/*13 ±íÊ¾V1.3*/
+#define VERSION 13	/*13 è¡¨ç¤ºV1.3*/
 
 configParam_t configParam;
 
 static configParam_t configParamDefault=
 {
-	.version = VERSION,		/*Èí¼ş°æ±¾ºÅ*/
+	.version = VERSION,		/*è½¯ä»¶ç‰ˆæœ¬å·*/
 
-	.pidAngle=	/*½Ç¶ÈPID*/
+	.pidAngle=	/*è§’åº¦PID*/
 	{	
 		.roll=
 		{
@@ -56,7 +56,7 @@ static configParam_t configParamDefault=
 			.kd=1.5,
 		},
 	},	
-	.pidRate=	/*½ÇËÙ¶ÈPID*/
+	.pidRate=	/*è§’é€Ÿåº¦PID*/
 	{	
 		.roll=
 		{
@@ -77,7 +77,7 @@ static configParam_t configParamDefault=
 			.kd=0.0,
 		},
 	},	
-	.pidPos=	/*Î»ÖÃPID*/
+	.pidPos=	/*ä½ç½®PID*/
 	{	
 		.vx=
 		{
@@ -118,9 +118,9 @@ static configParam_t configParamDefault=
 		},
 	},
 	
-	.trimP = 0.f,	/*pitchÎ¢µ÷*/
-	.trimR = 0.f,	/*rollÎ¢µ÷*/
-	.thrustBase=34000,	/*¶¨¸ßÓÍÃÅ»ù´¡Öµ*/
+	.trimP = 0.f,	/*pitchå¾®è°ƒ*/
+	.trimR = 0.f,	/*rollå¾®è°ƒ*/
+	.thrustBase=34000,	/*å®šé«˜æ²¹é—¨åŸºç¡€å€¼*/
 };
 
 static u32 lenth = 0;
@@ -144,7 +144,7 @@ static u8 configParamCksum(configParam_t* data)
 	return cksum;
 }
 
-void configParamInit(void)	/*²ÎÊıÅäÖÃ³õÊ¼»¯*/
+void configParamInit(void)	/*å‚æ•°é…ç½®åˆå§‹åŒ–*/
 {
 	if(isInit) return;
 	
@@ -153,9 +153,9 @@ void configParamInit(void)	/*²ÎÊıÅäÖÃ³õÊ¼»¯*/
 
 	STMFLASH_Read(CONFIG_PARAM_ADDR, (u32 *)&configParam, lenth);
 	
-	if(configParam.version == VERSION)	/*°æ±¾ÕıÈ·*/
+	if(configParam.version == VERSION)	/*ç‰ˆæœ¬æ­£ç¡®*/
 	{
-		if(configParamCksum(&configParam) == configParam.cksum)	/*Ğ£ÑéÕıÈ·*/
+		if(configParamCksum(&configParam) == configParam.cksum)	/*æ ¡éªŒæ­£ç¡®*/
 		{
 			printf("Version V%1.1f check [OK]\r\n", configParam.version / 10.0f);
 			isConfigParamOK = true;
@@ -165,16 +165,16 @@ void configParamInit(void)	/*²ÎÊıÅäÖÃ³õÊ¼»¯*/
 			isConfigParamOK = false;
 		}
 	}	
-	else	/*°æ±¾¸üĞÂ*/
+	else	/*ç‰ˆæœ¬æ›´æ–°*/
 	{
 		isConfigParamOK = false;
 	}
 	
-	if(isConfigParamOK == false)	/*ÅäÖÃ²ÎÊı´íÎó£¬Ğ´ÈëÄ¬ÈÏ²ÎÊı*/
+	if(isConfigParamOK == false)	/*é…ç½®å‚æ•°é”™è¯¯ï¼Œå†™å…¥é»˜è®¤å‚æ•°*/
 	{
 		memcpy((u8 *)&configParam, (u8 *)&configParamDefault, sizeof(configParam));
-		configParam.cksum = configParamCksum(&configParam);				/*¼ÆËãĞ£ÑéÖµ*/
-		STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*Ğ´Èëstm32 flash*/
+		configParam.cksum = configParamCksum(&configParam);				/*è®¡ç®—æ ¡éªŒå€¼*/
+		STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*å†™å…¥stm32 flash*/
 		isConfigParamOK=true;
 	}	
 	
@@ -190,14 +190,14 @@ void configParamTask(void* param)
 	while(1) 
 	{	
 		xSemaphoreTake(xSemaphore, portMAX_DELAY);
-		cksum = configParamCksum(&configParam);		/*Êı¾İĞ£Ñé*/
+		cksum = configParamCksum(&configParam);		/*æ•°æ®æ ¡éªŒ*/
 		
 		if(configParam.cksum != cksum)	
 		{
-			configParam.cksum = cksum;	/*Êı¾İĞ£Ñé*/
-			watchdogInit(500);			/*²Á³ıÊ±¼ä±È½Ï³¤£¬¿´ÃÅ¹·Ê±¼äÉèÖÃ´óÒ»Ğ©*/					
-			STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*Ğ´Èëstm32 flash*/
-			watchdogInit(WATCHDOG_RESET_MS);		/*ÖØĞÂÉèÖÃ¿´ÃÅ¹·*/
+			configParam.cksum = cksum;	/*æ•°æ®æ ¡éªŒ*/
+			watchdogInit(500);			/*æ“¦é™¤æ—¶é—´æ¯”è¾ƒé•¿ï¼Œçœ‹é—¨ç‹—æ—¶é—´è®¾ç½®å¤§ä¸€äº›*/					
+			STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*å†™å…¥stm32 flash*/
+			watchdogInit(WATCHDOG_RESET_MS);		/*é‡æ–°è®¾ç½®çœ‹é—¨ç‹—*/
 		}						
 	}
 }
@@ -221,10 +221,10 @@ void resetConfigParamPID(void)
 
 void saveConfigAndNotify(void)
 {
-	u8 cksum = configParamCksum(&configParam);		/*Êı¾İĞ£Ñé*/
+	u8 cksum = configParamCksum(&configParam);		/*æ•°æ®æ ¡éªŒ*/
 	if(configParam.cksum != cksum)	
 	{
-		configParam.cksum = cksum;	/*Êı¾İĞ£Ñé*/				
-		STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*Ğ´Èëstm32 flash*/
+		configParam.cksum = cksum;	/*æ•°æ®æ ¡éªŒ*/				
+		STMFLASH_Write(CONFIG_PARAM_ADDR,(u32 *)&configParam, lenth);	/*å†™å…¥stm32 flash*/
 	}
 }

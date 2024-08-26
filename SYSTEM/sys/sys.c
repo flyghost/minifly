@@ -1,26 +1,26 @@
 #include "sys.h"  
 //////////////////////////////////////////////////////////////////////////////////	 
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//ALIENTEK STM32F407¿ª·¢°å
-//ÏµÍ³Ê±ÖÓ³õÊ¼»¯	
-//°üÀ¨Ê±ÖÓÉèÖÃ/ÖÐ¶Ï¹ÜÀí/GPIOÉèÖÃµÈ
-//ÕýµãÔ­×Ó@ALIENTEK
-//¼¼ÊõÂÛÌ³:www.openedv.com
-//´´½¨ÈÕÆÚ:2014/5/2
-//°æ±¾£º V1.2
-//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
-//Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
+//ALIENTEK STM32F407å¼€å‘æ¿
+//ç³»ç»Ÿæ—¶é’Ÿåˆå§‹åŒ–	
+//åŒ…æ‹¬æ—¶é’Ÿè®¾ç½®/ä¸­æ–­ç®¡ç†/GPIOè®¾ç½®ç­‰
+//æ­£ç‚¹åŽŸå­@ALIENTEK
+//æŠ€æœ¯è®ºå›:www.openedv.com
+//åˆ›å»ºæ—¥æœŸ:2014/5/2
+//ç‰ˆæœ¬ï¼š V1.2
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+//Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
 //All rights reserved
 //********************************************************************************
-//ÐÞ¸ÄËµÃ÷
-//ÎÞ
+//ä¿®æ”¹è¯´æ˜Ž
+//æ— 
 //////////////////////////////////////////////////////////////////////////////////  
 
 
 #ifdef  USE_FULL_ASSERT
-//µ±±àÒëÌáÊ¾³ö´íµÄÊ±ºò´Ëº¯ÊýÓÃÀ´±¨¸æ´íÎóµÄÎÄ¼þºÍËùÔÚÐÐ
-//file£ºÖ¸ÏòÔ´ÎÄ¼þ
-//line£ºÖ¸ÏòÔÚÎÄ¼þÖÐµÄÐÐÊý
+//å½“ç¼–è¯‘æç¤ºå‡ºé”™çš„æ—¶å€™æ­¤å‡½æ•°ç”¨æ¥æŠ¥å‘Šé”™è¯¯çš„æ–‡ä»¶å’Œæ‰€åœ¨è¡Œ
+//fileï¼šæŒ‡å‘æºæ–‡ä»¶
+//lineï¼šæŒ‡å‘åœ¨æ–‡ä»¶ä¸­çš„è¡Œæ•°
 void assert_failed(uint8_t* file, uint32_t line)
 { 
 	while (1)
@@ -29,26 +29,26 @@ void assert_failed(uint8_t* file, uint32_t line)
 }
 #endif
 
-//THUMBÖ¸Áî²»Ö§³Ö»ã±àÄÚÁª
-//²ÉÓÃÈçÏÂ·½·¨ÊµÏÖÖ´ÐÐ»ã±àÖ¸ÁîWFI  
+//THUMBæŒ‡ä»¤ä¸æ”¯æŒæ±‡ç¼–å†…è”
+//é‡‡ç”¨å¦‚ä¸‹æ–¹æ³•å®žçŽ°æ‰§è¡Œæ±‡ç¼–æŒ‡ä»¤WFI  
 __asm void WFI_SET(void)
 {
 	WFI;		  
 }
-//¹Ø±ÕËùÓÐÖÐ¶Ï(µ«ÊÇ²»°üÀ¨faultºÍNMIÖÐ¶Ï)
+//å…³é—­æ‰€æœ‰ä¸­æ–­(ä½†æ˜¯ä¸åŒ…æ‹¬faultå’ŒNMIä¸­æ–­)
 __asm void INTX_DISABLE(void)
 {
 	CPSID   I
 	BX      LR	  
 }
-//¿ªÆôËùÓÐÖÐ¶Ï
+//å¼€å¯æ‰€æœ‰ä¸­æ–­
 __asm void INTX_ENABLE(void)
 {
 	CPSIE   I
 	BX      LR  
 }
-//ÉèÖÃÕ»¶¥µØÖ·
-//addr:Õ»¶¥µØÖ·
+//è®¾ç½®æ ˆé¡¶åœ°å€
+//addr:æ ˆé¡¶åœ°å€
 __asm void MSR_MSP(u32 addr) 
 {
 	MSR MSP, r0 			//set Main Stack value

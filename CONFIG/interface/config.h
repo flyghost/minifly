@@ -1,18 +1,18 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 #include "nvic.h"
-#include "stdio.h"	/*printf µ÷ÓÃ*/
+#include "stdio.h"	/*printf è°ƒç”¨*/
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÅäÖÃÎÄ¼þ´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * é…ç½®æ–‡ä»¶ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -20,11 +20,11 @@
 #define CONFIG_PARAM_SIZE	(16*1024)
 
 #define CONFIG_PARAM_ADDR 	(FLASH_BASE + BOOTLOADER_SIZE)	/*16K bootloader*/
-#define FIRMWARE_START_ADDR (FLASH_BASE + BOOTLOADER_SIZE + CONFIG_PARAM_SIZE)	/*16K bootloader+ 16 Ä£Äâeeprom*/
+#define FIRMWARE_START_ADDR (FLASH_BASE + BOOTLOADER_SIZE + CONFIG_PARAM_SIZE)	/*16K bootloader+ 16 æ¨¡æ‹Ÿeeprom*/
 
 
-#define DEG2RAD		0.017453293f	/* ¶È×ª»¡¶È ¦Ð/180 */
-#define RAD2DEG		57.29578f		/* »¡¶È×ª¶È 180/¦Ð */
+#define DEG2RAD		0.017453293f	/* åº¦è½¬å¼§åº¦ Ï€/180 */
+#define RAD2DEG		57.29578f		/* å¼§åº¦è½¬åº¦ 180/Ï€ */
 
 #define P_NAME "MiniFly"
 #define MCU_ID_ADDRESS          0x1FFF7A10

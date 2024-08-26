@@ -13,20 +13,20 @@
 #include "spl06.h"
 
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ´«¸ĞÆ÷¿ØÖÆ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * ä¼ æ„Ÿå™¨æ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -36,11 +36,11 @@
 #define SENSORS_ACCEL_FS_CFG      MPU6500_ACCEL_FS_16	
 #define SENSORS_G_PER_LSB_CFG     MPU6500_G_PER_LSB_16
 
-#define SENSORS_NBR_OF_BIAS_SAMPLES		1024	/* ¼ÆËã·½²îµÄ²ÉÑùÑù±¾¸öÊı */
-#define GYRO_VARIANCE_BASE				4000	/* ÍÓÂİÒÇÁãÆ«·½²îãĞÖµ */
-#define SENSORS_ACC_SCALE_SAMPLES  		200		/* ¼ÓËÙ¼Æ²ÉÑù¸öÊı */
+#define SENSORS_NBR_OF_BIAS_SAMPLES		1024	/* è®¡ç®—æ–¹å·®çš„é‡‡æ ·æ ·æœ¬ä¸ªæ•° */
+#define GYRO_VARIANCE_BASE				4000	/* é™€èºä»ªé›¶åæ–¹å·®é˜ˆå€¼ */
+#define SENSORS_ACC_SCALE_SAMPLES  		200		/* åŠ é€Ÿè®¡é‡‡æ ·ä¸ªæ•° */
 
-// MPU9250Ö÷»úÄ£Ê½¶ÁÈ¡Êı¾İ »º³åÇø³¤¶È
+// MPU9250ä¸»æœºæ¨¡å¼è¯»å–æ•°æ® ç¼“å†²åŒºé•¿åº¦
 #define SENSORS_MPU6500_BUFF_LEN    14
 #define SENSORS_MAG_BUFF_LEN       	8
 #define SENSORS_BARO_STATUS_LEN		1
@@ -69,7 +69,7 @@ static Axis3i16	gyroRaw;
 static Axis3i16	accRaw;
 static Axis3i16 magRaw;
 
-/*µÍÍ¨ÂË²¨²ÎÊı*/
+/*ä½é€šæ»¤æ³¢å‚æ•°*/
 #define GYRO_LPF_CUTOFF_FREQ  80
 #define ACCEL_LPF_CUTOFF_FREQ 30
 static lpf2pData accLpf[3];
@@ -96,33 +96,33 @@ static bool sensorsFindBiasValue(BiasObj* bias);
 static void sensorsAddBiasValue(BiasObj* bias, int16_t x, int16_t y, int16_t z);
 
 
-/*´Ó¶ÓÁĞ¶ÁÈ¡ÍÓÂİÊı¾İ*/
+/*ä»é˜Ÿåˆ—è¯»å–é™€èºæ•°æ®*/
 bool sensorsReadGyro(Axis3f *gyro)
 {
 	return (pdTRUE == xQueueReceive(gyroDataQueue, gyro, 0));
 }
-/*´Ó¶ÓÁĞ¶ÁÈ¡¼ÓËÙ¼ÆÊı¾İ*/
+/*ä»é˜Ÿåˆ—è¯»å–åŠ é€Ÿè®¡æ•°æ®*/
 bool sensorsReadAcc(Axis3f *acc)
 {
 	return (pdTRUE == xQueueReceive(accelerometerDataQueue, acc, 0));
 }
-/*´Ó¶ÓÁĞ¶ÁÈ¡´ÅÁ¦¼ÆÊı¾İ*/
+/*ä»é˜Ÿåˆ—è¯»å–ç£åŠ›è®¡æ•°æ®*/
 bool sensorsReadMag(Axis3f *mag)
 {
 	return (pdTRUE == xQueueReceive(magnetometerDataQueue, mag, 0));
 }
-/*´Ó¶ÓÁĞ¶ÁÈ¡ÆøÑ¹Êı¾İ*/
+/*ä»é˜Ÿåˆ—è¯»å–æ°”å‹æ•°æ®*/
 bool sensorsReadBaro(baro_t *baro)
 {
 	return (pdTRUE == xQueueReceive(barometerDataQueue, baro, 0));
 }
-/*´«¸ĞÆ÷ÖĞ¶Ï³õÊ¼»¯*/
+/*ä¼ æ„Ÿå™¨ä¸­æ–­åˆå§‹åŒ–*/
 static void sensorsInterruptInit(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
-	/*Ê¹ÄÜMPU6500ÖĞ¶Ï*/
+	/*ä½¿èƒ½MPU6500ä¸­æ–­*/
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
@@ -140,15 +140,15 @@ static void sensorsInterruptInit(void)
 	portENABLE_INTERRUPTS();
 }
 
-/* ´«¸ĞÆ÷Æ÷¼ş³õÊ¼»¯ */
+/* ä¼ æ„Ÿå™¨å™¨ä»¶åˆå§‹åŒ– */
 void sensorsDeviceInit(void)
 {
 	i2cdevInit(I2C1_DEV);
 	mpu6500Init(I2C1_DEV);	
 	
 	vTaskDelay(10);
-	mpu6500Reset();	// ¸´Î»MPU6500
-	vTaskDelay(20);	// ÑÓÊ±µÈ´ı¼Ä´æÆ÷¸´Î»
+	mpu6500Reset();	// å¤ä½MPU6500
+	vTaskDelay(20);	// å»¶æ—¶ç­‰å¾…å¯„å­˜å™¨å¤ä½
 	
 	u8 temp = mpu6500GetDeviceID();
 	if (temp == 0x38 || temp == 0x39)
@@ -161,21 +161,21 @@ void sensorsDeviceInit(void)
 		printf("MPU9250 I2C connection [FAIL].\n");
 	}
 	
-	mpu6500SetSleepEnabled(false);	// »½ĞÑMPU6500
+	mpu6500SetSleepEnabled(false);	// å”¤é†’MPU6500
 	vTaskDelay(10);		
-	mpu6500SetClockSource(MPU6500_CLOCK_PLL_XGYRO);	// ÉèÖÃXÖáÍÓÂİ×÷ÎªÊ±ÖÓ	
-	vTaskDelay(10);		// ÑÓÊ±µÈ´ıÊ±ÖÓÎÈ¶¨	
-	mpu6500SetTempSensorEnabled(true);	// Ê¹ÄÜÎÂ¶È´«¸ĞÆ÷	
-	mpu6500SetIntEnabled(false);		// ¹Ø±ÕÖĞ¶Ï	
-	mpu6500SetI2CBypassEnabled(true);	// ÅÔÂ·Ä£Ê½£¬´ÅÁ¦¼ÆºÍÆøÑ¹Á¬½Óµ½Ö÷IIC	
-	mpu6500SetFullScaleGyroRange(SENSORS_GYRO_FS_CFG);	// ÉèÖÃÍÓÂİÁ¿³Ì	
-	mpu6500SetFullScaleAccelRange(SENSORS_ACCEL_FS_CFG);// ÉèÖÃ¼ÓËÙ¼ÆÁ¿³Ì	
-	mpu6500SetAccelDLPF(MPU6500_ACCEL_DLPF_BW_41);		// ÉèÖÃ¼ÓËÙ¼ÆÊı×ÖµÍÍ¨ÂË²¨
+	mpu6500SetClockSource(MPU6500_CLOCK_PLL_XGYRO);	// è®¾ç½®Xè½´é™€èºä½œä¸ºæ—¶é’Ÿ	
+	vTaskDelay(10);		// å»¶æ—¶ç­‰å¾…æ—¶é’Ÿç¨³å®š	
+	mpu6500SetTempSensorEnabled(true);	// ä½¿èƒ½æ¸©åº¦ä¼ æ„Ÿå™¨	
+	mpu6500SetIntEnabled(false);		// å…³é—­ä¸­æ–­	
+	mpu6500SetI2CBypassEnabled(true);	// æ—è·¯æ¨¡å¼ï¼Œç£åŠ›è®¡å’Œæ°”å‹è¿æ¥åˆ°ä¸»IIC	
+	mpu6500SetFullScaleGyroRange(SENSORS_GYRO_FS_CFG);	// è®¾ç½®é™€èºé‡ç¨‹	
+	mpu6500SetFullScaleAccelRange(SENSORS_ACCEL_FS_CFG);// è®¾ç½®åŠ é€Ÿè®¡é‡ç¨‹	
+	mpu6500SetAccelDLPF(MPU6500_ACCEL_DLPF_BW_41);		// è®¾ç½®åŠ é€Ÿè®¡æ•°å­—ä½é€šæ»¤æ³¢
 
-	mpu6500SetRate(0);// ÉèÖÃ²ÉÑùËÙÂÊ: 1000 / (1 + 0) = 1000Hz
-	mpu6500SetDLPFMode(MPU6500_DLPF_BW_98);// ÉèÖÃÍÓÂİÊı×ÖµÍÍ¨ÂË²¨
+	mpu6500SetRate(0);// è®¾ç½®é‡‡æ ·é€Ÿç‡: 1000 / (1 + 0) = 1000Hz
+	mpu6500SetDLPFMode(MPU6500_DLPF_BW_98);// è®¾ç½®é™€èºæ•°å­—ä½é€šæ»¤æ³¢
 	
-	for (u8 i = 0; i < 3; i++)// ³õÊ¼»¯¼ÓËÙ¼ÆºÍÍÓÂİ¶ş½×µÍÍ¨ÂË²¨
+	for (u8 i = 0; i < 3; i++)// åˆå§‹åŒ–åŠ é€Ÿè®¡å’Œé™€èºäºŒé˜¶ä½é€šæ»¤æ³¢
 	{
 		lpf2pInit(&gyroLpf[i], 1000, GYRO_LPF_CUTOFF_FREQ);
 		lpf2pInit(&accLpf[i],  1000, ACCEL_LPF_CUTOFF_FREQ);
@@ -183,7 +183,7 @@ void sensorsDeviceInit(void)
 
 
 #ifdef SENSORS_ENABLE_MAG_AK8963
-	ak8963Init(I2C1_DEV);	//ak8963´ÅÁ¦¼Æ³õÊ¼»¯
+	ak8963Init(I2C1_DEV);	//ak8963ç£åŠ›è®¡åˆå§‹åŒ–
 	if (ak8963TestConnection() == true)
 	{
 		isMagPresent = true;
@@ -196,13 +196,13 @@ void sensorsDeviceInit(void)
 	}
 #endif
 
-	if (bmp280Init(I2C1_DEV) == true)//BMP280³õÊ¼»¯
+	if (bmp280Init(I2C1_DEV) == true)//BMP280åˆå§‹åŒ–
 	{
 		isBaroPresent = true;
 		baroType = BMP280;
 		vTaskDelay(100);
 	}
-	else if (SPL06Init(I2C1_DEV) == true)//SPL06³õÊ¼»¯
+	else if (SPL06Init(I2C1_DEV) == true)//SPL06åˆå§‹åŒ–
 	{
 		isBaroPresent = true;
 		baroType = SPL06;
@@ -213,19 +213,19 @@ void sensorsDeviceInit(void)
 		isBaroPresent = false;
 	}
 
-	/*´´½¨´«¸ĞÆ÷Êı¾İ¶ÓÁĞ*/
+	/*åˆ›å»ºä¼ æ„Ÿå™¨æ•°æ®é˜Ÿåˆ—*/
 	accelerometerDataQueue = xQueueCreate(1, sizeof(Axis3f));
 	gyroDataQueue = xQueueCreate(1, sizeof(Axis3f));
 	magnetometerDataQueue = xQueueCreate(1, sizeof(Axis3f));
 	barometerDataQueue = xQueueCreate(1, sizeof(baro_t));
 }
-/*´«¸ĞÆ÷Æ«ÖÃ³õÊ¼»¯*/
+/*ä¼ æ„Ÿå™¨åç½®åˆå§‹åŒ–*/
 static void sensorsBiasObjInit(BiasObj* bias)
 {
 	bias->isBufferFilled = false;
 	bias->bufHead = bias->buffer;
 }
-/*´«¸ĞÆ÷²âÊÔ*/
+/*ä¼ æ„Ÿå™¨æµ‹è¯•*/
 bool sensorsTest(void)
 {
 	bool testStatus = true;
@@ -241,7 +241,7 @@ bool sensorsTest(void)
 	return testStatus;
 }
 
-/*¼ÆËã·½²îºÍÆ½¾ùÖµ*/
+/*è®¡ç®—æ–¹å·®å’Œå¹³å‡å€¼*/
 static void sensorsCalculateVarianceAndMean(BiasObj* bias, Axis3f* varOut, Axis3f* meanOut)
 {
 	u32 i;
@@ -266,7 +266,7 @@ static void sensorsCalculateVarianceAndMean(BiasObj* bias, Axis3f* varOut, Axis3
 	meanOut->y = (float)sum[1] / SENSORS_NBR_OF_BIAS_SAMPLES;
 	meanOut->z = (float)sum[2] / SENSORS_NBR_OF_BIAS_SAMPLES;
 }
-/*´«¸ĞÆ÷²éÕÒÆ«ÖÃÖµ*/
+/*ä¼ æ„Ÿå™¨æŸ¥æ‰¾åç½®å€¼*/
 static bool sensorsFindBiasValue(BiasObj* bias)
 {
 	bool foundbias = false;
@@ -291,39 +291,39 @@ static bool sensorsFindBiasValue(BiasObj* bias)
 	return foundbias;
 }
 
-/* ´«¸ĞÆ÷³õÊ¼»¯ */
+/* ä¼ æ„Ÿå™¨åˆå§‹åŒ– */
 void sensorsInit(void)
 {
 	if(isInit) return;
 
-	sensorsDataReady = xSemaphoreCreateBinary();/*´´½¨´«¸ĞÆ÷Êı¾İ¾ÍĞ÷¶şÖµĞÅºÅÁ¿*/
+	sensorsDataReady = xSemaphoreCreateBinary();/*åˆ›å»ºä¼ æ„Ÿå™¨æ•°æ®å°±ç»ªäºŒå€¼ä¿¡å·é‡*/
 	sensorsBiasObjInit(&gyroBiasRunning);
-	sensorsDeviceInit();	/*´«¸ĞÆ÷Æ÷¼ş³õÊ¼»¯*/
-	sensorsInterruptInit();	/*´«¸ĞÆ÷ÖĞ¶Ï³õÊ¼»¯*/
+	sensorsDeviceInit();	/*ä¼ æ„Ÿå™¨å™¨ä»¶åˆå§‹åŒ–*/
+	sensorsInterruptInit();	/*ä¼ æ„Ÿå™¨ä¸­æ–­åˆå§‹åŒ–*/
 	
 	isInit = true;
 }
-/*ÉèÖÃ´«¸ĞÆ÷´ÓÄ£Ê½¶ÁÈ¡*/
+/*è®¾ç½®ä¼ æ„Ÿå™¨ä»æ¨¡å¼è¯»å–*/
 static void sensorsSetupSlaveRead(void)
 {
-	mpu6500SetSlave4MasterDelay(19); 	// ´Ó»ú¶ÁÈ¡ËÙÂÊ: 100Hz = (1000Hz / (1 + 9))
+	mpu6500SetSlave4MasterDelay(19); 	// ä»æœºè¯»å–é€Ÿç‡: 100Hz = (1000Hz / (1 + 9))
 
-	mpu6500SetI2CBypassEnabled(false);	//Ö÷»úÄ£Ê½
+	mpu6500SetI2CBypassEnabled(false);	//ä¸»æœºæ¨¡å¼
 	mpu6500SetWaitForExternalSensorEnabled(true); 	
-	mpu6500SetInterruptMode(0); 		// ÖĞ¶Ï¸ßµçÆ½ÓĞĞ§
-	mpu6500SetInterruptDrive(0); 		// ÍÆÍìÊä³ö
-	mpu6500SetInterruptLatch(0); 		// ÖĞ¶ÏËø´æÄ£Ê½(0=50us-pulse, 1=latch-until-int-cleared)
-	mpu6500SetInterruptLatchClear(1); 	// ÖĞ¶ÏÇå³ıÄ£Ê½(0=status-read-only, 1=any-register-read)
-	mpu6500SetSlaveReadWriteTransitionEnabled(false); // ¹Ø±Õ´Ó»ú¶ÁĞ´´«Êä
-	mpu6500SetMasterClockSpeed(13); 	// ÉèÖÃi2cËÙ¶È400kHz
+	mpu6500SetInterruptMode(0); 		// ä¸­æ–­é«˜ç”µå¹³æœ‰æ•ˆ
+	mpu6500SetInterruptDrive(0); 		// æ¨æŒ½è¾“å‡º
+	mpu6500SetInterruptLatch(0); 		// ä¸­æ–­é”å­˜æ¨¡å¼(0=50us-pulse, 1=latch-until-int-cleared)
+	mpu6500SetInterruptLatchClear(1); 	// ä¸­æ–­æ¸…é™¤æ¨¡å¼(0=status-read-only, 1=any-register-read)
+	mpu6500SetSlaveReadWriteTransitionEnabled(false); // å…³é—­ä»æœºè¯»å†™ä¼ è¾“
+	mpu6500SetMasterClockSpeed(13); 	// è®¾ç½®i2cé€Ÿåº¦400kHz
 
 #ifdef SENSORS_ENABLE_MAG_AK8963
 	if (isMagPresent)
 	{
-		// ÉèÖÃMPU6500Ö÷»úÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveAddress(0, 0x80 | AK8963_ADDRESS_00); 	// ÉèÖÃ´ÅÁ¦¼ÆÎª0ºÅ´Ó»ú
-		mpu6500SetSlaveRegister(0, AK8963_RA_ST1); 				// ´Ó»ú0ĞèÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveDataLength(0, SENSORS_MAG_BUFF_LEN); 	// ¶ÁÈ¡8¸ö×Ö½Ú(ST1, x, y, z heading, ST2 (overflow check))
+		// è®¾ç½®MPU6500ä¸»æœºè¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveAddress(0, 0x80 | AK8963_ADDRESS_00); 	// è®¾ç½®ç£åŠ›è®¡ä¸º0å·ä»æœº
+		mpu6500SetSlaveRegister(0, AK8963_RA_ST1); 				// ä»æœº0éœ€è¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveDataLength(0, SENSORS_MAG_BUFF_LEN); 	// è¯»å–8ä¸ªå­—èŠ‚(ST1, x, y, z heading, ST2 (overflow check))
 		mpu6500SetSlaveDelayEnabled(0, true);
 		mpu6500SetSlaveEnabled(0, true);
 	}
@@ -332,41 +332,41 @@ static void sensorsSetupSlaveRead(void)
 
 	if (isBaroPresent && baroType == BMP280)
 	{
-		// ÉèÖÃMPU6500Ö÷»úÒª¶ÁÈ¡BMP280µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveAddress(1, 0x80 | BMP280_I2C_ADDR);		// ÉèÖÃÆøÑ¹¼Æ×´Ì¬¼Ä´æÆ÷Îª1ºÅ´Ó»ú
-		mpu6500SetSlaveRegister(1, BMP280_STAT_REG);			// ´Ó»ú1ĞèÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveDataLength(1, SENSORS_BARO_STATUS_LEN);	// ¶ÁÈ¡1¸ö×Ö½Ú
+		// è®¾ç½®MPU6500ä¸»æœºè¦è¯»å–BMP280çš„å¯„å­˜å™¨
+		mpu6500SetSlaveAddress(1, 0x80 | BMP280_I2C_ADDR);		// è®¾ç½®æ°”å‹è®¡çŠ¶æ€å¯„å­˜å™¨ä¸º1å·ä»æœº
+		mpu6500SetSlaveRegister(1, BMP280_STAT_REG);			// ä»æœº1éœ€è¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveDataLength(1, SENSORS_BARO_STATUS_LEN);	// è¯»å–1ä¸ªå­—èŠ‚
 		mpu6500SetSlaveDelayEnabled(1, true);
 		mpu6500SetSlaveEnabled(1, true);
 
-		mpu6500SetSlaveAddress(2, 0x80 | BMP280_I2C_ADDR);		// ÉèÖÃÆøÑ¹¼ÆÊı¾İ¼Ä´æÆ÷Îª2ºÅ´Ó»ú
-		mpu6500SetSlaveRegister(2, BMP280_PRESSURE_MSB_REG);	// ´Ó»ú2ĞèÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveDataLength(2, SENSORS_BARO_DATA_LEN);	// ¶ÁÈ¡6¸ö×Ö½Ú
+		mpu6500SetSlaveAddress(2, 0x80 | BMP280_I2C_ADDR);		// è®¾ç½®æ°”å‹è®¡æ•°æ®å¯„å­˜å™¨ä¸º2å·ä»æœº
+		mpu6500SetSlaveRegister(2, BMP280_PRESSURE_MSB_REG);	// ä»æœº2éœ€è¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveDataLength(2, SENSORS_BARO_DATA_LEN);	// è¯»å–6ä¸ªå­—èŠ‚
 		mpu6500SetSlaveDelayEnabled(2, true);
 		mpu6500SetSlaveEnabled(2, true);
 	}
 	if (isBaroPresent && baroType == SPL06)
 	{
-		// ÉèÖÃMPU6500Ö÷»úÒª¶ÁÈ¡SPL06µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveAddress(1, 0x80 | SPL06_I2C_ADDR);		// ÉèÖÃÆøÑ¹¼Æ×´Ì¬¼Ä´æÆ÷Îª1ºÅ´Ó»ú
-		mpu6500SetSlaveRegister(1, SPL06_MODE_CFG_REG);			// ´Ó»ú1ĞèÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveDataLength(1, SENSORS_BARO_STATUS_LEN);	// ¶ÁÈ¡1¸ö×Ö½Ú
+		// è®¾ç½®MPU6500ä¸»æœºè¦è¯»å–SPL06çš„å¯„å­˜å™¨
+		mpu6500SetSlaveAddress(1, 0x80 | SPL06_I2C_ADDR);		// è®¾ç½®æ°”å‹è®¡çŠ¶æ€å¯„å­˜å™¨ä¸º1å·ä»æœº
+		mpu6500SetSlaveRegister(1, SPL06_MODE_CFG_REG);			// ä»æœº1éœ€è¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveDataLength(1, SENSORS_BARO_STATUS_LEN);	// è¯»å–1ä¸ªå­—èŠ‚
 		mpu6500SetSlaveDelayEnabled(1, true);
 		mpu6500SetSlaveEnabled(1, true);
 
-		mpu6500SetSlaveAddress(2, 0x80 | SPL06_I2C_ADDR);		// ÉèÖÃÆøÑ¹¼ÆÊı¾İ¼Ä´æÆ÷Îª2ºÅ´Ó»ú
-		mpu6500SetSlaveRegister(2, SPL06_PRESSURE_MSB_REG);		// ´Ó»ú2ĞèÒª¶ÁÈ¡µÄ¼Ä´æÆ÷
-		mpu6500SetSlaveDataLength(2, SENSORS_BARO_DATA_LEN);	// ¶ÁÈ¡6¸ö×Ö½Ú
+		mpu6500SetSlaveAddress(2, 0x80 | SPL06_I2C_ADDR);		// è®¾ç½®æ°”å‹è®¡æ•°æ®å¯„å­˜å™¨ä¸º2å·ä»æœº
+		mpu6500SetSlaveRegister(2, SPL06_PRESSURE_MSB_REG);		// ä»æœº2éœ€è¦è¯»å–çš„å¯„å­˜å™¨
+		mpu6500SetSlaveDataLength(2, SENSORS_BARO_DATA_LEN);	// è¯»å–6ä¸ªå­—èŠ‚
 		mpu6500SetSlaveDelayEnabled(2, true);
 		mpu6500SetSlaveEnabled(2, true);
 	}
 
-	mpu6500SetI2CMasterModeEnabled(true);	//Ê¹ÄÜmpu6500Ö÷»úÄ£Ê½
-	mpu6500SetIntDataReadyEnabled(true);	//Êı¾İ¾ÍĞ÷ÖĞ¶ÏÊ¹ÄÜ
+	mpu6500SetI2CMasterModeEnabled(true);	//ä½¿èƒ½mpu6500ä¸»æœºæ¨¡å¼
+	mpu6500SetIntDataReadyEnabled(true);	//æ•°æ®å°±ç»ªä¸­æ–­ä½¿èƒ½
 }
 
 /**
- * Íù·½²î»º³åÇø£¨Ñ­»·»º³åÇø£©Ìí¼ÓÒ»¸öĞÂÖµ£¬»º³åÇøÂúºó£¬Ìæ»»¾ÉµÄµÄÖµ
+ * å¾€æ–¹å·®ç¼“å†²åŒºï¼ˆå¾ªç¯ç¼“å†²åŒºï¼‰æ·»åŠ ä¸€ä¸ªæ–°å€¼ï¼Œç¼“å†²åŒºæ»¡åï¼Œæ›¿æ¢æ—§çš„çš„å€¼
  */
 static void sensorsAddBiasValue(BiasObj* bias, int16_t x, int16_t y, int16_t z)
 {
@@ -383,7 +383,7 @@ static void sensorsAddBiasValue(BiasObj* bias, int16_t x, int16_t y, int16_t z)
 }
 
 /**
- * ¸ù¾İÑù±¾¼ÆËãÖØÁ¦¼ÓËÙ¶ÈËõ·ÅÒò×Ó
+ * æ ¹æ®æ ·æœ¬è®¡ç®—é‡åŠ›åŠ é€Ÿåº¦ç¼©æ”¾å› å­
  */
 static bool processAccScale(int16_t ax, int16_t ay, int16_t az)
 {
@@ -406,7 +406,7 @@ static bool processAccScale(int16_t ax, int16_t ay, int16_t az)
 }
 
 /**
- * ¼ÆËãÍÓÂİ·½²î
+ * è®¡ç®—é™€èºæ–¹å·®
  */
 static bool processGyroBias(int16_t gx, int16_t gy, int16_t gz, Axis3f *gyroBiasOut)
 {
@@ -424,7 +424,7 @@ static bool processGyroBias(int16_t gx, int16_t gy, int16_t gz, Axis3f *gyroBias
 	return gyroBiasRunning.isBiasValueFound;
 }
 
-/*´¦ÀíÆøÑ¹¼ÆÊı¾İ*/
+/*å¤„ç†æ°”å‹è®¡æ•°æ®*/
 void processBarometerMeasurements(const u8 *buffer)
 {
 	static float temp;
@@ -433,7 +433,7 @@ void processBarometerMeasurements(const u8 *buffer)
 	if (baroType == BMP280)
 	{
 		// Check if there is a new data update
-		if ((buffer[0] & 0x08)) /*bit3=1 ×ª»»Íê³É*/
+		if ((buffer[0] & 0x08)) /*bit3=1 è½¬æ¢å®Œæˆ*/
 		{
 			s32 rawPressure = (s32)((((u32)(buffer[1])) << 12) | (((u32)(buffer[2])) << 4) | ((u32)buffer[3] >> 4));
 			s32 rawTemp = (s32)((((u32)(buffer[4])) << 12) | (((u32)(buffer[5])) << 4) | ((u32)buffer[6] >> 4));
@@ -442,8 +442,8 @@ void processBarometerMeasurements(const u8 *buffer)
 
 //			pressureFilter(&pressure, &sensors.baro.pressure);	
 			sensors.baro.pressure = pressure;
-			sensors.baro.temperature = (float)temp;	/*µ¥Î»¶È*/
-			sensors.baro.asl = bmp280PressureToAltitude(&pressure) * 100.f;	/*×ª»»³Éº£°Î*/
+			sensors.baro.temperature = (float)temp;	/*å•ä½åº¦*/
+			sensors.baro.asl = bmp280PressureToAltitude(&pressure) * 100.f;	/*è½¬æ¢æˆæµ·æ‹”*/
 		}
 	}
 	else if (baroType == SPL06)
@@ -457,12 +457,12 @@ void processBarometerMeasurements(const u8 *buffer)
 		temp = spl0601_get_temperature(rawTemp);
 		pressure = spl0601_get_pressure(rawPressure, rawTemp);
 		sensors.baro.pressure = pressure / 100.0f;
-		sensors.baro.temperature = (float)temp; /*µ¥Î»¶È*/
+		sensors.baro.temperature = (float)temp; /*å•ä½åº¦*/
 		sensors.baro.asl = SPL06PressureToAltitude(sensors.baro.pressure) * 100.f; //cm
 	}
 
 }
-/*´¦Àí´ÅÁ¦¼ÆÊı¾İ*/
+/*å¤„ç†ç£åŠ›è®¡æ•°æ®*/
 void processMagnetometerMeasurements(const uint8_t *buffer)
 {
 	if (buffer[0] & (1 << AK8963_ST1_DRDY_BIT)) 
@@ -474,16 +474,16 @@ void processMagnetometerMeasurements(const uint8_t *buffer)
 		sensors.mag.x = (float)headingx / MAG_GAUSS_PER_LSB;
 		sensors.mag.y = (float)headingy / MAG_GAUSS_PER_LSB;
 		sensors.mag.z = (float)headingz / MAG_GAUSS_PER_LSB;		
-		magRaw.x = headingx;/*ÓÃÓÚÉÏ´«µ½ÉÏÎ»»ú*/
+		magRaw.x = headingx;/*ç”¨äºä¸Šä¼ åˆ°ä¸Šä½æœº*/
 		
 		magRaw.y = headingy;
 		magRaw.z = headingz;
 	}
 }
-/*´¦Àí¼ÓËÙ¼ÆºÍÍÓÂİÒÇÊı¾İ*/
+/*å¤„ç†åŠ é€Ÿè®¡å’Œé™€èºä»ªæ•°æ®*/
 void processAccGyroMeasurements(const uint8_t *buffer)
 {
-	/*×¢Òâ´«¸ĞÆ÷¶ÁÈ¡·½Ïò(Ğı×ª270¡ãxºÍy½»»»)*/
+	/*æ³¨æ„ä¼ æ„Ÿå™¨è¯»å–æ–¹å‘(æ—‹è½¬270Â°xå’Œyäº¤æ¢)*/
 	int16_t ay = (((int16_t) buffer[0]) << 8) | buffer[1];
 	int16_t ax = ((((int16_t) buffer[2]) << 8) | buffer[3]);
 	int16_t az = (((int16_t) buffer[4]) << 8) | buffer[5];
@@ -491,7 +491,7 @@ void processAccGyroMeasurements(const uint8_t *buffer)
 	int16_t gx = (((int16_t) buffer[10]) << 8) | buffer[11];
 	int16_t gz = (((int16_t) buffer[12]) << 8) | buffer[13];
 
-	accRaw.x = ax;/*ÓÃÓÚÉÏ´«µ½ÉÏÎ»»ú*/
+	accRaw.x = ax;/*ç”¨äºä¸Šä¼ åˆ°ä¸Šä½æœº*/
 	accRaw.y = ay;
 	accRaw.z = az;
 	gyroRaw.x = gx - gyroBias.x;
@@ -502,39 +502,39 @@ void processAccGyroMeasurements(const uint8_t *buffer)
 	
 	if (gyroBiasFound)
 	{
-		processAccScale(ax, ay, az);	/*¼ÆËãaccScale*/
+		processAccScale(ax, ay, az);	/*è®¡ç®—accScale*/
 	}
 	
-	sensors.gyro.x = -(gx - gyroBias.x) * SENSORS_DEG_PER_LSB_CFG;	/*µ¥Î» ¡ã/s */
+	sensors.gyro.x = -(gx - gyroBias.x) * SENSORS_DEG_PER_LSB_CFG;	/*å•ä½ Â°/s */
 	sensors.gyro.y =  (gy - gyroBias.y) * SENSORS_DEG_PER_LSB_CFG;
 	sensors.gyro.z =  (gz - gyroBias.z) * SENSORS_DEG_PER_LSB_CFG;
 	applyAxis3fLpf(gyroLpf, &sensors.gyro);	
 
-	sensors.acc.x = -(ax) * SENSORS_G_PER_LSB_CFG / accScale;	/*µ¥Î» g(9.8m/s^2)*/
-	sensors.acc.y =  (ay) * SENSORS_G_PER_LSB_CFG / accScale;	/*ÖØÁ¦¼ÓËÙ¶ÈËõ·ÅÒò×ÓaccScale ¸ù¾İÑù±¾¼ÆËãµÃ³ö*/
+	sensors.acc.x = -(ax) * SENSORS_G_PER_LSB_CFG / accScale;	/*å•ä½ g(9.8m/s^2)*/
+	sensors.acc.y =  (ay) * SENSORS_G_PER_LSB_CFG / accScale;	/*é‡åŠ›åŠ é€Ÿåº¦ç¼©æ”¾å› å­accScale æ ¹æ®æ ·æœ¬è®¡ç®—å¾—å‡º*/
 	sensors.acc.z =  (az) * SENSORS_G_PER_LSB_CFG / accScale;
 
 	applyAxis3fLpf(accLpf, &sensors.acc);
 }
-/*´«¸ĞÆ÷ÈÎÎñ*/
+/*ä¼ æ„Ÿå™¨ä»»åŠ¡*/
 void sensorsTask(void *param)
 {
-	sensorsInit();	/*´«¸ĞÆ÷³õÊ¼»¯*/
+	sensorsInit();	/*ä¼ æ„Ÿå™¨åˆå§‹åŒ–*/
 	vTaskDelay(150);
-	sensorsSetupSlaveRead();/*ÉèÖÃ´«¸ĞÆ÷´ÓÄ£Ê½¶ÁÈ¡*/
+	sensorsSetupSlaveRead();/*è®¾ç½®ä¼ æ„Ÿå™¨ä»æ¨¡å¼è¯»å–*/
 
 	while (1)
 	{
 		if (pdTRUE == xSemaphoreTake(sensorsDataReady, portMAX_DELAY))
 		{
-			/*È·¶¨Êı¾İ³¤¶È*/
+			/*ç¡®å®šæ•°æ®é•¿åº¦*/
 			u8 dataLen = (u8) (SENSORS_MPU6500_BUFF_LEN +
 				(isMagPresent ? SENSORS_MAG_BUFF_LEN : 0) +
 				(isBaroPresent ? SENSORS_BARO_BUFF_LEN : 0));
 
 			i2cdevRead(I2C1_DEV, MPU6500_ADDRESS_AD0_HIGH, MPU6500_RA_ACCEL_XOUT_H, dataLen, buffer);
 			
-			/*´¦ÀíÔ­Ê¼Êı¾İ£¬²¢·ÅÈëÊı¾İ¶ÓÁĞÖĞ*/
+			/*å¤„ç†åŸå§‹æ•°æ®ï¼Œå¹¶æ”¾å…¥æ•°æ®é˜Ÿåˆ—ä¸­*/
 			processAccGyroMeasurements(&(buffer[0]));
 
 			if (isMagPresent)
@@ -547,7 +547,7 @@ void sensorsTask(void *param)
 					SENSORS_MPU6500_BUFF_LEN + SENSORS_MAG_BUFF_LEN : SENSORS_MPU6500_BUFF_LEN]));
 			}
 			
-			vTaskSuspendAll();	/*È·±£Í¬Ò»Ê±¿Ì°ÑÊı¾İ·ÅÈë¶ÓÁĞÖĞ*/
+			vTaskSuspendAll();	/*ç¡®ä¿åŒä¸€æ—¶åˆ»æŠŠæ•°æ®æ”¾å…¥é˜Ÿåˆ—ä¸­*/
 			xQueueOverwrite(accelerometerDataQueue, &sensors.acc);
 			xQueueOverwrite(gyroDataQueue, &sensors.gyro);
 			if (isMagPresent)
@@ -562,7 +562,7 @@ void sensorsTask(void *param)
 		}
 	}	
 }
-/*»ñÈ¡´«¸ĞÆ÷Êı¾İ*/
+/*è·å–ä¼ æ„Ÿå™¨æ•°æ®*/
 void sensorsAcquire(sensorData_t *sensors, const u32 tick)	
 {	
 	sensorsReadGyro(&sensors->gyro);
@@ -581,7 +581,7 @@ void __attribute__((used)) EXTI4_Callback(void)
 		portYIELD();
 	}
 }
-/*¶ş½×µÍÍ¨ÂË²¨*/
+/*äºŒé˜¶ä½é€šæ»¤æ³¢*/
 static void applyAxis3fLpf(lpf2pData *data, Axis3f* in)
 {
 	for (u8 i = 0; i < 3; i++) 
@@ -589,12 +589,12 @@ static void applyAxis3fLpf(lpf2pData *data, Axis3f* in)
 		in->axis[i] = lpf2pApply(&data[i], in->axis[i]);
 	}
 }
-/*´«¸ĞÆ÷Êı¾İĞ£×¼*/
+/*ä¼ æ„Ÿå™¨æ•°æ®æ ¡å‡†*/
 bool sensorsAreCalibrated()	
 {
 	return gyroBiasFound;
 }
-/*ÉÏÎ»»ú»ñÈ¡¶ÁÈ¡Ô­Ê¼Êı¾İ*/
+/*ä¸Šä½æœºè·å–è¯»å–åŸå§‹æ•°æ®*/
 void getSensorRawData(Axis3i16* acc, Axis3i16* gyro, Axis3i16* mag)
 {
 	*acc = accRaw;

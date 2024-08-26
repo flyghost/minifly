@@ -3,19 +3,19 @@
 #include "vl53l0x.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * vl53l0xµ×²ãÇı¶¯´úÂë, ÒÆÖ²×Ôcrazyflie	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * vl53l0xåº•å±‚é©±åŠ¨ä»£ç , ç§»æ¤è‡ªcrazyflie	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ĞŞ¸ÄËµÃ÷:
- * °æ±¾V1.3 ĞŞ¸ÄÎªµ×²ãÇı¶¯£¬·½±ãÓ¦ÓÃ²ãvl53lxx.cµ÷ÓÃ¡£
+ * ä¿®æ”¹è¯´æ˜:
+ * ç‰ˆæœ¬V1.3 ä¿®æ”¹ä¸ºåº•å±‚é©±åŠ¨ï¼Œæ–¹ä¾¿åº”ç”¨å±‚vl53lxx.cè°ƒç”¨ã€‚
 ********************************************************************************/
 
 
@@ -102,11 +102,11 @@ bool vl53l0xTest(void)
 	return testStatus;
 }
 
-void vl53l0xSetParam(void)	/*ÉèÖÃvl53l0x ²ÎÊı*/
+void vl53l0xSetParam(void)	/*è®¾ç½®vl53l0x å‚æ•°*/
 {
 	vl53l0xTest();		
-	vl53l0xSetVcselPulsePeriod(VcselPeriodPreRange, 18);	/*³¤¾àÀëÄ£Ê½  33ms ÖÜÆÚ*/
-	vl53l0xSetVcselPulsePeriod(VcselPeriodFinalRange, 14);	/*³¤¾àÀëÄ£Ê½  33ms ÖÜÆÚ*/
+	vl53l0xSetVcselPulsePeriod(VcselPeriodPreRange, 18);	/*é•¿è·ç¦»æ¨¡å¼  33ms å‘¨æœŸ*/
+	vl53l0xSetVcselPulsePeriod(VcselPeriodFinalRange, 14);	/*é•¿è·ç¦»æ¨¡å¼  33ms å‘¨æœŸ*/
 	vl53l0xStartContinuous(0);
 }
 

@@ -12,15 +12,15 @@
 #include "queue.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * usart2 ´®¿ÚÍ¨ÐÅÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * usart2 ä¸²å£é€šä¿¡é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -48,14 +48,14 @@ static bool     dmaIsPaused;
 static void uartslkPauseDma(void);
 static void uartslkResumeDma(void);
 
-/*ÅäÖÃ´®¿ÚDMA*/
+/*é…ç½®ä¸²å£DMA*/
 void uartslkDmaInit(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);	
 
-	/* USART TX DMA Í¨µÀÅäÖÃ*/
+	/* USART TX DMA é€šé“é…ç½®*/
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&UARTSLK_TYPE->DR;
 	DMA_InitStructure.DMA_Memory0BaseAddr = (u32)dmaBuffer;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
@@ -81,13 +81,13 @@ void uartslkDmaInit(void)
 	isUartDmaInitialized = true;
 }
 
-void uartslkInit(void)	/*´®¿Ú³õÊ¼»¯*/
+void uartslkInit(void)	/*ä¸²å£åˆå§‹åŒ–*/
 {
-	waitUntilSendDone = xSemaphoreCreateBinary(); 	/*µÈ´ý·¢ËÍÍê³É ¶þÖµÐÅºÅÁ¿*/
-	uartBusy = xSemaphoreCreateBinary();			/*´®¿ÚÃ¦ ¶þÖµÐÅºÅÁ¿*/
+	waitUntilSendDone = xSemaphoreCreateBinary(); 	/*ç­‰å¾…å‘é€å®Œæˆ äºŒå€¼ä¿¡å·é‡*/
+	uartBusy = xSemaphoreCreateBinary();			/*ä¸²å£å¿™ äºŒå€¼ä¿¡å·é‡*/
 	xSemaphoreGive(uartBusy); 
 	
-	uartslkDataDelivery = xQueueCreate(1024, sizeof(u8));	/*¶ÓÁÐ 1024¸öÏûÏ¢*/
+	uartslkDataDelivery = xQueueCreate(1024, sizeof(u8));	/*é˜Ÿåˆ— 1024ä¸ªæ¶ˆæ¯*/
 	ASSERT(uartslkDataDelivery);
 
 	USART_InitTypeDef USART_InitStructure;
@@ -95,24 +95,24 @@ void uartslkInit(void)	/*´®¿Ú³õÊ¼»¯*/
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
-	/* Ê¹ÄÜGPIO ºÍ UART Ê±ÖÓ*/
+	/* ä½¿èƒ½GPIO å’Œ UART æ—¶é’Ÿ*/
 	RCC_AHB1PeriphClockCmd(UARTSLK_GPIO_PERIF, ENABLE);
 	ENABLE_UARTSLK_RCC(UARTSLK_PERIF, ENABLE);
 
-	/* ÅäÖÃUSART RxÎª¸¡¿ÕÊäÈë*/
+	/* é…ç½®USART Rxä¸ºæµ®ç©ºè¾“å…¥*/
 	GPIO_InitStructure.GPIO_Pin   = UARTSLK_GPIO_RX_PIN;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(UARTSLK_GPIO_PORT, &GPIO_InitStructure);
 
-	/* ÅäÖÃUSART Tx ¸´ÓÃ¹¦ÄÜÊä³ö*/
+	/* é…ç½®USART Tx å¤ç”¨åŠŸèƒ½è¾“å‡º*/
 	GPIO_InitStructure.GPIO_Pin   = UARTSLK_GPIO_TX_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	GPIO_Init(UARTSLK_GPIO_PORT, &GPIO_InitStructure);
 
-	/*¶Ë¿ÚÓ³Éä*/
+	/*ç«¯å£æ˜ å°„*/
 	GPIO_PinAFConfig(UARTSLK_GPIO_PORT, UARTSLK_GPIO_AF_TX_PIN, UARTSLK_GPIO_AF_TX);
 	GPIO_PinAFConfig(UARTSLK_GPIO_PORT, UARTSLK_GPIO_AF_RX_PIN, UARTSLK_GPIO_AF_RX);
 
@@ -127,17 +127,17 @@ void uartslkInit(void)	/*´®¿Ú³õÊ¼»¯*/
 
 	uartslkDmaInit();
 
-	/*ÅäÖÃ´®¿Ú·Ç¿ÕÖÐ¶Ï*/
+	/*é…ç½®ä¸²å£éžç©ºä¸­æ–­*/
 	NVIC_InitStructure.NVIC_IRQChannel = UARTSLK_IRQ;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	/*´®¿Ú½ÓÊÕÊý¾Ý¼Ä´æÆ÷·Ç¿ÕÖÐ¶Ï*/
+	/*ä¸²å£æŽ¥æ”¶æ•°æ®å¯„å­˜å™¨éžç©ºä¸­æ–­*/
 	USART_ITConfig(UARTSLK_TYPE, USART_IT_RXNE, ENABLE);	
 
-	/*ÅäÖÃTXENÒý½Å(NRFÁ÷¿ØÖÆ)*/
+	/*é…ç½®TXENå¼•è„š(NRFæµæŽ§åˆ¶)*/
 	RCC_AHB1PeriphClockCmd(UARTSLK_TXEN_PERIF, ENABLE);
 
 	memset(&GPIO_InitStructure, 0,sizeof(GPIO_InitStructure));
@@ -146,7 +146,7 @@ void uartslkInit(void)	/*´®¿Ú³õÊ¼»¯*/
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(UARTSLK_TXEN_PORT, &GPIO_InitStructure);
 
-	/*PA0Íâ²¿ÖÐ¶ÏÅäÖÃ*/
+	/*PA0å¤–éƒ¨ä¸­æ–­é…ç½®*/
 	EXTI_InitStructure.EXTI_Line = UARTSLK_TXEN_EXTI;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
@@ -156,7 +156,7 @@ void uartslkInit(void)	/*´®¿Ú³õÊ¼»¯*/
 
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
-	USART_Cmd(UARTSLK_TYPE, ENABLE);	/*Ê¹ÄÜ¶¨Ê±Æ÷*/
+	USART_Cmd(UARTSLK_TYPE, ENABLE);	/*ä½¿èƒ½å®šæ—¶å™¨*/
 	isInit = true;
 }
 
@@ -164,10 +164,10 @@ bool uartslkTest(void)
 {
 	return isInit;
 }
-/*´Ó½ÓÊÕ¶ÓÁÐ¶ÁÈ¡Êý¾Ý(´ø³¬Ê±´¦Àí)*/
+/*ä»ŽæŽ¥æ”¶é˜Ÿåˆ—è¯»å–æ•°æ®(å¸¦è¶…æ—¶å¤„ç†)*/
 bool uartslkGetDataWithTimout(u8 *c)
 {
-	/*½ÓÊÕuartslkDataDelivery(1024¸öÈÝÁ¿)ÏûÏ¢*/
+	/*æŽ¥æ”¶uartslkDataDelivery(1024ä¸ªå®¹é‡)æ¶ˆæ¯*/
 	if (xQueueReceive(uartslkDataDelivery, c, UARTSLK_DATA_TIMEOUT_TICKS) == pdTRUE)	
 	{
 		return true;
@@ -175,7 +175,7 @@ bool uartslkGetDataWithTimout(u8 *c)
 	*c = 0;
 	return false;
 }
-/*·¢ËÍÔ­Ê¼Êý¾Ý*/
+/*å‘é€åŽŸå§‹æ•°æ®*/
 void uartslkSendData(u32 size, u8* data)
 {
 	u32 i;
@@ -192,7 +192,7 @@ void uartslkSendData(u32 size, u8* data)
 		UARTSLK_TYPE->DR = (data[i] & 0x00FF);
 	}
 }
-/*ÖÐ¶Ï·½Ê½·¢ËÍÔ­Ê¼Êý¾Ý*/
+/*ä¸­æ–­æ–¹å¼å‘é€åŽŸå§‹æ•°æ®*/
 void uartslkSendDataIsrBlocking(u32 size, u8* data)
 {
 	xSemaphoreTake(uartBusy, portMAX_DELAY);
@@ -200,43 +200,43 @@ void uartslkSendDataIsrBlocking(u32 size, u8* data)
 	dataSizeIsr = size;
 	dataIndexIsr = 1;
 	uartslkSendData(1, &data[0]);
-	USART_ITConfig(UARTSLK_TYPE, USART_IT_TXE, ENABLE);	/*´®¿Ú·¢ËÍÊý¾Ý¼Ä´æÆ÷Îª¿ÕÖÐ¶Ï*/
+	USART_ITConfig(UARTSLK_TYPE, USART_IT_TXE, ENABLE);	/*ä¸²å£å‘é€æ•°æ®å¯„å­˜å™¨ä¸ºç©ºä¸­æ–­*/
 	xSemaphoreTake(waitUntilSendDone, portMAX_DELAY);
 	outDataIsr = 0;
 	xSemaphoreGive(uartBusy);
 }
-/*·¢ËÍÒ»¸ö×Ö·ûµ½´®¿Ú*/
+/*å‘é€ä¸€ä¸ªå­—ç¬¦åˆ°ä¸²å£*/
 int uartslkPutchar(int ch)
 {
     uartslkSendData(1, (u8 *)&ch);
     
     return (u8)ch;
 }
-/*Í¨¹ýDMA·¢ËÍÔ­Ê¼Êý¾Ý*/
+/*é€šè¿‡DMAå‘é€åŽŸå§‹æ•°æ®*/
 void uartslkSendDataDmaBlocking(u32 size, u8* data)
 {
 	if (isUartDmaInitialized)
 	{
 		xSemaphoreTake(uartBusy, portMAX_DELAY);
-		while(DMA_GetCmdStatus(UARTSLK_DMA_STREAM) != DISABLE);	/*µÈ´ýDMA¿ÕÏÐ*/
-		memcpy(dmaBuffer, data, size);		/*¸´ÖÆÊý¾Ýµ½DMA»º³åÇø*/
+		while(DMA_GetCmdStatus(UARTSLK_DMA_STREAM) != DISABLE);	/*ç­‰å¾…DMAç©ºé—²*/
+		memcpy(dmaBuffer, data, size);		/*å¤åˆ¶æ•°æ®åˆ°DMAç¼“å†²åŒº*/
 		DMA_InitStructure.DMA_BufferSize = size;
 		initialDMACount = size;
-		DMA_Init(UARTSLK_DMA_STREAM, &DMA_InitStructure);	/*ÖØÐÂ³õÊ¼»¯DMAÊý¾ÝÁ÷*/
-		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, ENABLE);/*¿ªÆôDMA´«ÊäÍê³ÉÖÐ¶Ï*/		
-		USART_DMACmd(UARTSLK_TYPE, USART_DMAReq_Tx, ENABLE);/* Ê¹ÄÜUSART DMA TXÇëÇó */
-		USART_ClearFlag(UARTSLK_TYPE, USART_FLAG_TC);		/* Çå³ý´«ÊäÍê³ÉÖÐ¶Ï±êÖ¾Î» */
-		DMA_Cmd(UARTSLK_DMA_STREAM, ENABLE);	/* Ê¹ÄÜDMA USART TXÊý¾ÝÁ÷ */
+		DMA_Init(UARTSLK_DMA_STREAM, &DMA_InitStructure);	/*é‡æ–°åˆå§‹åŒ–DMAæ•°æ®æµ*/
+		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, ENABLE);/*å¼€å¯DMAä¼ è¾“å®Œæˆä¸­æ–­*/		
+		USART_DMACmd(UARTSLK_TYPE, USART_DMAReq_Tx, ENABLE);/* ä½¿èƒ½USART DMA TXè¯·æ±‚ */
+		USART_ClearFlag(UARTSLK_TYPE, USART_FLAG_TC);		/* æ¸…é™¤ä¼ è¾“å®Œæˆä¸­æ–­æ ‡å¿—ä½ */
+		DMA_Cmd(UARTSLK_DMA_STREAM, ENABLE);	/* ä½¿èƒ½DMA USART TXæ•°æ®æµ */
 		xSemaphoreTake(waitUntilSendDone, portMAX_DELAY);
 		xSemaphoreGive(uartBusy);
 	}
 }
-/*ÔÝÍ£DMA´«Êä*/
+/*æš‚åœDMAä¼ è¾“*/
 static void uartslkPauseDma()
 {
 	if (DMA_GetCmdStatus(UARTSLK_DMA_STREAM) == ENABLE)
 	{
-		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, DISABLE);	/*¹Ø±ÕDMA´«ÊäÍê³ÉÖÐ¶Ï*/	
+		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, DISABLE);	/*å…³é—­DMAä¼ è¾“å®Œæˆä¸­æ–­*/	
 		DMA_Cmd(UARTSLK_DMA_STREAM, DISABLE);
 		while(DMA_GetCmdStatus(UARTSLK_DMA_STREAM) != DISABLE);
 		DMA_ClearITPendingBit(UARTSLK_DMA_STREAM, UARTSLK_DMA_IT_TCIF);
@@ -244,16 +244,16 @@ static void uartslkPauseDma()
 		dmaIsPaused = true;
 	}
 }
-/*»Ö¸´DMA´«Êä*/
+/*æ¢å¤DMAä¼ è¾“*/
 static void uartslkResumeDma()
 {
 	if (dmaIsPaused)
 	{
-		DMA_SetCurrDataCounter(UARTSLK_DMA_STREAM, remainingDMACount);	/*¸üÐÂDMA¼ÆÊýÆ÷*/
-		UARTSLK_DMA_STREAM->M0AR = (u32)&dmaBuffer[initialDMACount - remainingDMACount];/*¸üÐÂÄÚ´æ¶ÁÈ¡µØÖ·*/
-		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, ENABLE);	/*¿ªÆôDMA´«ÊäÍê³ÉÖÐ¶Ï*/	
-		USART_ClearFlag(UARTSLK_TYPE, USART_FLAG_TC);	/* Çå³ý´«ÊäÍê³ÉÖÐ¶Ï±êÖ¾Î» */
-		DMA_Cmd(UARTSLK_DMA_STREAM, ENABLE);	/* Ê¹ÄÜDMA USART TXÊý¾ÝÁ÷ */
+		DMA_SetCurrDataCounter(UARTSLK_DMA_STREAM, remainingDMACount);	/*æ›´æ–°DMAè®¡æ•°å™¨*/
+		UARTSLK_DMA_STREAM->M0AR = (u32)&dmaBuffer[initialDMACount - remainingDMACount];/*æ›´æ–°å†…å­˜è¯»å–åœ°å€*/
+		DMA_ITConfig(UARTSLK_DMA_STREAM, DMA_IT_TC, ENABLE);	/*å¼€å¯DMAä¼ è¾“å®Œæˆä¸­æ–­*/	
+		USART_ClearFlag(UARTSLK_TYPE, USART_FLAG_TC);	/* æ¸…é™¤ä¼ è¾“å®Œæˆä¸­æ–­æ ‡å¿—ä½ */
+		DMA_Cmd(UARTSLK_DMA_STREAM, ENABLE);	/* ä½¿èƒ½DMA USART TXæ•°æ®æµ */
 		dmaIsPaused = false;
 	}
 }
@@ -275,7 +275,7 @@ void uartslkIsr(void)
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
-	if ((UARTSLK_TYPE->SR & (1<<5)) != 0) /*½ÓÊÕ·Ç¿ÕÖÐ¶Ï*/
+	if ((UARTSLK_TYPE->SR & (1<<5)) != 0) /*æŽ¥æ”¶éžç©ºä¸­æ–­*/
 	{
 		u8 rxDataInterrupt = (u8)(UARTSLK_TYPE->DR & 0xFF);
 		xQueueSendFromISR(uartslkDataDelivery, &rxDataInterrupt, &xHigherPriorityTaskWoken);

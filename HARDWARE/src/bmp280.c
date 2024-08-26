@@ -5,19 +5,19 @@
 #include "bmp280.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * BMP280Çý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * BMP280é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-/*bmp280 ÆøÑ¹ºÍÎÂ¶È¹ý²ÉÑù ¹¤×÷Ä£Ê½*/
+/*bmp280 æ°”åŽ‹å’Œæ¸©åº¦è¿‡é‡‡æ · å·¥ä½œæ¨¡å¼*/
 #define BMP280_PRESSURE_OSR			(BMP280_OVERSAMP_8X)
 #define BMP280_TEMPERATURE_OSR		(BMP280_OVERSAMP_8X)
 #define BMP280_MODE					(BMP280_PRESSURE_OSR << 2 | BMP280_TEMPERATURE_OSR << 5 | BMP280_NORMAL_MODE)
@@ -63,17 +63,17 @@ bool bmp280Init(I2C_Dev *i2cPort)
 
     delay_xms(50);
 	
-	i2cdevReadByte(I2Cx, devAddr, BMP280_CHIP_ID, &bmp280ID);	/* ¶ÁÈ¡bmp280 ID*/
+	i2cdevReadByte(I2Cx, devAddr, BMP280_CHIP_ID, &bmp280ID);	/* è¯»å–bmp280 ID*/
 	
 	if(bmp280ID == BMP280_DEFAULT_CHIP_ID)
 		printf("BMP280 ID IS: 0x%X\n",bmp280ID);
     else 
         return false;
 
-    /* ¶ÁÈ¡Ð£×¼Êý¾Ý */
+    /* è¯»å–æ ¡å‡†æ•°æ® */
     i2cdevRead(I2Cx, devAddr, BMP280_TEMPERATURE_CALIB_DIG_T1_LSB_REG, 24, (u8 *)&bmp280Cal);	
 	i2cdevWriteByte(I2Cx, devAddr, BMP280_CTRL_MEAS_REG, BMP280_MODE);
-	i2cdevWriteByte(I2Cx, devAddr, BMP280_CONFIG_REG, 5<<2);		/*ÅäÖÃIIRÂË²¨*/
+	i2cdevWriteByte(I2Cx, devAddr, BMP280_CONFIG_REG, 5<<2);		/*é…ç½®IIRæ»¤æ³¢*/
 	
 //	printf("BMP280 Calibrate Registor Are: \r\n");
 //	for(i=0;i<24;i++)
@@ -133,7 +133,7 @@ u32 bmp280CompensateP(s32 adcP)
 #define FILTER_NUM	5
 #define FILTER_A	0.1f
 
-/*ÏÞ·ùÆ½¾ùÂË²¨·¨*/
+/*é™å¹…å¹³å‡æ»¤æ³¢æ³•*/
 void pressureFilter(float* in, float* out)
 {	
 	static u8 i=0;
@@ -176,10 +176,10 @@ void bmp280GetData(float* pressure, float* temperature, float* asl)
 	p = bmp280CompensateP(bmp280RawPressure)/25600.0;		
 
 	pressureFilter(&p,pressure);
-	*temperature = (float)t;/*µ¥Î»¶È*/
-//	*pressure = (float)p ;	/*µ¥Î»hPa*/	
+	*temperature = (float)t;/*å•ä½åº¦*/
+//	*pressure = (float)p ;	/*å•ä½hPa*/	
 	
-	*asl=bmp280PressureToAltitude(pressure);	/*×ª»»³Éº£°Î*/	
+	*asl=bmp280PressureToAltitude(pressure);	/*è½¬æ¢æˆæµ·æ‹”*/	
 }
 
 /**

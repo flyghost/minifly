@@ -5,21 +5,21 @@
 #include "config_param.h"
 #include "commander.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼þ*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * SPIÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * SPIé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -83,23 +83,23 @@ void spi2Init(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	SPI_InitTypeDef  SPI_InitStructure;
 
-	/*´´½¨2ÖµÐÅºÅÁ¿£¬Ê¹ÓÃÖ®Ç°ÏÈÊÍ·Å*/
+	/*åˆ›å»º2å€¼ä¿¡å·é‡ï¼Œä½¿ç”¨ä¹‹å‰å…ˆé‡Šæ”¾*/
 	txComplete = xSemaphoreCreateBinary();
 	rxComplete = xSemaphoreCreateBinary();
 	spiMutex = xSemaphoreCreateMutex();
 
-	/* Ê¹ÄÜGPIOÊ±ÖÓ */
+	/* ä½¿èƒ½GPIOæ—¶é’Ÿ */
 	RCC_AHB1PeriphClockCmd(SPI_SCK_GPIO_CLK | SPI_MISO_GPIO_CLK | SPI_MOSI_GPIO_CLK, ENABLE);
 
-	/* Ê¹ÄÜSPIÊ±ÖÓ */
+	/* ä½¿èƒ½SPIæ—¶é’Ÿ */
 	SPI_CLK_INIT(SPI_CLK, ENABLE);
 
-	/* Ê¹ÄÜDMAÊ±ÖÓ*/
+	/* ä½¿èƒ½DMAæ—¶é’Ÿ*/
 	SPI_DMA_CLK_INIT(SPI_DMA_CLK, ENABLE);
 
-	/*SPI Òý½ÅÅäÖÃ*/
+	/*SPI å¼•è„šé…ç½®*/
 
-	/*¸´ÓÃ¹¦ÄÜÉèÖÃ */
+	/*å¤ç”¨åŠŸèƒ½è®¾ç½® */
 	GPIO_PinAFConfig(SPI_SCK_GPIO_PORT, SPI_SCK_SOURCE, SPI_SCK_AF);
 	GPIO_PinAFConfig(SPI_MISO_GPIO_PORT, SPI_MISO_SOURCE, SPI_MISO_AF);
 	GPIO_PinAFConfig(SPI_MOSI_GPIO_PORT, SPI_MOSI_SOURCE, SPI_MOSI_AF);
@@ -121,10 +121,10 @@ void spi2Init(void)
 	GPIO_InitStructure.GPIO_Pin =  SPI_MISO_PIN;
 	GPIO_Init(SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
 
-	/*!< SPI DMA³õÊ¼»¯ */
+	/*!< SPI DMAåˆå§‹åŒ– */
 	spiDMAInit();
 
-	/*!< SPI ²ÎÊýÅäÖÃ */
+	/*!< SPI å‚æ•°é…ç½® */
 	SPI_I2S_DeInit(SPI);
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BAUDRATE_2MHZ;
@@ -141,7 +141,7 @@ void spi2Init(void)
 	isInit = true;
 }
 
-/*DMA ³õÊ¼»¯*/
+/*DMA åˆå§‹åŒ–*/
 static void spiDMAInit()
 {
 	DMA_InitTypeDef  DMA_InitStructure;
@@ -149,7 +149,7 @@ static void spiDMAInit()
 
 	DMA_DeInit(DMA1_Stream4);
 	
-	/* DMA½á¹¹ÌåÅäÖÃ */
+	/* DMAç»“æž„ä½“é…ç½® */
 	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable ;
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull ;
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single ;
@@ -164,19 +164,19 @@ static void spiDMAInit()
 	DMA_InitStructure.DMA_BufferSize = 0;
 	DMA_InitStructure.DMA_Memory0BaseAddr = 0; 
 
-	// ÅäÖÃ TX DMA
+	// é…ç½® TX DMA
 	DMA_InitStructure.DMA_Channel = SPI_TX_DMA_CHANNEL;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
 	DMA_Cmd(SPI_TX_DMA_STREAM,DISABLE);
 	DMA_Init(SPI_TX_DMA_STREAM, &DMA_InitStructure);
 	
-	// ÅäÖÃ RX DMA
+	// é…ç½® RX DMA
 	DMA_InitStructure.DMA_Channel = SPI_RX_DMA_CHANNEL;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_Cmd(SPI_RX_DMA_STREAM,DISABLE);
 	DMA_Init(SPI_RX_DMA_STREAM, &DMA_InitStructure);
 
-	// ÖÐ¶ÏÅäÖÃ
+	// ä¸­æ–­é…ç½®
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 9;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -196,37 +196,37 @@ bool spiTest(void)
 
 bool spiExchange(size_t length, const uint8_t * data_tx, uint8_t * data_rx)
 {
-	// ÉèÖÃÄÚ´æµØÖ· 
+	// è®¾ç½®å†…å­˜åœ°å€ 
 	SPI_TX_DMA_STREAM->M0AR = (uint32_t)data_tx;
 	SPI_TX_DMA_STREAM->NDTR = length;
 
 	SPI_RX_DMA_STREAM->M0AR = (uint32_t)data_rx;
 	SPI_RX_DMA_STREAM->NDTR = length;
 
-	//Ê¹ÄÜSPI DMA ÖÐ¶Ï
+	//ä½¿èƒ½SPI DMA ä¸­æ–­
 	DMA_ITConfig(SPI_TX_DMA_STREAM, DMA_IT_TC, ENABLE);
 	DMA_ITConfig(SPI_RX_DMA_STREAM, DMA_IT_TC, ENABLE);
 
-	// Çå³ýÖÐ¶Ï±êÖ¾Î»
+	// æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 	DMA_ClearFlag(SPI_TX_DMA_STREAM, DMA_FLAG_FEIF4|DMA_FLAG_DMEIF4|DMA_FLAG_TEIF4|DMA_FLAG_HTIF4|DMA_FLAG_TCIF4);
 	DMA_ClearFlag(SPI_RX_DMA_STREAM, DMA_FLAG_FEIF3|DMA_FLAG_DMEIF3|DMA_FLAG_TEIF3|DMA_FLAG_HTIF3|DMA_FLAG_TCIF3);
 
-	// Ê¹ÄÜ DMA Êý¾ÝÁ÷
+	// ä½¿èƒ½ DMA æ•°æ®æµ
 	DMA_Cmd(SPI_TX_DMA_STREAM,ENABLE);
 	DMA_Cmd(SPI_RX_DMA_STREAM,ENABLE);
 
-	//Ê¹ÄÜ SPI DMA ÇëÇó
+	//ä½¿èƒ½ SPI DMA è¯·æ±‚
 	SPI_I2S_DMACmd(SPI, SPI_I2S_DMAReq_Tx, ENABLE);
 	SPI_I2S_DMACmd(SPI, SPI_I2S_DMAReq_Rx, ENABLE);
 
-	// Ê¹ÄÜSPI
+	// ä½¿èƒ½SPI
 	SPI_Cmd(SPI, ENABLE);
 
-	// µÈ´ý´«ÊäÍê³É
+	// ç­‰å¾…ä¼ è¾“å®Œæˆ
 	bool result = (xSemaphoreTake(txComplete, portMAX_DELAY) == pdTRUE)
 				&& (xSemaphoreTake(rxComplete, portMAX_DELAY) == pdTRUE);
 
-	// ¹Ø±ÕSPI
+	// å…³é—­SPI
 	SPI_Cmd(SPI, DISABLE);
 	return result;
 }
@@ -241,25 +241,25 @@ void spiEndTransaction()
 	xSemaphoreGive(spiMutex);
 }
 
-/*DMA TXÖÐ¶Ï*/
+/*DMA TXä¸­æ–­*/
 void  spiTxDmaIsr(void)
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
-	// Í£Ö¹²¢Çå³ý DMA Êý¾ÝÁ÷
+	// åœæ­¢å¹¶æ¸…é™¤ DMA æ•°æ®æµ
 	DMA_ITConfig(SPI_TX_DMA_STREAM, DMA_IT_TC, DISABLE);
 	DMA_ClearITPendingBit(SPI_TX_DMA_STREAM, SPI_TX_DMA_FLAG_TCIF);
 
-	// Çå³ý±êÖ¾Î»
+	// æ¸…é™¤æ ‡å¿—ä½
 	DMA_ClearFlag(SPI_TX_DMA_STREAM,SPI_TX_DMA_FLAG_TCIF);
 
-	// ¹Ø±Õ SPI DMA ÇëÇó
+	// å…³é—­ SPI DMA è¯·æ±‚
 	SPI_I2S_DMACmd(SPI, SPI_I2S_DMAReq_Tx, DISABLE);
 
-	// ¹Ø±ÕÊý¾ÝÁ÷
+	// å…³é—­æ•°æ®æµ
 	DMA_Cmd(SPI_TX_DMA_STREAM,DISABLE);
 
-	// ÊÍ·ÅÐÅºÅÁ¿
+	// é‡Šæ”¾ä¿¡å·é‡
 	xSemaphoreGiveFromISR(txComplete, &xHigherPriorityTaskWoken);
 
 	if (xHigherPriorityTaskWoken)
@@ -268,25 +268,25 @@ void  spiTxDmaIsr(void)
 	}
 }
 
-/*DMA RXÖÐ¶Ï*/
+/*DMA RXä¸­æ–­*/
 void spiRxDmaIsr(void)
 {
 	portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
-	// Í£Ö¹²¢Çå³ý DMA Êý¾ÝÁ÷
+	// åœæ­¢å¹¶æ¸…é™¤ DMA æ•°æ®æµ
 	DMA_ITConfig(SPI_RX_DMA_STREAM, DMA_IT_TC, DISABLE);
 	DMA_ClearITPendingBit(SPI_RX_DMA_STREAM, SPI_RX_DMA_FLAG_TCIF);
 
-	// Çå³ý±êÖ¾Î»
+	// æ¸…é™¤æ ‡å¿—ä½
 	DMA_ClearFlag(SPI_RX_DMA_STREAM,SPI_RX_DMA_FLAG_TCIF);
 
-	// ¹Ø±Õ SPI DMA ÇëÇó
+	// å…³é—­ SPI DMA è¯·æ±‚
 	SPI_I2S_DMACmd(SPI, SPI_I2S_DMAReq_Rx, DISABLE);
 
-	// ¹Ø±ÕÊý¾ÝÁ÷
+	// å…³é—­æ•°æ®æµ
 	DMA_Cmd(SPI_RX_DMA_STREAM,DISABLE);
 
-	// ÊÍ·ÅÐÅºÅÁ¿
+	// é‡Šæ”¾ä¿¡å·é‡
 	xSemaphoreGiveFromISR(rxComplete, &xHigherPriorityTaskWoken);
 
 	if (xHigherPriorityTaskWoken)

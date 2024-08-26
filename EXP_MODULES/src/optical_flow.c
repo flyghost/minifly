@@ -10,46 +10,46 @@
 #include "filter.h"
 #include "arm_math.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ¹âÁ÷Ä£¿éÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å…‰æµæ¨¡å—é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ĞŞ¸ÄËµÃ÷:
- * °æ±¾V1.3 Ôö¼Ó¹âÁ÷Êı¾İ½á¹¹ÌåopFlow_t£¬ÓÃÓÚ´æ·Å¹âÁ÷¸÷ÏîÊı¾İ£¬·½±ãÓÃ»§µ÷ÊÔ¡£
+ * ä¿®æ”¹è¯´æ˜:
+ * ç‰ˆæœ¬V1.3 å¢åŠ å…‰æµæ•°æ®ç»“æ„ä½“opFlow_tï¼Œç”¨äºå­˜æ”¾å…‰æµå„é¡¹æ•°æ®ï¼Œæ–¹ä¾¿ç”¨æˆ·è°ƒè¯•ã€‚
 ********************************************************************************/
 
 #define NCS_PIN					PAout(8)
 #define OPTICAL_POWER_ENABLE	PBout(0)
 
-#define RESOLUTION			(0.2131946f)/*1m¸ß¶ÈÏÂ 1¸öÏñËØ¶ÔÓ¦µÄÎ»ÒÆ£¬µ¥Î»cm*/
-#define OULIER_LIMIT 		(100)		/*¹âÁ÷ÏñËØÊä³öÏŞ·ù*/
-#define VEL_LIMIT			(150.f)		/*¹âÁ÷ËÙ¶ÈÏŞ·ù*/
+#define RESOLUTION			(0.2131946f)/*1mé«˜åº¦ä¸‹ 1ä¸ªåƒç´ å¯¹åº”çš„ä½ç§»ï¼Œå•ä½cm*/
+#define OULIER_LIMIT 		(100)		/*å…‰æµåƒç´ è¾“å‡ºé™å¹…*/
+#define VEL_LIMIT			(150.f)		/*å…‰æµé€Ÿåº¦é™å¹…*/
 
-#define VEL_LPF_FILTER			/*µÍÍ¨ÂË²¨*/
-//#define AVERAGE_FILTER		/*¾ùÖµÂË²¨*/
+#define VEL_LPF_FILTER			/*ä½é€šæ»¤æ³¢*/
+//#define AVERAGE_FILTER		/*å‡å€¼æ»¤æ³¢*/
 
 static bool isInit = false;
-static u8 outlierCount = 0;			/*Êı¾İ²»¿ÉÓÃ¼ÆÊı*/
+static u8 outlierCount = 0;			/*æ•°æ®ä¸å¯ç”¨è®¡æ•°*/
 
-opFlow_t opFlow;	/*¹âÁ÷*/
+opFlow_t opFlow;	/*å…‰æµ*/
 
 
 TaskHandle_t opFlowTaskHandle = NULL;
 
 #if defined(__CC_ARM) 
-	#pragma anon_unions	/*ÓÃÓÚÖ§³Ö½á¹¹ÌåÁªºÏÌå*/
+	#pragma anon_unions	/*ç”¨äºæ”¯æŒç»“æ„ä½“è”åˆä½“*/
 #endif
 
 typedef __packed struct motionBurst_s 
@@ -85,7 +85,7 @@ motionBurst_t currentMotion;
 
 static void InitRegisters(void);
 
-//¹âÁ÷µçÔ´¿ØÖÆ
+//å…‰æµç”µæºæ§åˆ¶
 void opticalFlowPowerControl(bool state)
 {
 	if(state == true)
@@ -96,7 +96,7 @@ void opticalFlowPowerControl(bool state)
 
 static void registerWrite(uint8_t reg, uint8_t value)
 {
-	// ×î¸ßÎ»Îª1 Ğ´¼Ä´æÆ÷
+	// æœ€é«˜ä½ä¸º1 å†™å¯„å­˜å™¨
 	reg |= 0x80u;
 
 	spiBeginTransaction();
@@ -119,7 +119,7 @@ static uint8_t registerRead(uint8_t reg)
 {
 	uint8_t data = 0;
 
-	// ×î¸ßÎ»Îª0 ¶Á¼Ä´æÆ÷
+	// æœ€é«˜ä½ä¸º0 è¯»å¯„å­˜å™¨
 	reg &= ~0x80u;
 
 	spiBeginTransaction();
@@ -243,12 +243,12 @@ static void InitRegisters(void)
 	registerWrite(0x5A, 0x50);
 	registerWrite(0x40, 0x80);
 	
-//	/*³õÊ¼»¯LED_N*/
+//	/*åˆå§‹åŒ–LED_N*/
 //	registerWrite(0x7F, 0x0E);
 //	registerWrite(0x72, 0x0F);
 //	registerWrite(0x7F, 0x00);
 }
-/*¸´Î»¹âÁ÷Êı¾İ*/
+/*å¤ä½å…‰æµæ•°æ®*/
 static void resetOpFlowData(void)
 {
 	for(u8 i=0; i<2; i++)
@@ -260,7 +260,7 @@ static void resetOpFlowData(void)
 	}
 }
 
-/*¹âÁ÷ÈÎÎñº¯Êı*/
+/*å…‰æµä»»åŠ¡å‡½æ•°*/
 void opticalFlowTask(void *param)
 {	
 	static u16 count = 0;	
@@ -270,7 +270,7 @@ void opticalFlowTask(void *param)
 	
 	while(1) 
 	{
-		vTaskDelayUntil(&lastWakeTime, 10);		/*100Hz 10msÖÜÆÚÑÓÊ±*/
+		vTaskDelayUntil(&lastWakeTime, 10);		/*100Hz 10mså‘¨æœŸå»¶æ—¶*/
 		
 		readMotion(&currentMotion);
 
@@ -279,14 +279,14 @@ void opticalFlowTask(void *param)
 			if(count++ > 100 && opFlow.isOpFlowOk == true)
 			{
 				count = 0;
-				opFlow.isOpFlowOk = false;		/*¹âÁ÷³ö´í*/
-				vTaskSuspend(opFlowTaskHandle);	/*¹ÒÆğ¹âÁ÷ÈÎÎñ*/
+				opFlow.isOpFlowOk = false;		/*å…‰æµå‡ºé”™*/
+				vTaskSuspend(opFlowTaskHandle);	/*æŒ‚èµ·å…‰æµä»»åŠ¡*/
 			}		
 		}else
 		{
 			count = 0;
 		}
-		/*Á¬Ğø2Ö¡Ö®¼äµÄÏñËØ±ä»¯£¬¸ù¾İÊµ¼Ê°²×°·½Ïòµ÷Õû (pitch:x)  (roll:y)*/
+		/*è¿ç»­2å¸§ä¹‹é—´çš„åƒç´ å˜åŒ–ï¼Œæ ¹æ®å®é™…å®‰è£…æ–¹å‘è°ƒæ•´ (pitch:x)  (roll:y)*/
 		int16_t pixelDx = currentMotion.deltaY;
 		int16_t pixelDy = -currentMotion.deltaX;
 
@@ -306,7 +306,7 @@ void opticalFlowTask(void *param)
 #define GROUP		2
 #define FILTER_NUM	3
 
-/*ÏŞ·ù¾ùÖµÂË²¨·¨*/
+/*é™å¹…å‡å€¼æ»¤æ³¢æ³•*/
 void velFilter(float* in, float* out)
 {	
 	static u8 i=0;
@@ -339,9 +339,9 @@ void velFilter(float* in, float* out)
 bool getOpFlowData(state_t *state, float dt)
 {
 	static u8 cnt = 0;
-	float height = 0.01f * getFusedHeight();/*¶ÁÈ¡¸ß¶ÈĞÅÏ¢ µ¥Î»m*/
+	float height = 0.01f * getFusedHeight();/*è¯»å–é«˜åº¦ä¿¡æ¯ å•ä½m*/
 	
-	if(opFlow.isOpFlowOk && height<4.0f)	/*4m·¶Î§ÄÚ£¬¹âÁ÷¿ÉÓÃ*/
+	if(opFlow.isOpFlowOk && height<4.0f)	/*4mèŒƒå›´å†…ï¼Œå…‰æµå¯ç”¨*/
 	{
 		cnt= 0;
 		opFlow.isDataValid = true;
@@ -350,37 +350,37 @@ bool getOpFlowData(state_t *state, float dt)
 		float tanRoll = tanf(state->attitude.roll * DEG2RAD);
 		float tanPitch = tanf(state->attitude.pitch * DEG2RAD);
 		
-		opFlow.pixComp[X] = 480.f * tanPitch;	/*ÏñËØ²¹³¥£¬¸º·½Ïò*/
+		opFlow.pixComp[X] = 480.f * tanPitch;	/*åƒç´ è¡¥å¿ï¼Œè´Ÿæ–¹å‘*/
 		opFlow.pixComp[Y] = 480.f * tanRoll;
-		opFlow.pixValid[X] = (opFlow.pixSum[X] + opFlow.pixComp[X]);	/*Êµ¼ÊÊä³öÏñËØ*/
+		opFlow.pixValid[X] = (opFlow.pixSum[X] + opFlow.pixComp[X]);	/*å®é™…è¾“å‡ºåƒç´ */
 		opFlow.pixValid[Y] = (opFlow.pixSum[Y] + opFlow.pixComp[Y]);		
 		
-		if(height < 0.05f)	/*¹âÁ÷²âÁ¿·¶Î§´óÓÚ5cm*/
+		if(height < 0.05f)	/*å…‰æµæµ‹é‡èŒƒå›´å¤§äº5cm*/
 		{
 			coeff = 0.0f;
 		}
-		opFlow.deltaPos[X] = coeff * (opFlow.pixValid[X] - opFlow.pixValidLast[X]);	/*2Ö¡Ö®¼äÎ»ÒÆ±ä»¯Á¿£¬µ¥Î»cm*/
+		opFlow.deltaPos[X] = coeff * (opFlow.pixValid[X] - opFlow.pixValidLast[X]);	/*2å¸§ä¹‹é—´ä½ç§»å˜åŒ–é‡ï¼Œå•ä½cm*/
 		opFlow.deltaPos[Y] = coeff * (opFlow.pixValid[Y] - opFlow.pixValidLast[Y]);	
-		opFlow.pixValidLast[X] = opFlow.pixValid[X];	/*ÉÏÒ»´ÎÊµ¼ÊÊä³öÏñËØ*/
+		opFlow.pixValidLast[X] = opFlow.pixValid[X];	/*ä¸Šä¸€æ¬¡å®é™…è¾“å‡ºåƒç´ */
 		opFlow.pixValidLast[Y] = opFlow.pixValid[Y];
-		opFlow.deltaVel[X] = opFlow.deltaPos[X] / dt;	/*ËÙ¶È cm/s*/
+		opFlow.deltaVel[X] = opFlow.deltaPos[X] / dt;	/*é€Ÿåº¦ cm/s*/
 		opFlow.deltaVel[Y] = opFlow.deltaPos[Y] / dt;
 		
 #ifdef AVERAGE_FILTER
-		velFilter(opFlow.deltaVel, opFlow.velLpf);		/*ÏŞ·ù¾ùÖµÂË²¨·¨*/
+		velFilter(opFlow.deltaVel, opFlow.velLpf);		/*é™å¹…å‡å€¼æ»¤æ³¢æ³•*/
 #else
-		opFlow.velLpf[X] += (opFlow.deltaVel[X] - opFlow.velLpf[X]) * 0.15f;	/*ËÙ¶ÈµÍÍ¨ cm/s*/
-		opFlow.velLpf[Y] += (opFlow.deltaVel[Y] - opFlow.velLpf[Y]) * 0.15f;	/*ËÙ¶ÈµÍÍ¨ cm/s*/
+		opFlow.velLpf[X] += (opFlow.deltaVel[X] - opFlow.velLpf[X]) * 0.15f;	/*é€Ÿåº¦ä½é€š cm/s*/
+		opFlow.velLpf[Y] += (opFlow.deltaVel[Y] - opFlow.velLpf[Y]) * 0.15f;	/*é€Ÿåº¦ä½é€š cm/s*/
 #endif			
-		opFlow.velLpf[X] = constrainf(opFlow.velLpf[X], -VEL_LIMIT, VEL_LIMIT);	/*ËÙ¶ÈÏŞ·ù cm/s*/
-		opFlow.velLpf[Y] = constrainf(opFlow.velLpf[Y], -VEL_LIMIT, VEL_LIMIT);	/*ËÙ¶ÈÏŞ·ù cm/s*/
+		opFlow.velLpf[X] = constrainf(opFlow.velLpf[X], -VEL_LIMIT, VEL_LIMIT);	/*é€Ÿåº¦é™å¹… cm/s*/
+		opFlow.velLpf[Y] = constrainf(opFlow.velLpf[Y], -VEL_LIMIT, VEL_LIMIT);	/*é€Ÿåº¦é™å¹… cm/s*/
 	
-		opFlow.posSum[X] += opFlow.deltaPos[X];	/*ÀÛ»ıÎ»ÒÆ cm*/
-		opFlow.posSum[Y] += opFlow.deltaPos[Y];	/*ÀÛ»ıÎ»ÒÆ cm*/
+		opFlow.posSum[X] += opFlow.deltaPos[X];	/*ç´¯ç§¯ä½ç§» cm*/
+		opFlow.posSum[Y] += opFlow.deltaPos[Y];	/*ç´¯ç§¯ä½ç§» cm*/
 	}
 	else if(opFlow.isDataValid == true)
 	{
-		if(cnt++ > 100)	/*³¬¹ı¶¨µã¸ß¶È£¬ÇĞ»»Îª¶¨¸ßÄ£Ê½*/
+		if(cnt++ > 100)	/*è¶…è¿‡å®šç‚¹é«˜åº¦ï¼Œåˆ‡æ¢ä¸ºå®šé«˜æ¨¡å¼*/
 		{
 			cnt = 0;
 			opFlow.isDataValid = false;
@@ -388,18 +388,18 @@ bool getOpFlowData(state_t *state, float dt)
 		resetOpFlowData();	
 	}
 	
-	return opFlow.isOpFlowOk;	/*·µ»Ø¹âÁ÷×´Ì¬*/
+	return opFlow.isOpFlowOk;	/*è¿”å›å…‰æµçŠ¶æ€*/
 }
-/*³õÊ¼»¯¹âÁ÷Ä£¿é*/
+/*åˆå§‹åŒ–å…‰æµæ¨¡å—*/
 void opticalFlowInit(void)
 {
-	if (!isInit) /*µÚÒ»´Î³õÊ¼»¯Í¨ÓÃIO*/
+	if (!isInit) /*ç¬¬ä¸€æ¬¡åˆå§‹åŒ–é€šç”¨IO*/
 	{
 		GPIO_InitTypeDef GPIO_InitStructure;
 
-		//³õÊ¼»¯CSÒı½Å	
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//Ê¹ÄÜÊ±ÖÓ
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);//Ê¹ÄÜÊ±ÖÓ
+		//åˆå§‹åŒ–CSå¼•è„š	
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//ä½¿èƒ½æ—¶é’Ÿ
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);//ä½¿èƒ½æ—¶é’Ÿ
 		
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
@@ -416,7 +416,7 @@ void opticalFlowInit(void)
 		opFlow.isOpFlowOk = true;				
 	}
 	
-	opticalFlowPowerControl(true);	/*´ò¿ªµçÔ´*/
+	opticalFlowPowerControl(true);	/*æ‰“å¼€ç”µæº*/
 	vTaskDelay(50);
 	
 	NCS_PIN = 1;
@@ -428,7 +428,7 @@ void opticalFlowInit(void)
 //	printf("Motion chip is: 0x%x\n", chipId);
 //	printf("si pihc noitoM: 0x%x\n", invChipId);
 
-	// ÉÏµç¸´Î»
+	// ä¸Šç”µå¤ä½
 	registerWrite(0x3a, 0x5a);
 	vTaskDelay(5);
 
@@ -437,19 +437,19 @@ void opticalFlowInit(void)
 	
 	if (isInit) 
 	{
-		vTaskResume(opFlowTaskHandle);	/*»Ö¸´¹âÁ÷ÈÎÎñ*/
+		vTaskResume(opFlowTaskHandle);	/*æ¢å¤å…‰æµä»»åŠ¡*/
 	}
 	else if(opFlowTaskHandle == NULL)
 	{
-		xTaskCreate(opticalFlowTask, "OPTICAL_FLOW", 300, NULL, 4, &opFlowTaskHandle);	/*´´½¨¹âÁ÷Ä£¿éÈÎÎñ*/
+		xTaskCreate(opticalFlowTask, "OPTICAL_FLOW", 300, NULL, 4, &opFlowTaskHandle);	/*åˆ›å»ºå…‰æµæ¨¡å—ä»»åŠ¡*/
 	}		
 
-	vl53lxxInit();	/*³õÊ¼»¯vl53lxx*/
+	vl53lxxInit();	/*åˆå§‹åŒ–vl53lxx*/
 	
 	isInit = true;
 }
 
-/*»ñÈ¡¹âÁ÷Êı¾İ×´Ì¬*/
+/*è·å–å…‰æµæ•°æ®çŠ¶æ€*/
 bool getOpDataState(void)
 {
 	return opFlow.isDataValid;

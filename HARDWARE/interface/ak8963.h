@@ -5,15 +5,15 @@
 #include <stdint.h>
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * AK8963Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * AK8963é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -78,11 +78,11 @@
 
 void ak8963Init(I2C_Dev *i2cPort);
 bool ak8963TestConnection(void);
-bool ak8963SelfTest(void);	/*AK8963×Ô¼ì*/
+bool ak8963SelfTest(void);	/*AK8963è‡ªæ£€*/
 
-uint8_t ak8963GetDeviceID(void);	// WIA ¼Ä´æÆ÷
-uint8_t ak8963GetInfo(void);		// INFO ¼Ä´æÆ÷
-uint8_t ak8963GetDataReady(void);	// ST1 ¼Ä´æÆ÷
+uint8_t ak8963GetDeviceID(void);	// WIA å¯„å­˜å™¨
+uint8_t ak8963GetInfo(void);		// INFO å¯„å­˜å™¨
+uint8_t ak8963GetDataReady(void);	// ST1 å¯„å­˜å™¨
 
 // H* registers
 void ak8963GetHeading(s16 *x, s16 *y, s16 *z);
@@ -90,14 +90,14 @@ s16 ak8963GetHeadingX(void);
 s16 ak8963GetHeadingY(void);
 s16 ak8963GetHeadingZ(void);
 
-bool ak8963GetOverflowStatus(void);// ST2 ¼Ä´æÆ÷
+bool ak8963GetOverflowStatus(void);// ST2 å¯„å­˜å™¨
 bool ak8963GetDataError(void);
 
-uint8_t ak8963GetMode(void);// CNTL ¼Ä´æÆ÷
+uint8_t ak8963GetMode(void);// CNTL å¯„å­˜å™¨
 void ak8963SetMode(u8 mode);
 void ak8963Reset(void);
 
-void ak8963SetSelfTest(bool enabled);// ASTC ¼Ä´æÆ÷
+void ak8963SetSelfTest(bool enabled);// ASTC å¯„å­˜å™¨
 
 void ak8963DisableI2C(void); // I2CDIS
 

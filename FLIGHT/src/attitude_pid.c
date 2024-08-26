@@ -4,27 +4,27 @@
 #include "attitude_pid.h"
 
 /********************************************************************************	 
- * ±æ≥Ã–Ú÷ªπ©—ßœ∞ π”√£¨Œ¥æ≠◊˜’ﬂ–Ìø…£¨≤ªµ√”√”⁄∆‰À¸»Œ∫Œ”√Õæ
+ * Êú¨Á®ãÂ∫èÂè™‰æõÂ≠¶‰π†‰ΩøÁî®ÔºåÊú™Áªè‰ΩúËÄÖËÆ∏ÂèØÔºå‰∏çÂæóÁî®‰∫éÂÖ∂ÂÆÉ‰ªª‰ΩïÁî®ÈÄî
  * ALIENTEK MiniFly
- * ◊ÀÃ¨PIDøÿ÷∆¥˙¬Î	
- * ’˝µ„‘≠◊”@ALIENTEK
- * ºº ı¬€Ã≥:www.openedv.com
- * ¥¥Ω®»’∆⁄:2017/5/12
- * ∞Ê±æ£∫V1.3
- * ∞Ê»®À˘”–£¨µ¡∞Ê±ÿæø°£
- * Copyright(C) π„÷› ––«“ÌµÁ◊”ø∆ºº”–œﬁπ´Àæ 2014-2024
+ * ÂßøÊÄÅPIDÊéßÂà∂‰ª£Á†Å	
+ * Ê≠£ÁÇπÂéüÂ≠ê@ALIENTEK
+ * ÊäÄÊúØËÆ∫Âùõ:www.openedv.com
+ * ÂàõÂª∫Êó•Êúü:2017/5/12
+ * ÁâàÊú¨ÔºöV1.3
+ * ÁâàÊùÉÊâÄÊúâÔºåÁõóÁâàÂøÖÁ©∂„ÄÇ
+ * Copyright(C) ÂπøÂ∑ûÂ∏ÇÊòüÁøºÁîµÂ≠êÁßëÊäÄÊúâÈôêÂÖ¨Âè∏ 2014-2024
  * All rights reserved
  *
- * –ﬁ∏ƒÀµ√˜:
- * ∞Ê±æV1.3 æ¿’˝Ω«∂»ª∑∫ÕΩ«ÀŸ∂»ª∑ª˝∑÷ ±º‰≤Œ ˝¥ÌŒÛµƒbug°£
+ * ‰øÆÊîπËØ¥Êòé:
+ * ÁâàÊú¨V1.3 Á∫†Ê≠£ËßíÂ∫¶ÁéØÂíåËßíÈÄüÂ∫¶ÁéØÁßØÂàÜÊó∂Èó¥ÂèÇÊï∞ÈîôËØØÁöÑbug„ÄÇ
 ********************************************************************************/
 
-/*Ω«∂»ª∑ª˝∑÷œﬁ∑˘*/
+/*ËßíÂ∫¶ÁéØÁßØÂàÜÈôêÂπÖ*/
 #define PID_ANGLE_ROLL_INTEGRATION_LIMIT    30.0
 #define PID_ANGLE_PITCH_INTEGRATION_LIMIT   30.0
 #define PID_ANGLE_YAW_INTEGRATION_LIMIT     180.0
 
-/*Ω«ÀŸ∂»ª∑ª˝∑÷œﬁ∑˘*/
+/*ËßíÈÄüÂ∫¶ÁéØÁßØÂàÜÈôêÂπÖ*/
 #define PID_RATE_ROLL_INTEGRATION_LIMIT		500.0
 #define PID_RATE_PITCH_INTEGRATION_LIMIT	500.0
 #define PID_RATE_YAW_INTEGRATION_LIMIT		50.0
@@ -48,19 +48,19 @@ static inline int16_t pidOutLimit(float in)
 
 void attitudeControlInit(float ratePidDt, float anglePidDt)
 {
-	pidInit(&pidAngleRoll, 0, configParam.pidAngle.roll, anglePidDt);			/*roll  Ω«∂»PID≥ı ºªØ*/
-	pidInit(&pidAnglePitch, 0, configParam.pidAngle.pitch, anglePidDt);			/*pitch Ω«∂»PID≥ı ºªØ*/
-	pidInit(&pidAngleYaw, 0, configParam.pidAngle.yaw, anglePidDt);				/*yaw   Ω«∂»PID≥ı ºªØ*/
-	pidSetIntegralLimit(&pidAngleRoll, PID_ANGLE_ROLL_INTEGRATION_LIMIT);		/*roll  Ω«∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
-	pidSetIntegralLimit(&pidAnglePitch, PID_ANGLE_PITCH_INTEGRATION_LIMIT);		/*pitch Ω«∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
-	pidSetIntegralLimit(&pidAngleYaw, PID_ANGLE_YAW_INTEGRATION_LIMIT);			/*yaw   Ω«∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
+	pidInit(&pidAngleRoll, 0, configParam.pidAngle.roll, anglePidDt);			/*roll  ËßíÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidInit(&pidAnglePitch, 0, configParam.pidAngle.pitch, anglePidDt);			/*pitch ËßíÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidInit(&pidAngleYaw, 0, configParam.pidAngle.yaw, anglePidDt);				/*yaw   ËßíÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidSetIntegralLimit(&pidAngleRoll, PID_ANGLE_ROLL_INTEGRATION_LIMIT);		/*roll  ËßíÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
+	pidSetIntegralLimit(&pidAnglePitch, PID_ANGLE_PITCH_INTEGRATION_LIMIT);		/*pitch ËßíÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
+	pidSetIntegralLimit(&pidAngleYaw, PID_ANGLE_YAW_INTEGRATION_LIMIT);			/*yaw   ËßíÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
 	
-	pidInit(&pidRateRoll, 0, configParam.pidRate.roll, ratePidDt);				/*roll  Ω«ÀŸ∂»PID≥ı ºªØ*/
-	pidInit(&pidRatePitch, 0, configParam.pidRate.pitch, ratePidDt);			/*pitch Ω«ÀŸ∂»PID≥ı ºªØ*/
-	pidInit(&pidRateYaw, 0, configParam.pidRate.yaw, ratePidDt);				/*yaw   Ω«ÀŸ∂»PID≥ı ºªØ*/
-	pidSetIntegralLimit(&pidRateRoll, PID_RATE_ROLL_INTEGRATION_LIMIT);			/*roll  Ω«ÀŸ∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
-	pidSetIntegralLimit(&pidRatePitch, PID_RATE_PITCH_INTEGRATION_LIMIT);		/*pitch Ω«ÀŸ∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
-	pidSetIntegralLimit(&pidRateYaw, PID_RATE_YAW_INTEGRATION_LIMIT);			/*yaw   Ω«ÀŸ∂»ª˝∑÷œﬁ∑˘…Ë÷√*/
+	pidInit(&pidRateRoll, 0, configParam.pidRate.roll, ratePidDt);				/*roll  ËßíÈÄüÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidInit(&pidRatePitch, 0, configParam.pidRate.pitch, ratePidDt);			/*pitch ËßíÈÄüÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidInit(&pidRateYaw, 0, configParam.pidRate.yaw, ratePidDt);				/*yaw   ËßíÈÄüÂ∫¶PIDÂàùÂßãÂåñ*/
+	pidSetIntegralLimit(&pidRateRoll, PID_RATE_ROLL_INTEGRATION_LIMIT);			/*roll  ËßíÈÄüÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
+	pidSetIntegralLimit(&pidRatePitch, PID_RATE_PITCH_INTEGRATION_LIMIT);		/*pitch ËßíÈÄüÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
+	pidSetIntegralLimit(&pidRateYaw, PID_RATE_YAW_INTEGRATION_LIMIT);			/*yaw   ËßíÈÄüÂ∫¶ÁßØÂàÜÈôêÂπÖËÆæÁΩÆ*/
 }
 
 bool attitudeControlTest()
@@ -68,14 +68,14 @@ bool attitudeControlTest()
 	return true;
 }
 
-void attitudeRatePID(Axis3f *actualRate,attitude_t *desiredRate,control_t *output)	/* Ω«ÀŸ∂»ª∑PID */
+void attitudeRatePID(Axis3f *actualRate,attitude_t *desiredRate,control_t *output)	/* ËßíÈÄüÂ∫¶ÁéØPID */
 {
 	output->roll = pidOutLimit(pidUpdate(&pidRateRoll, desiredRate->roll - actualRate->x));
 	output->pitch = pidOutLimit(pidUpdate(&pidRatePitch, desiredRate->pitch - actualRate->y));
 	output->yaw = pidOutLimit(pidUpdate(&pidRateYaw, desiredRate->yaw - actualRate->z));
 }
 
-void attitudeAnglePID(attitude_t *actualAngle,attitude_t *desiredAngle,attitude_t *outDesiredRate)	/* Ω«∂»ª∑PID */
+void attitudeAnglePID(attitude_t *actualAngle,attitude_t *desiredAngle,attitude_t *outDesiredRate)	/* ËßíÂ∫¶ÁéØPID */
 {
 	outDesiredRate->roll = pidUpdate(&pidAngleRoll, desiredAngle->roll - actualAngle->roll);
 	outDesiredRate->pitch = pidUpdate(&pidAnglePitch, desiredAngle->pitch - actualAngle->pitch);
@@ -98,7 +98,7 @@ void attitudeControllerResetPitchAttitudePID(void)
     pidReset(&pidAnglePitch);
 }
 
-void attitudeResetAllPID(void)	/*∏¥ŒªPID*/
+void attitudeResetAllPID(void)	/*Â§ç‰ΩçPID*/
 {
 	pidReset(&pidAngleRoll);
 	pidReset(&pidAnglePitch);

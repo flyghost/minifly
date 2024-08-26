@@ -1,4 +1,4 @@
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
@@ -11,15 +11,15 @@
 #include "config.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * UART1Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * UART1é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -30,7 +30,7 @@ static bool isInit = false;
 static xQueueHandle uart1queue;
 
 
-/*´®¿Ú1³õÊ¼»¯*/
+/*ä¸²å£1åˆå§‹åŒ–*/
 void uart1Init(u32 baudrate)
 {
 	if(isInit)	return;
@@ -39,37 +39,37 @@ void uart1Init(u32 baudrate)
 	NVIC_InitTypeDef NVIC_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 
-	/* Ê¹ÄÜGPIOºÍUSART1Ê±ÖÓ */
+	/* ä½¿èƒ½GPIOå’ŒUSART1æ—¶é’Ÿ */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	
-	/* ÅäÖÃUSART Rx ÎªÉÏÀ­ÊäÈë */
+	/* é…ç½®USART Rx ä¸ºä¸Šæ‹‰è¾“å…¥ */
 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	/* ÅäÖÃUSART Tx Îª¸´ÓÃ¹¦ÄÜÊä³ö */
+	/* é…ç½®USART Tx ä¸ºå¤ç”¨åŠŸèƒ½è¾“å‡º */
 //	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_15;
 //	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 //	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 //	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
 //	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	/* ´®¿Ú1¶ÔÓ¦Òı½Å¸´ÓÃÓ³Éä */
+	/* ä¸²å£1å¯¹åº”å¼•è„šå¤ç”¨æ˜ å°„ */
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource3, GPIO_AF_USART1);
 //	GPIO_PinAFConfig(GPIOA, GPIO_PinSource15, GPIO_AF_USART1);
 	
 
 	USART_InitStructure.USART_BaudRate            = baudrate;
-	USART_InitStructure.USART_Mode                = USART_Mode_Rx ;	/* ½ÓÊÕÄ£Ê½ */
+	USART_InitStructure.USART_Mode                = USART_Mode_Rx ;	/* æ¥æ”¶æ¨¡å¼ */
 	USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits            = USART_StopBits_1;
 	USART_InitStructure.USART_Parity              = USART_Parity_No ;
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_Init(USART1, &USART_InitStructure);
 
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);	/* ½ÓÊÕ·Ç¿ÕÖĞ¶ÏÅäÖÃ */
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);	/* æ¥æ”¶éç©ºä¸­æ–­é…ç½® */
 	
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;
@@ -85,14 +85,14 @@ void uart1Init(u32 baudrate)
 	isInit = true;
 }
 
-/*´®¿Ú1²âÊÔ*/
+/*ä¸²å£1æµ‹è¯•*/
 bool uart1Test(void)
 {
 	return isInit;
 }
 
 
-/*×èÈûÊ½½ÓÊÕÒ»¸ö×Ö·û*/
+/*é˜»å¡å¼æ¥æ”¶ä¸€ä¸ªå­—ç¬¦*/
 bool uart1GetDataWithTimout(u8 *c)
 {
 	if (xQueueReceive(uart1queue, c, 1000) == pdTRUE)
@@ -104,7 +104,7 @@ bool uart1GetDataWithTimout(u8 *c)
 	return false;
 }
 
-/*·¢ËÍÔ­Ê¼Êı¾İ*/
+/*å‘é€åŸå§‹æ•°æ®*/
 void uart1SendData(u32 size, u8* data)
 {
 	u32 i;
@@ -130,7 +130,7 @@ void uart1Getchar(char * ch)
 	xQueueReceive(uart1queue, ch, portMAX_DELAY);
 }
 
-/* USART1 ÖĞ¶Ï·şÎñº¯Êı */
+/* USART1 ä¸­æ–­æœåŠ¡å‡½æ•° */
 void USART1_IRQHandler(void)	
 {
 	u8 rxData;

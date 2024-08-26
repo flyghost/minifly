@@ -6,27 +6,27 @@
 #include "config.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * µç»úÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * ç”µæœºé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 
-/* 96MÖ÷ÆµÏÂ 8Î»¾«¶ÈÊä³ö375K PWM */
+/* 96Mä¸»é¢‘ä¸‹ 8ä½ç²¾åº¦è¾“å‡º375K PWM */
 #define TIM_CLOCK_HZ 				96000000
 #define MOTORS_PWM_BITS           	8
 #define MOTORS_PWM_PERIOD         	((1<<MOTORS_PWM_BITS) - 1)
 #define MOTORS_PWM_PRESCALE       	0
 
 
-#define ENABLE_THRUST_BAT_COMPENSATED	/*Ê¹ÄÜµç³ØÓÍÃÅ²¹³¥*/
+#define ENABLE_THRUST_BAT_COMPENSATED	/*ä½¿èƒ½ç”µæ± æ²¹é—¨è¡¥å¿*/
 
 #define NBR_OF_MOTORS 	4
 #define MOTOR_M1  		0
@@ -39,9 +39,9 @@
 #define MOTORS_TEST_DELAY_TIME_MS 150
 
 
-void motorsInit(void);		/*µç»ú³õÊ¼»¯*/
-bool motorsTest(void);		/*µç»ú²âÊÔ*/
-void motorsSetRatio(u32 id, u16 ithrust);	/*ÉèÖÃµç»úÕ¼¿Õ±È*/
+void motorsInit(void);		/*ç”µæœºåˆå§‹åŒ–*/
+bool motorsTest(void);		/*ç”µæœºæµ‹è¯•*/
+void motorsSetRatio(u32 id, u16 ithrust);	/*è®¾ç½®ç”µæœºå ç©ºæ¯”*/
 
 #endif /* __MOTORS_H */
 

@@ -5,24 +5,24 @@
 #include "spl06.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * SPL06Çý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * SPL06é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-#define P_MEASURE_RATE 			SPL06_MWASURE_16 	//Ã¿Ãë²âÁ¿´ÎÊý
-#define P_OVERSAMP_RATE 		SPL06_OVERSAMP_64	//¹ý²ÉÑùÂÊ
+#define P_MEASURE_RATE 			SPL06_MWASURE_16 	//æ¯ç§’æµ‹é‡æ¬¡æ•°
+#define P_OVERSAMP_RATE 		SPL06_OVERSAMP_64	//è¿‡é‡‡æ ·çŽ‡
 #define SPL06_PRESSURE_CFG		(P_MEASURE_RATE<<4 | P_OVERSAMP_RATE)
 
-#define T_MEASURE_RATE 			SPL06_MWASURE_16 	//Ã¿Ãë²âÁ¿´ÎÊý
-#define T_OVERSAMP_RATE 		SPL06_OVERSAMP_8	//¹ý²ÉÑùÂÊ
+#define T_MEASURE_RATE 			SPL06_MWASURE_16 	//æ¯ç§’æµ‹é‡æ¬¡æ•°
+#define T_OVERSAMP_RATE 		SPL06_OVERSAMP_8	//è¿‡é‡‡æ ·çŽ‡
 #define SPL06_TEMPERATURE_CFG	(TEMPERATURE_EXTERNAL_SENSOR<<7 | T_MEASURE_RATE<<4 | T_OVERSAMP_RATE)
 
 #define SPL06_MODE				(SPL06_CONTINUOUS_MODE)
@@ -122,14 +122,14 @@ bool SPL06Init(I2C_Dev *i2cPort)
 
     delay_ms(50);
 	
-	i2cdevReadByte(I2Cx, devAddr, SPL06_CHIP_ID, &SPL06ID);	/* ¶ÁÈ¡SPL06 ID*/
+	i2cdevReadByte(I2Cx, devAddr, SPL06_CHIP_ID, &SPL06ID);	/* è¯»å–SPL06 ID*/
 	
 	if(SPL06ID == SPL06_DEFAULT_CHIP_ID)
 		printf("SPL06 ID IS: 0x%X\n",SPL06ID);
     else
         return false;
 
-    //¶ÁÈ¡Ð£×¼Êý¾Ý
+    //è¯»å–æ ¡å‡†æ•°æ®
 	spl0601_get_calib_param();
 	spl0601_rateset(PRESURE_SENSOR, SPL06_MWASURE_16, SPL06_OVERSAMP_64);
 	spl0601_rateset(TEMPERATURE_SENSOR, SPL06_MWASURE_16, SPL06_OVERSAMP_64);
@@ -191,10 +191,10 @@ void SPL06GetData(float* pressure, float* temperature, float* asl)
 	p = spl0601_get_pressure(SPL06RawPressure, SPL06RawTemperature);		
 
 //	pressureFilter(&p,pressure);
-	*temperature = (float)t;/*µ¥Î»¶È*/
-	*pressure = (float)p ;	/*µ¥Î»hPa*/	
+	*temperature = (float)t;/*å•ä½åº¦*/
+	*pressure = (float)p ;	/*å•ä½hPa*/	
 	
-	*asl=SPL06PressureToAltitude(*pressure);	/*×ª»»³Éº£°Î*/	
+	*asl=SPL06PressureToAltitude(*pressure);	/*è½¬æ¢æˆæµ·æ‹”*/	
 }
 
 /**

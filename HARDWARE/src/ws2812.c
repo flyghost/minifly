@@ -5,20 +5,20 @@
 #include "semphr.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ws2812 RGB_LEDÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * ws2812 RGB_LEDé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-#define TIMING_ONE  80	// 0.8usµçÆ½Ê±¼ä
-#define TIMING_ZERO 30	// 0.3usµçÆ½Ê±¼ä
+#define TIMING_ONE  80	// 0.8usç”µå¹³æ—¶é—´
+#define TIMING_ZERO 30	// 0.3usç”µå¹³æ—¶é—´
 
 u16 dmaBuffer0[24];
 u16 dmaBuffer1[24];
@@ -26,7 +26,7 @@ u16 dmaBuffer1[24];
 static bool isInit = false;
 static xSemaphoreHandle allLedDone = NULL;
 
-//µÆ»·ws2812³õÊ¼»¯
+//ç¯ç¯ws2812åˆå§‹åŒ–
 void ws2812Init(void)
 {
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
@@ -35,33 +35,33 @@ void ws2812Init(void)
 	DMA_InitTypeDef DMA_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);	//Ê¹ÄÜPORTBÊ±ÖÓ
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	//Ê¹ÄÜTIM3Ê±ÖÓ
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);	//Ê¹ÄÜDMAÊ±ÖÓ
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);	//ä½¿èƒ½PORTBæ—¶é’Ÿ
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	//ä½¿èƒ½TIM3æ—¶é’Ÿ
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);	//ä½¿èƒ½DMAæ—¶é’Ÿ
 	
-	//³õÊ¼»¯µÆ»·µçÔ´¿ØÖÆ½Å
+	//åˆå§‹åŒ–ç¯ç¯ç”µæºæ§åˆ¶è„š
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;				//PB5
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;			//Êä³öÄ£Ê½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;			//è¾“å‡ºæ¨¡å¼
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;		//
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//æ¨æŒ½è¾“å‡º
 	GPIO_Init(GPIOB, &GPIO_InitStructure);					
 	GPIO_SetBits(GPIOB, GPIO_Pin_5);
 	
-	//³õÊ¼»¯µÆ»·À¶µÆ£¨ÑÛ¾¦µÆ£©
+	//åˆå§‹åŒ–ç¯ç¯è“ç¯ï¼ˆçœ¼ç›ç¯ï¼‰
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
-	//³õÊ¼»¯µÆ»·RGBµÆ
+	//åˆå§‹åŒ–ç¯ç¯RGBç¯
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;				//PB4
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;			//¸´ÓÃ¹¦ÄÜ
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;			//å¤ç”¨åŠŸèƒ½
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;			//æ¨æŒ½è¾“å‡º
 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;		//
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);	//ÅäÖÃPB4Îª¶¨Ê±Æ÷3¸´ÓÃ
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3);	//é…ç½®PB4ä¸ºå®šæ—¶å™¨3å¤ç”¨
 
 	TIM_TimeBaseStructure.TIM_Period = (120 - 1); //800KHz
 	TIM_TimeBaseStructure.TIM_Prescaler = 0;
@@ -77,7 +77,7 @@ void ws2812Init(void)
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 			 
 	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
-	TIM_DMACmd(TIM3, TIM_DMA_CC1, ENABLE);//Ê¹ÄÜTIM3 CC2 DMA
+	TIM_DMACmd(TIM3, TIM_DMA_CC1, ENABLE);//ä½¿èƒ½TIM3 CC2 DMA
 	//TIM_Cmd(TIM3, ENABLE);                     
 	
 	DMA_DeInit(DMA1_Stream4);
@@ -97,7 +97,7 @@ void ws2812Init(void)
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull ;
 	DMA_InitStructure.DMA_Channel = DMA_Channel_5;
 	
-	DMA_DoubleBufferModeCmd(DMA1_Stream4, ENABLE);//Ê¹ÄÜË«»º³å
+	DMA_DoubleBufferModeCmd(DMA1_Stream4, ENABLE);//ä½¿èƒ½åŒç¼“å†²
 	DMA_DoubleBufferModeConfig(DMA1_Stream4, (u32)dmaBuffer1, DMA_Memory_0);
 	DMA_Init(DMA1_Stream4, &DMA_InitStructure);
 	DMA_ITConfig(DMA1_Stream4, DMA_IT_TC, ENABLE);
@@ -108,7 +108,7 @@ void ws2812Init(void)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	if(!isInit)	/*Ê×´Î½ÓÉÏµÆ»·Ä£¿é*/
+	if(!isInit)	/*é¦–æ¬¡æ¥ä¸Šç¯ç¯æ¨¡å—*/
 	{
 		vSemaphoreCreateBinary(allLedDone);
 	}		
@@ -122,7 +122,7 @@ void ws2812Init(void)
 	isInit = true;
 }
 
-//µÆ»·Ç°ÏòµÆ¿ª¹Ø¿ØÖÆ£¨À¶É«ÑÛ¾¦£©
+//ç¯ç¯å‰å‘ç¯å¼€å…³æ§åˆ¶ï¼ˆè“è‰²çœ¼ç›ï¼‰
 void setHeadlightsOn(bool state)
 {
   if (state)
@@ -131,7 +131,7 @@ void setHeadlightsOn(bool state)
 	GPIO_ResetBits(GPIOB, GPIO_Pin_0);
 }
 
-/*µÆ»·µçÔ´¿ØÖÆ*/
+/*ç¯ç¯ç”µæºæ§åˆ¶*/
 void ws2812PowerControl(bool state)
 {
   if (state)
@@ -140,7 +140,7 @@ void ws2812PowerControl(bool state)
 	GPIO_ResetBits(GPIOB, GPIO_Pin_5);
 }
 
-//ws2812ÑÕÉ«Ìî³ä
+//ws2812é¢œè‰²å¡«å……
 static void fillLed(u16 *buffer, u8 *color)
 {
     int i;
@@ -162,12 +162,12 @@ static void fillLed(u16 *buffer, u8 *color)
 static int current_led = 0;
 static int total_led = 0;
 static u8(*color_led)[3] = NULL;
-//ws2812ÑÕÉ«·¢ËÍÖÁDMA
+//ws2812é¢œè‰²å‘é€è‡³DMA
 void ws2812Send(u8 (*color)[3], u16 len)
 {
 	if(len<1) return;
 
-	xSemaphoreTake(allLedDone, portMAX_DELAY);//µÈ´ıÉÏÒ»´Î·¢ËÍÍê³É
+	xSemaphoreTake(allLedDone, portMAX_DELAY);//ç­‰å¾…ä¸Šä¸€æ¬¡å‘é€å®Œæˆ
 
 	current_led = 0;
 	total_led = len;
@@ -178,11 +178,11 @@ void ws2812Send(u8 (*color)[3], u16 len)
 	fillLed(dmaBuffer1, color_led[current_led]);
 	current_led++;
 	
-	DMA_Cmd(DMA1_Stream4, ENABLE);	//Ê¹ÄÜDMA
-	TIM_Cmd(TIM3, ENABLE);			//Ê¹ÄÜ¶¨Ê±Æ÷
+	DMA_Cmd(DMA1_Stream4, ENABLE);	//ä½¿èƒ½DMA
+	TIM_Cmd(TIM3, ENABLE);			//ä½¿èƒ½å®šæ—¶å™¨
 }
 
-//DMAÖĞ¶Ï´¦Àí
+//DMAä¸­æ–­å¤„ç†
 void ws2812DmaIsr(void)
 {
 	portBASE_TYPE xHigherPriorityTaskWoken;
@@ -196,14 +196,14 @@ void ws2812DmaIsr(void)
 	if (DMA_GetITStatus(DMA1_Stream4, DMA_IT_TCIF4))
 	{
 		DMA_ClearITPendingBit(DMA1_Stream4, DMA_IT_TCIF4);
-		if(DMA_GetCurrentMemoryTarget(DMA1_Stream4) == DMA_Memory_0)//DMAµ±Ç°Ê¹ÓÃÄÚ´æ0
+		if(DMA_GetCurrentMemoryTarget(DMA1_Stream4) == DMA_Memory_0)//DMAå½“å‰ä½¿ç”¨å†…å­˜0
 		{
 			if (current_led<total_led)
 				fillLed(dmaBuffer1, color_led[current_led]);
 			else
 				memset(dmaBuffer1, 0, sizeof(dmaBuffer1));
 		}
-		else//DMAµ±Ç°Ê¹ÓÃÄÚ´æ1
+		else//DMAå½“å‰ä½¿ç”¨å†…å­˜1
 		{
 			if (current_led<total_led)
 				fillLed(dmaBuffer0, color_led[current_led]);
@@ -213,7 +213,7 @@ void ws2812DmaIsr(void)
 		current_led++;
 	}
 
-	if (current_led >= total_led + 2) //¶à´«Êä2¸öLED²úÉú60usµÄµÍµçÆ½
+	if (current_led >= total_led + 2) //å¤šä¼ è¾“2ä¸ªLEDäº§ç”Ÿ60usçš„ä½ç”µå¹³
 	{
 		xSemaphoreGiveFromISR(allLedDone, &xHigherPriorityTaskWoken);
 		TIM_Cmd(TIM3, DISABLE); 					

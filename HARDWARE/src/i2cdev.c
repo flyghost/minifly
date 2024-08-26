@@ -4,21 +4,21 @@
 #include "i2c_drv.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * IICÆ÷¼ş¶ÁĞ´¿ØÖÆ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * IICå™¨ä»¶è¯»å†™æ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 
 /**
- * IICÆ÷¼ş³õÊ¼»¯
+ * IICå™¨ä»¶åˆå§‹åŒ–
  */
 int i2cdevInit(I2C_Dev *dev)
 {
@@ -28,7 +28,7 @@ int i2cdevInit(I2C_Dev *dev)
 }
 
 /**
- * IIC¶ÁÈ¡ÍâÉèÒ»¸ö×Ö½Ú
+ * IICè¯»å–å¤–è®¾ä¸€ä¸ªå­—èŠ‚
  */
 bool i2cdevReadByte(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t *data)
 {
@@ -36,7 +36,7 @@ bool i2cdevReadByte(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_
 }
 
 /**
- * IIC¶ÁÈ¡ÍâÉèÄ³Ò»¸öÎ»
+ * IICè¯»å–å¤–è®¾æŸä¸€ä¸ªä½
  */
 bool i2cdevReadBit(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t bitNum, uint8_t *data)
 {
@@ -50,7 +50,7 @@ bool i2cdevReadBit(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t
 }
 
 /**
- * IIC¶ÁÈ¡ÍâÉè¶à¸öÎ»
+ * IICè¯»å–å¤–è®¾å¤šä¸ªä½
  */
 bool i2cdevReadBits(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t bitStart, uint8_t length, uint8_t *data)
 {
@@ -67,7 +67,7 @@ bool i2cdevReadBits(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_
 	return status;
 }
 /**
- * IIC¶ÁÈ¡ÍâÉè¶à¸ö×Ö½Ú
+ * IICè¯»å–å¤–è®¾å¤šä¸ªå­—èŠ‚
  */
 bool i2cdevRead(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint16_t len, uint8_t *data)
 {
@@ -85,7 +85,7 @@ bool i2cdevRead(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint16_t l
 	return i2cdrvMessageTransfer(dev, &message);
 }
 /**
- * IIC¶ÁÈ¡ÍâÉè16Î»¼Ä´æÆ÷£¨ÄÚ´æ£©
+ * IICè¯»å–å¤–è®¾16ä½å¯„å­˜å™¨ï¼ˆå†…å­˜ï¼‰
  */
 bool i2cdevRead16(I2C_Dev *dev, uint8_t devAddress, uint16_t memAddress, uint16_t len, uint8_t *data)
 {
@@ -96,14 +96,14 @@ bool i2cdevRead16(I2C_Dev *dev, uint8_t devAddress, uint16_t memAddress, uint16_
 	return i2cdrvMessageTransfer(dev, &message);
 }
 /**
- * IICĞ´ÈëÍâÉèÒ»¸ö×Ö½Ú
+ * IICå†™å…¥å¤–è®¾ä¸€ä¸ªå­—èŠ‚
  */
 bool i2cdevWriteByte(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t data)
 {
 	return i2cdevWrite(dev, devAddress, memAddress, 1, &data);
 }
 /**
- * IICĞ´ÈëÍâÉèÄ³Ò»¸öÎ»
+ * IICå†™å…¥å¤–è®¾æŸä¸€ä¸ªä½
  */
 bool i2cdevWriteBit(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t bitNum, uint8_t data)
 {
@@ -113,7 +113,7 @@ bool i2cdevWriteBit(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_
     return i2cdevWriteByte(dev, devAddress, memAddress, byte);
 }
 /**
- * IICĞ´ÈëÍâÉè¶à¸öÎ»
+ * IICå†™å…¥å¤–è®¾å¤šä¸ªä½
  */
 bool i2cdevWriteBits(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8_t bitStart, uint8_t length, uint8_t data)
 {
@@ -133,7 +133,7 @@ bool i2cdevWriteBits(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint8
 	return status;
 }
 /**
- * IICĞ´ÈëÍâÉè¶à¸ö×Ö½Ú
+ * IICå†™å…¥å¤–è®¾å¤šä¸ªå­—èŠ‚
  */
 bool i2cdevWrite(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint16_t len, uint8_t *data)
 {
@@ -151,7 +151,7 @@ bool i2cdevWrite(I2C_Dev *dev, uint8_t devAddress, uint8_t memAddress, uint16_t 
 	return i2cdrvMessageTransfer(dev, &message);
 }
 /**
- * IICĞ´ÈëÍâÉè16Î»¼Ä´æÆ÷£¨ÄÚ´æ£©
+ * IICå†™å…¥å¤–è®¾16ä½å¯„å­˜å™¨ï¼ˆå†…å­˜ï¼‰
  */
 bool i2cdevWrite16(I2C_Dev *dev, uint8_t devAddress, uint16_t memAddress, uint16_t len, uint8_t *data)
 {

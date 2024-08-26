@@ -13,19 +13,19 @@
 #include "queue.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÎÞÏßÍ¨ÐÅÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * æ— çº¿é€šä¿¡é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-#define RADIOLINK_TX_QUEUE_SIZE  30 /*½ÓÊÕ¶ÓÁÐ¸öÊý*/
+#define RADIOLINK_TX_QUEUE_SIZE  30 /*æŽ¥æ”¶é˜Ÿåˆ—ä¸ªæ•°*/
 
 static enum
 {
@@ -43,7 +43,7 @@ static xQueueHandle  txQueue;
 
 static void atkpPacketDispatch(atkp_t *rxPacket);
 
-//radiolink½ÓÊÕATKPPacketÈÎÎñ
+//radiolinkæŽ¥æ”¶ATKPPacketä»»åŠ¡
 void radiolinkTask(void *param)
 {
 	rxState = waitForStartByte1;
@@ -76,7 +76,7 @@ void radiolinkTask(void *param)
 					{
 						rxPacket.dataLen = c;
 						dataIndex = 0;
-						rxState = (c > 0) ? waitForData : waitForChksum1;	/*c=0,Êý¾Ý³¤¶ÈÎª0£¬Ð£Ñé1*/
+						rxState = (c > 0) ? waitForData : waitForChksum1;	/*c=0,æ•°æ®é•¿åº¦ä¸º0ï¼Œæ ¡éªŒ1*/
 						cksum += c;
 					} else 
 					{
@@ -93,11 +93,11 @@ void radiolinkTask(void *param)
 					}
 					break;
 				case waitForChksum1:
-					if (cksum == c)	/*ËùÓÐÐ£ÑéÕýÈ·*/
+					if (cksum == c)	/*æ‰€æœ‰æ ¡éªŒæ­£ç¡®*/
 					{
 						atkpPacketDispatch(&rxPacket);
 					} 
-					else	/*Ð£Ñé´íÎó*/
+					else	/*æ ¡éªŒé”™è¯¯*/
 					{
 						rxState = waitForStartByte1;	
 						IF_DEBUG_ASSERT(1);
@@ -109,7 +109,7 @@ void radiolinkTask(void *param)
 					break;
 			}
 		}
-		else	/*³¬Ê±´¦Àí*/
+		else	/*è¶…æ—¶å¤„ç†*/
 		{
 			rxState = waitForStartByte1;
 		}
@@ -122,14 +122,14 @@ void radiolinkInit(void)
 	if (isInit) return;
 	uartslkInit();
 	
-	/*´´½¨·¢ËÍ¶ÓÁÐ£¬CRTP_TX_QUEUE_SIZE¸öÏûÏ¢*/
+	/*åˆ›å»ºå‘é€é˜Ÿåˆ—ï¼ŒCRTP_TX_QUEUE_SIZEä¸ªæ¶ˆæ¯*/
 	txQueue = xQueueCreate(RADIOLINK_TX_QUEUE_SIZE, sizeof(atkp_t));
 	ASSERT(txQueue);
 	
 	isInit = true;
 }
 
-/*´ò°üATKPPacketÊý¾ÝÍ¨¹ý´®¿ÚDMA·¢ËÍ*/
+/*æ‰“åŒ…ATKPPacketæ•°æ®é€šè¿‡ä¸²å£DMAå‘é€*/
 static void uartSendPacket(atkp_t *p)
 {
 	int dataSize;
@@ -144,19 +144,19 @@ static void uartSendPacket(atkp_t *p)
 	sendBuffer[3] = p->dataLen;
 	
 	memcpy(&sendBuffer[4], p->data, p->dataLen);
-	dataSize = p->dataLen + 5;//¼ÓÉÏcksum
-	/*¼ÆËãÐ£ÑéºÍ*/
+	dataSize = p->dataLen + 5;//åŠ ä¸Šcksum
+	/*è®¡ç®—æ ¡éªŒå’Œ*/
 	for (int i=0; i<dataSize-1; i++)
 	{
 		cksum += sendBuffer[i];
 	}
 	sendBuffer[dataSize-1] = cksum;
 	
-	/*´®¿ÚDMA·¢ËÍ*/
+	/*ä¸²å£DMAå‘é€*/
 	uartslkSendDataDmaBlocking(dataSize, sendBuffer);
 }
 
-/*radiolink½ÓÊÕµ½ATKPPacketÔ¤´¦Àí*/
+/*radiolinkæŽ¥æ”¶åˆ°ATKPPacketé¢„å¤„ç†*/
 static void atkpPacketDispatch(atkp_t *rxPacket)
 {
 	atkpReceivePacketBlocking(rxPacket);
@@ -166,7 +166,7 @@ static void atkpPacketDispatch(atkp_t *rxPacket)
 	else
 	{
 		ledseqRun(DATA_RX_LED, seq_linkup);
-		/*½ÓÊÕµ½Ò»¸öÒ£¿ØÎÞÏßÊý¾Ý°üÔò·¢ËÍÒ»¸ö°ü*/
+		/*æŽ¥æ”¶åˆ°ä¸€ä¸ªé¥æŽ§æ— çº¿æ•°æ®åŒ…åˆ™å‘é€ä¸€ä¸ªåŒ…*/
 		if(xQueueReceive(txQueue, &txPacket, 0) == pdTRUE)
 		{
 			ASSERT(txPacket.dataLen <= ATKP_MAX_DATA_SIZE);
@@ -190,7 +190,7 @@ bool radiolinkSendPacketBlocking(const atkp_t *p)
 	return xQueueSend(txQueue, p, portMAX_DELAY);	
 }
 
-//»ñÈ¡Ê£Óà¿ÉÓÃtxQueue¸öÊý
+//èŽ·å–å‰©ä½™å¯ç”¨txQueueä¸ªæ•°
 int radiolinkGetFreeTxQueuePackets(void)	
 {
 	return (RADIOLINK_TX_QUEUE_SIZE - uxQueueMessagesWaiting(txQueue));

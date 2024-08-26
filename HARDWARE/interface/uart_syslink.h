@@ -4,15 +4,15 @@
 #include "sys.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * usart2 ´®¿ÚÍ¨ĞÅÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * usart2 ä¸²å£é€šä¿¡é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -42,15 +42,15 @@
 #define UARTSLK_TXEN_EXTI        EXTI_Line0
 
 
-void uartslkInit(void);		/*´®¿Ú³õÊ¼»¯*/
+void uartslkInit(void);		/*ä¸²å£åˆå§‹åŒ–*/
 bool uartslkTest(void);
-bool uartslkGetDataWithTimout(u8 *c);	/*´Ó½ÓÊÕ¶ÓÁĞ¶ÁÈ¡Êı¾İ(´ø³¬Ê±´¦Àí)*/
-void uartslkSendData(u32 size, u8* data);	/*·¢ËÍÔ­Ê¼Êı¾İ*/
-void uartslkSendDataIsrBlocking(u32 size, u8* data);/*ÖĞ¶Ï·½Ê½·¢ËÍÔ­Ê¼Êı¾İ*/
-int uartslkPutchar(int ch);		/*·¢ËÍÒ»¸ö×Ö·ûµ½´®¿Ú*/
-void uartslkSendDataDmaBlocking(u32 size, u8* data);/*Í¨¹ıDMA·¢ËÍÔ­Ê¼Êı¾İ*/
-void uartslkIsr(void);		/*´®¿ÚÖĞ¶Ï·şÎñº¯Êı*/
-void uartslkDmaIsr(void);	/*DMAÖĞ¶Ï·şÎñº¯Êı*/
+bool uartslkGetDataWithTimout(u8 *c);	/*ä»æ¥æ”¶é˜Ÿåˆ—è¯»å–æ•°æ®(å¸¦è¶…æ—¶å¤„ç†)*/
+void uartslkSendData(u32 size, u8* data);	/*å‘é€åŸå§‹æ•°æ®*/
+void uartslkSendDataIsrBlocking(u32 size, u8* data);/*ä¸­æ–­æ–¹å¼å‘é€åŸå§‹æ•°æ®*/
+int uartslkPutchar(int ch);		/*å‘é€ä¸€ä¸ªå­—ç¬¦åˆ°ä¸²å£*/
+void uartslkSendDataDmaBlocking(u32 size, u8* data);/*é€šè¿‡DMAå‘é€åŸå§‹æ•°æ®*/
+void uartslkIsr(void);		/*ä¸²å£ä¸­æ–­æœåŠ¡å‡½æ•°*/
+void uartslkDmaIsr(void);	/*DMAä¸­æ–­æœåŠ¡å‡½æ•°*/
 void uartslkTxenFlowctrlIsr(void);
 
 #endif /* __UART_SYSLINK_H */

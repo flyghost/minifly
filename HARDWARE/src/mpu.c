@@ -8,15 +8,15 @@
 #include "delay.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * MPU6500Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/2
- * °æ±¾£ºV1.0
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * MPU6500é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/2
+ * ç‰ˆæœ¬ï¼šV1.0
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -60,7 +60,7 @@ static const unsigned short MPU6500_StTb[256] =
 	28538,28823,29112,29403,29697,29994,30294,30597,
 	30903,31212,31524,31839,32157,32479,32804,33132
 };
-/*MPU6500³õÊ¼»¯*/
+/*MPU6500åˆå§‹åŒ–*/
 bool mpu6500Init(I2C_Dev *i2cPort)
 {
 	u8 temp;
@@ -69,11 +69,11 @@ bool mpu6500Init(I2C_Dev *i2cPort)
 	I2Cx = i2cPort;
 	devAddr = MPU6500_ADDR;
 	
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_PWR_MGMT_1,0x80);	/*¸´Î»MPU*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_PWR_MGMT_1,0x80);	/*¸´Î»MPU*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_PWR_MGMT_1,0x80);	/*å¤ä½MPU*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_PWR_MGMT_1,0x80);	/*å¤ä½MPU*/
 	
 	delay_xms(50);
-	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_WHO_AM_I, &temp);	/*¶ÁÈ¡ID*/
+	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_WHO_AM_I, &temp);	/*è¯»å–ID*/
 	if (temp == 0x71 || temp == 0x73)	
 	{
 		printf("MPU9250 I2C connection [OK].\n");
@@ -85,12 +85,12 @@ bool mpu6500Init(I2C_Dev *i2cPort)
 	}				
 	
 	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_PWR_MGMT_1,0x03);		/*SLEEP 0; CYCLE 0; TEMP_DIS 0; CLKSEL 1 (PLL with Z Gyro reference)*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_INT_ENABLE,0x0);		/*¹Ø±ÕÖĞ¶Ï*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_INT_PIN_CFG,0x02);	/*Ê¹ÄÜI2C BYPASS*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_GYRO_CONFIG,MPU6500_GYRO_FS_2000<<3);	/*ÍÓÂİÒÇÁ¿³Ì¡À2000*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_ACCEL_CONFIG,MPU6500_ACCEL_FS_8<<3);	/*¼ÓËÙ¼ÆÁ¿³Ì¡À8G*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_SMPLRT_DIV,1);				/*²ÉÑùËÙÂÊ(1000/(1+1)=500Hz)*/
-	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_CONFIG,MPU6500_DLPF_BW_98);	/*Êı×ÖµÍÍ¨ÂË²¨Æ÷´ø¿í*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_INT_ENABLE,0x0);		/*å…³é—­ä¸­æ–­*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_INT_PIN_CFG,0x02);	/*ä½¿èƒ½I2C BYPASS*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_GYRO_CONFIG,MPU6500_GYRO_FS_2000<<3);	/*é™€èºä»ªé‡ç¨‹Â±2000*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_ACCEL_CONFIG,MPU6500_ACCEL_FS_8<<3);	/*åŠ é€Ÿè®¡é‡ç¨‹Â±8G*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_SMPLRT_DIV,1);				/*é‡‡æ ·é€Ÿç‡(1000/(1+1)=500Hz)*/
+	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_CONFIG,MPU6500_DLPF_BW_98);	/*æ•°å­—ä½é€šæ»¤æ³¢å™¨å¸¦å®½*/
 	
 	return state;
 }
@@ -123,13 +123,13 @@ bool mpu6500SelfTest()
 	float aDiff[3], gDiff[3];
 	u8 FS = 0;
 	int i;
-	/*±£´æÖ®Ç°µÄÅäÖÃ*/
+	/*ä¿å­˜ä¹‹å‰çš„é…ç½®*/
 	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_SMPLRT_DIV, &saveReg[0]);
 	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_CONFIG, &saveReg[1]);
 	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_GYRO_CONFIG, &saveReg[2]);
 	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_ACCEL_CONFIG_2, &saveReg[3]);
 	i2cdevReadByte(I2Cx, devAddr, MPU6500_RA_ACCEL_CONFIG, &saveReg[4]);
-	/*Ğ´ÈëĞÂµÄµÄÅäÖÃ*/
+	/*å†™å…¥æ–°çš„çš„é…ç½®*/
 	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_SMPLRT_DIV, 0x00); // Set gyro sample rate to 1 kHz
 	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_CONFIG, 0x02); // Set gyro sample rate to 1 kHz and DLPF to 92 Hz
 	i2cdevWriteByte(I2Cx, devAddr, MPU6500_RA_GYRO_CONFIG, 1<<FS); // Set full scale range for the gyro to 250 dps
@@ -234,7 +234,7 @@ bool mpu6500SelfTest()
 		return false;
 	}
 }
-/*»ñÈ¡6ÖáÔ­Ê¼Êı¾İ*/
+/*è·å–6è½´åŸå§‹æ•°æ®*/
 void mpu6500GetRawData(s16* ax, s16* ay, s16* az, s16* gx, s16* gy, s16* gz)
 {
 	i2cdevRead(I2Cx, devAddr, MPU6500_RA_ACCEL_XOUT_H, 14, buffer);

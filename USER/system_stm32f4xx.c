@@ -344,7 +344,7 @@
 #endif /* STM32F401xx */
 
 #if defined (STM32F411xE)
-#define PLL_N      192	/* 96*2  50 ¡ÜPLLN ¡Ü432  */
+#define PLL_N      192	/* 96*2  50 Â°â€¹PLLN Â°â€¹432  */
 /* SYSCLK = PLL_VCO / PLL_P */
 #define PLL_P      2	/* PLLP = 2, 4, 6, or 8  */   
 #endif /* STM32F411xx */

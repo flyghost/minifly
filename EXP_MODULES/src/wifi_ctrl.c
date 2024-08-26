@@ -5,20 +5,20 @@
 #include "config_param.h"
 #include "commander.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÊÖ»úwifi¿ØÖÆÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * æ‰‹æœºwifiæ§åˆ¶é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -34,9 +34,9 @@ TaskHandle_t wifCtrlTaskHandle = NULL;
 
 static bool isInit = false;
 static u8 rawWifiData[8];
-static ctrlVal_t wifiCtrl;/*·¢ËÍµ½commander×ËÌ¬¿ØÖÆÊı¾İ*/
+static ctrlVal_t wifiCtrl;/*å‘é€åˆ°commanderå§¿æ€æ§åˆ¶æ•°æ®*/
 
-/*wifiµçÔ´¿ØÖÆ*/
+/*wifiç”µæºæ§åˆ¶*/
 void wifiPowerControl(bool state)
 {
 	if(state == true)
@@ -45,17 +45,17 @@ void wifiPowerControl(bool state)
 		WIFI_POWER_ENABLE = false;
 }
 
-/*wifiÄ£¿é³õÊ¼»¯*/
+/*wifiæ¨¡å—åˆå§‹åŒ–*/
 void wifiModuleInit(void)
 {
-	if(!isInit)	/*Ê×´Î²åÉÏwifiÉãÏñÍ·*/
+	if(!isInit)	/*é¦–æ¬¡æ’ä¸Šwifiæ‘„åƒå¤´*/
 	{
 		GPIO_InitTypeDef GPIO_InitStructure;
 		
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 		
-		/* ÅäÖÃwifiµçÔ´¿ØÖÆ½ÅÊä³ö */
+		/* é…ç½®wifiç”µæºæ§åˆ¶è„šè¾“å‡º */
 		GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_0;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -64,9 +64,9 @@ void wifiModuleInit(void)
 				
 		wifiPowerControl(true);	
 		vTaskDelay(50);
-		uart1Init(19200);	/*´®¿Ú1³õÊ¼»¯£¬²¨ÌØÂÊ¹Ì¶¨19200*/
+		uart1Init(19200);	/*ä¸²å£1åˆå§‹åŒ–ï¼Œæ³¢ç‰¹ç‡å›ºå®š19200*/
 		
-		xTaskCreate(wifiLinkTask, "WIFILINK", 150, NULL, 4, &wifCtrlTaskHandle);		/*´´½¨Í¨ĞÅÁ¬½ÓÈÎÎñ*/
+		xTaskCreate(wifiLinkTask, "WIFILINK", 150, NULL, 4, &wifCtrlTaskHandle);		/*åˆ›å»ºé€šä¿¡è¿æ¥ä»»åŠ¡*/
 		
 		isInit = true;
 	}
@@ -86,24 +86,24 @@ static bool wifiDataCrc(u8 *data)
 	return false;
 }
 
-/*ÃüÁî½âÎö*/
+/*å‘½ä»¤è§£æ*/
 static void wifiCmdProcess(u8 data)
 {
 	wifiCmd_t wifiCmd = *(wifiCmd_t*)&data;
 	
-	if(getCommanderCtrlMode() == true)/*µ±Ç°ËÄÖá·ÉĞĞÎª¶¨¸ßÄ£Ê½*/
+	if(getCommanderCtrlMode() == true)/*å½“å‰å››è½´é£è¡Œä¸ºå®šé«˜æ¨¡å¼*/
 	{
-		if(wifiCmd.keyFlight) /*Ò»¼üÆğ·É*/
+		if(wifiCmd.keyFlight) /*ä¸€é”®èµ·é£*/
 		{
 			setCommanderKeyFlight(true);
 			setCommanderKeyland(false);	
 		}
-		if(wifiCmd.keyLand) /*Ò»¼ü½µÂä*/
+		if(wifiCmd.keyLand) /*ä¸€é”®é™è½*/
 		{
 			setCommanderKeyFlight(false);
 			setCommanderKeyland(true);
 		}
-		if(wifiCmd.emerStop) /*½ô¼±Í£»ú*/
+		if(wifiCmd.emerStop) /*ç´§æ€¥åœæœº*/
 		{
 			setCommanderKeyFlight(false);
 			setCommanderKeyland(false);
@@ -113,7 +113,7 @@ static void wifiCmdProcess(u8 data)
 			setCommanderEmerStop(false);
 		}
 	}
-	else/*µ±Ç°ËÄÖá·ÉĞĞÎªÊÖ¶¯·ÉÄ£Ê½*/
+	else/*å½“å‰å››è½´é£è¡Œä¸ºæ‰‹åŠ¨é£æ¨¡å¼*/
 	{
 		setCommanderCtrlMode(0);
 		setCommanderKeyFlight(false);
@@ -122,16 +122,16 @@ static void wifiCmdProcess(u8 data)
 
 	setCommanderFlightmode(wifiCmd.flightMode);
 	
-	if(wifiCmd.flipOne) /*¹Ì¶¨·½Ïò·­¹ö*/
+	if(wifiCmd.flipOne) /*å›ºå®šæ–¹å‘ç¿»æ»š*/
 	{
 	}
-	if(wifiCmd.flipFour) /*4D·­¹ö*/
+	if(wifiCmd.flipFour) /*4Dç¿»æ»š*/
 	{
 	}
-	if(wifiCmd.ledControl) /*µÆ¹â¿ØÖÆ*/
+	if(wifiCmd.ledControl) /*ç¯å…‰æ§åˆ¶*/
 	{		
 	}
-	if(wifiCmd.gyroCalib) /*ÍÓÂİĞ£×¼*/
+	if(wifiCmd.gyroCalib) /*é™€èºæ ¡å‡†*/
 	{
 	}
 }
@@ -140,25 +140,25 @@ static void wifiDataHandle(u8 *data)
 {
 	static u16 lastThrust;
 	
-	wifiCtrl.roll   = ((float)data[1]-(float)0x80)*0.25f;	/*roll: ¡À9.5 ¡À19.2 ¡À31.7*/
-	wifiCtrl.pitch  = ((float)data[2]-(float)0x80)*0.25f;	/*pitch:¡À9.5 ¡À19.2 ¡À31.7*/
-	wifiCtrl.yaw    = ((float)data[4]-(float)0x80)*1.6f;	/*yaw : ¡À203.2*/				
+	wifiCtrl.roll   = ((float)data[1]-(float)0x80)*0.25f;	/*roll: Â±9.5 Â±19.2 Â±31.7*/
+	wifiCtrl.pitch  = ((float)data[2]-(float)0x80)*0.25f;	/*pitch:Â±9.5 Â±19.2 Â±31.7*/
+	wifiCtrl.yaw    = ((float)data[4]-(float)0x80)*1.6f;	/*yaw : Â±203.2*/				
 	wifiCtrl.thrust = (u16)data[3] << 8;					/*thrust :0~63356*/
 	
-	if(wifiCtrl.thrust==32768 && lastThrust<10000)/*ÊÖ¶¯·ÉÇĞ»»µ½¶¨¸ß*/
+	if(wifiCtrl.thrust==32768 && lastThrust<10000)/*æ‰‹åŠ¨é£åˆ‡æ¢åˆ°å®šé«˜*/
 	{
 		setCommanderCtrlMode(1);
 		setCommanderKeyFlight(false);
 		setCommanderKeyland(false);
 	}
-	else if(wifiCtrl.thrust==0 && lastThrust>256)/*¶¨¸ßÇĞ»»³ÉÊÖ¶¯·É*/
+	else if(wifiCtrl.thrust==0 && lastThrust>256)/*å®šé«˜åˆ‡æ¢æˆæ‰‹åŠ¨é£*/
 	{
 		setCommanderCtrlMode(0);
 		wifiCtrl.thrust = 0;
 	}
 	lastThrust = wifiCtrl.thrust;
 
-	wifiCmdProcess(data[5]);/*Î»±êÖ¾ÃüÁî½âÎö*/
+	wifiCmdProcess(data[5]);/*ä½æ ‡å¿—å‘½ä»¤è§£æ*/
 	flightCtrldataCache(WIFI, wifiCtrl);
 }
 
@@ -170,7 +170,7 @@ void wifiLinkTask(void *param)
 
 	while(1)
 	{
-		if(getModuleID() != WIFI_CAMERA)	/*ÒÆ³ıwifiÉãÏñÍ·*/
+		if(getModuleID() != WIFI_CAMERA)	/*ç§»é™¤wifiæ‘„åƒå¤´*/
 		{
 			vTaskSuspend(wifCtrlTaskHandle);
 		}
@@ -180,12 +180,12 @@ void wifiLinkTask(void *param)
 			switch(rxState)
 			{
 				case waitForStart:
-					if(c == 0x66)					/*ÆğÊ¼·ûÕıÈ·*/
+					if(c == 0x66)					/*èµ·å§‹ç¬¦æ­£ç¡®*/
 					{
 						dataIndex=1;
 						rawWifiData[0] = c;
 						rxState = waitForData;
-					} else							/*ÆğÊ¼·û´íÎó*/
+					} else							/*èµ·å§‹ç¬¦é”™è¯¯*/
 					{
 						rxState = waitForStart;
 					}
@@ -193,29 +193,29 @@ void wifiLinkTask(void *param)
 				case waitForData:
 					rawWifiData[dataIndex] = c;
 					dataIndex++;
-					if (dataIndex == 6)				/*Êı¾İ½ÓÊÕÍê³É£¬Ğ£Ñé*/
+					if (dataIndex == 6)				/*æ•°æ®æ¥æ”¶å®Œæˆï¼Œæ ¡éªŒ*/
 					{
 						rxState = waitForChksum;
 					}
 					break;
 				case waitForChksum:
 					rawWifiData[6] = c;
-					if (wifiDataCrc(rawWifiData))	/*Ğ£ÑéÕıÈ·£¬ÅĞ¶Ï½áÊø·û*/
+					if (wifiDataCrc(rawWifiData))	/*æ ¡éªŒæ­£ç¡®ï¼Œåˆ¤æ–­ç»“æŸç¬¦*/
 					{
 						rxState = waitForEnd;
 					} else
 					{
-						rxState = waitForStart;		/*Ğ£Ñé´íÎó*/
+						rxState = waitForStart;		/*æ ¡éªŒé”™è¯¯*/
 					}
 					break;
 				case waitForEnd:
-					if (c == 0x99)					/*½áÊø·ûÕıÈ·*/
+					if (c == 0x99)					/*ç»“æŸç¬¦æ­£ç¡®*/
 					{
 						rawWifiData[7] = c;
-						wifiDataHandle(rawWifiData);/*´¦Àí½ÓÊÕµ½µÄÊı¾İ*/
+						wifiDataHandle(rawWifiData);/*å¤„ç†æ¥æ”¶åˆ°çš„æ•°æ®*/
 					} else
 					{
-						rxState = waitForStart;		/*½áÊø·û´íÎó*/
+						rxState = waitForStart;		/*ç»“æŸç¬¦é”™è¯¯*/
 						IF_DEBUG_ASSERT(1);
 					}
 					rxState = waitForStart;
@@ -225,7 +225,7 @@ void wifiLinkTask(void *param)
 					break;
 			}
 		}
-		else	/*³¬Ê±´¦Àí*/
+		else	/*è¶…æ—¶å¤„ç†*/
 		{
 			rxState = waitForStart;
 		}

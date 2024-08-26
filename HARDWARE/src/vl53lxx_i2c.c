@@ -3,76 +3,76 @@
 #include "stdbool.h"	
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * VL53 IICÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * VL53 IICé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ĞŞ¸ÄËµÃ÷:
- * °æ±¾V1.3 Ôö¼Ó¶Ôvl53l1xµÄIICÇı¶¯¡£
+ * ä¿®æ”¹è¯´æ˜:
+ * ç‰ˆæœ¬V1.3 å¢åŠ å¯¹vl53l1xçš„IICé©±åŠ¨ã€‚
 ********************************************************************************/
 
-static void vl53IICStart(void);			//·¢ËÍiic¿ªÊ¼ĞÅºÅ
-static void vl53IICStop(void);	  		//·¢ËÍiicÍ£Ö¹ĞÅºÅ
-static void vl53IICAck(void);			//iic·¢ËÍACKĞÅºÅ
-static void vl53IICNAck(void);			//iic²»·¢ËÍACKĞÅºÅ 
-static u8 vl53IICWaitAck(void);			//iicµÈ´ıACKĞÅºÅ
-static void vl53IICSendByte(u8 txd);	//iic·¢ËÍÒ»¸ö×Ö½Ú
-static u8 vl53IICReceiveByte(u8 ack);	//iic¶ÁÈ¡Ò»¸ö×Ö½Ú
+static void vl53IICStart(void);			//å‘é€iicå¼€å§‹ä¿¡å·
+static void vl53IICStop(void);	  		//å‘é€iicåœæ­¢ä¿¡å·
+static void vl53IICAck(void);			//iicå‘é€ACKä¿¡å·
+static void vl53IICNAck(void);			//iicä¸å‘é€ACKä¿¡å· 
+static u8 vl53IICWaitAck(void);			//iicç­‰å¾…ACKä¿¡å·
+static void vl53IICSendByte(u8 txd);	//iicå‘é€ä¸€ä¸ªå­—èŠ‚
+static u8 vl53IICReceiveByte(u8 ack);	//iicè¯»å–ä¸€ä¸ªå­—èŠ‚
 
-//³õÊ¼»¯iic
+//åˆå§‹åŒ–iic
 void vl53IICInit(void)
 {	
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	/*Ê¹ÄÜVL53Ê±ÖÓ*/
+	/*ä½¿èƒ½VL53æ—¶é’Ÿ*/
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	/*SCL PB5   SDA PB4*/
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//ÉÏÀ­
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//ä¸Šæ‹‰
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	GPIO_SetBits(GPIOB,GPIO_Pin_5);//PB5Êä³ö¸ß
-	GPIO_SetBits(GPIOB,GPIO_Pin_4);//PB4Êä³ö¸ß
+	GPIO_SetBits(GPIOB,GPIO_Pin_5);//PB5è¾“å‡ºé«˜
+	GPIO_SetBits(GPIOB,GPIO_Pin_4);//PB4è¾“å‡ºé«˜
 }
-//²úÉúVL53ÆğÊ¼ĞÅºÅ
+//äº§ç”ŸVL53èµ·å§‹ä¿¡å·
 static void vl53IICStart(void)
 {
-	SDA_OUT();     //sdaÏßÊä³ö
+	SDA_OUT();     //sdaçº¿è¾“å‡º
 	VL53_SDA=1;	  	  
 	VL53_SCL=1;
 	delay_us(4);
  	VL53_SDA=0;//START:when CLK is high,DATA change form high to low 
 	delay_us(4);
-	VL53_SCL=0;//Ç¯×¡I2C×ÜÏß£¬×¼±¸·¢ËÍ»ò½ÓÊÕÊı¾İ 
+	VL53_SCL=0;//é’³ä½I2Cæ€»çº¿ï¼Œå‡†å¤‡å‘é€æˆ–æ¥æ”¶æ•°æ® 
 }	  
-//²úÉúVL53Í£Ö¹ĞÅºÅ
+//äº§ç”ŸVL53åœæ­¢ä¿¡å·
 static void vl53IICStop(void)
 {
-	SDA_OUT();//sdaÏßÊä³ö
+	SDA_OUT();//sdaçº¿è¾“å‡º
 	VL53_SCL=0;
 	VL53_SDA=0;//STOP:when CLK is high DATA change form low to high
  	delay_us(4);
 	VL53_SCL=1; 
-	VL53_SDA=1;//·¢ËÍI2C×ÜÏß½áÊøĞÅºÅ
+	VL53_SDA=1;//å‘é€I2Cæ€»çº¿ç»“æŸä¿¡å·
 	delay_us(4);							   	
 }
-//µÈ´ıÓ¦´ğĞÅºÅµ½À´
-//·µ»ØÖµ£º1£¬½ÓÊÕÓ¦´ğÊ§°Ü
-//        0£¬½ÓÊÕÓ¦´ğ³É¹¦
+//ç­‰å¾…åº”ç­”ä¿¡å·åˆ°æ¥
+//è¿”å›å€¼ï¼š1ï¼Œæ¥æ”¶åº”ç­”å¤±è´¥
+//        0ï¼Œæ¥æ”¶åº”ç­”æˆåŠŸ
 static u8 vl53IICWaitAck(void)
 {
 	u8 ucErrTime=0;
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAè®¾ç½®ä¸ºè¾“å…¥  
 	VL53_SDA=1;delay_us(1);	   
 	VL53_SCL=1;delay_us(1);	 
 	while(READ_SDA)
@@ -84,10 +84,10 @@ static u8 vl53IICWaitAck(void)
 			return 1;
 		}
 	}
-	VL53_SCL=0;//Ê±ÖÓÊä³ö0 	   
+	VL53_SCL=0;//æ—¶é’Ÿè¾“å‡º0 	   
 	return 0;  
 } 
-//²úÉúACKÓ¦´ğ
+//äº§ç”ŸACKåº”ç­”
 static void vl53IICAck(void)
 {
 	VL53_SCL=0;
@@ -98,7 +98,7 @@ static void vl53IICAck(void)
 	delay_us(1);
 	VL53_SCL=0;
 }
-//²»²úÉúACKÓ¦´ğ		    
+//ä¸äº§ç”ŸACKåº”ç­”		    
 static void vl53IICNAck(void)
 {
 	VL53_SCL=0;
@@ -109,15 +109,15 @@ static void vl53IICNAck(void)
 	delay_us(1);
 	VL53_SCL=0;
 }					 				     
-//VL53·¢ËÍÒ»¸ö×Ö½Ú
-//·µ»Ø´Ó»úÓĞÎŞÓ¦´ğ
-//1£¬ÓĞÓ¦´ğ
-//0£¬ÎŞÓ¦´ğ			  
+//VL53å‘é€ä¸€ä¸ªå­—èŠ‚
+//è¿”å›ä»æœºæœ‰æ— åº”ç­”
+//1ï¼Œæœ‰åº”ç­”
+//0ï¼Œæ— åº”ç­”			  
 static void vl53IICSendByte(u8 txd)
 {                        
     u8 t;   
 	SDA_OUT(); 	    
-    VL53_SCL=0;//À­µÍÊ±ÖÓ¿ªÊ¼Êı¾İ´«Êä
+    VL53_SCL=0;//æ‹‰ä½æ—¶é’Ÿå¼€å§‹æ•°æ®ä¼ è¾“
     for(t=0;t<8;t++)
     {              
         VL53_SDA=(txd&0x80)>>7;
@@ -129,11 +129,11 @@ static void vl53IICSendByte(u8 txd)
 		delay_us(1);
     }	 
 } 	    
-//¶Á1¸ö×Ö½Ú£¬ack=1Ê±£¬·¢ËÍACK£¬ack=0£¬·¢ËÍnACK   
+//è¯»1ä¸ªå­—èŠ‚ï¼Œack=1æ—¶ï¼Œå‘é€ACKï¼Œack=0ï¼Œå‘é€nACK   
 static u8 vl53IICReceiveByte(u8 ack)
 {
 	u8 i,receive=0;
-	SDA_IN();//SDAÉèÖÃÎªÊäÈë
+	SDA_IN();//SDAè®¾ç½®ä¸ºè¾“å…¥
     for(i=0;i<8;i++ )
 	{
         VL53_SCL=0; 
@@ -144,43 +144,43 @@ static u8 vl53IICReceiveByte(u8 ack)
 		delay_us(1); 
     }					 
     if (!ack)
-        vl53IICNAck();//·¢ËÍnACK
+        vl53IICNAck();//å‘é€nACK
     else
-        vl53IICAck(); //·¢ËÍACK   
+        vl53IICAck(); //å‘é€ACK   
     return receive;
 }
 
-//´ÓÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
-//ReadAddr:¿ªÊ¼¶ÁÊıµÄµØÖ·  
-//·µ»ØÖµ  :¶Áµ½µÄÊı¾İ
+//ä»æŒ‡å®šåœ°å€è¯»å‡ºä¸€ä¸ªæ•°æ®
+//ReadAddr:å¼€å§‹è¯»æ•°çš„åœ°å€  
+//è¿”å›å€¼  :è¯»åˆ°çš„æ•°æ®
 u8 vl53IICReadByte(u8 devaddr,u8 addr, u8* data)
 {				  
 	u8 temp=0;		  	    																 
 	vl53IICStart();  
-	vl53IICSendByte(devaddr);//·¢ËÍÆ÷¼şĞ´ÃüÁî 	   
+	vl53IICSendByte(devaddr);//å‘é€å™¨ä»¶å†™å‘½ä»¤ 	   
 	vl53IICWaitAck(); 
-	vl53IICSendByte(addr);   //·¢ËÍµÍµØÖ·
+	vl53IICSendByte(addr);   //å‘é€ä½åœ°å€
 	vl53IICWaitAck();	
 
 	vl53IICStart();  	 	   
-	vl53IICSendByte(devaddr|1);//·¢ËÍÆ÷¼ş¶ÁÃüÁî			   
+	vl53IICSendByte(devaddr|1);//å‘é€å™¨ä»¶è¯»å‘½ä»¤			   
 	vl53IICWaitAck();	 
 	temp=vl53IICReceiveByte(0);			   
-	vl53IICStop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş	 
+	vl53IICStop();//äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶	 
 	*data = temp;
 	return temp;
 }
-//Á¬Ğø¶Á¶à¸ö×Ö½Ú
-//addr:ÆğÊ¼µØÖ·
-//rbuf:¶ÁÊı¾İ»º´æ
-//len:Êı¾İ³¤¶È
+//è¿ç»­è¯»å¤šä¸ªå­—èŠ‚
+//addr:èµ·å§‹åœ°å€
+//rbuf:è¯»æ•°æ®ç¼“å­˜
+//len:æ•°æ®é•¿åº¦
 void vl53IICRead(u8 devaddr,u8 addr,u8 len,u8 *rbuf)
 {
 	int i=0;
 	vl53IICStart();  
 	vl53IICSendByte(devaddr);  
 	vl53IICWaitAck();	
-	vl53IICSendByte(addr);//µØÖ·×ÔÔö  
+	vl53IICSendByte(addr);//åœ°å€è‡ªå¢  
 	vl53IICWaitAck();	
 
 	vl53IICStart();  	
@@ -190,26 +190,26 @@ void vl53IICRead(u8 devaddr,u8 addr,u8 len,u8 *rbuf)
 	{
 		if(i==len-1)
 		{
-			rbuf[i] = vl53IICReceiveByte(0);//×îºóÒ»¸ö×Ö½Ú²»Ó¦´ğ
+			rbuf[i] = vl53IICReceiveByte(0);//æœ€åä¸€ä¸ªå­—èŠ‚ä¸åº”ç­”
 		}
 		else
 			rbuf[i] = vl53IICReceiveByte(1);
 	}
 	vl53IICStop( );	
 }
-//Á¬Ğø¶Á¶à¸ö×Ö½Ú
-//addr:ÆğÊ¼µØÖ·
-//rbuf:¶ÁÊı¾İ»º´æ
-//len:Êı¾İ³¤¶È
+//è¿ç»­è¯»å¤šä¸ªå­—èŠ‚
+//addr:èµ·å§‹åœ°å€
+//rbuf:è¯»æ•°æ®ç¼“å­˜
+//len:æ•°æ®é•¿åº¦
 void vl53l1Read(u8 devaddr,u16 addr,u8 len,u8 *rbuf)
 {
 	int i=0;
 	vl53IICStart();  
 	vl53IICSendByte(devaddr);  
 	vl53IICWaitAck();	
-	vl53IICSendByte(addr>>8);  //µØÖ·¸ßÎ»
+	vl53IICSendByte(addr>>8);  //åœ°å€é«˜ä½
 	vl53IICWaitAck();
-	vl53IICSendByte(addr&0x00FF);  //µØÖ·µÍÎ»
+	vl53IICSendByte(addr&0x00FF);  //åœ°å€ä½ä½
 	vl53IICWaitAck();	
 
 	vl53IICStart();  	
@@ -219,39 +219,39 @@ void vl53l1Read(u8 devaddr,u16 addr,u8 len,u8 *rbuf)
 	{
 		if(i==len-1)
 		{
-			rbuf[i] = vl53IICReceiveByte(0);//×îºóÒ»¸ö×Ö½Ú²»Ó¦´ğ
+			rbuf[i] = vl53IICReceiveByte(0);//æœ€åä¸€ä¸ªå­—èŠ‚ä¸åº”ç­”
 		}
 		else
 			rbuf[i] = vl53IICReceiveByte(1);
 	}
 	vl53IICStop( );	
 }
-//´ÓÖ¸¶¨µØÖ·Ğ´ÈëÒ»¸öÊı¾İ
-//WriteAddr :Ğ´ÈëÊı¾İµÄÄ¿µÄµØÖ·    
-//DataToWrite:ÒªĞ´ÈëµÄÊı¾İ
+//ä»æŒ‡å®šåœ°å€å†™å…¥ä¸€ä¸ªæ•°æ®
+//WriteAddr :å†™å…¥æ•°æ®çš„ç›®çš„åœ°å€    
+//DataToWrite:è¦å†™å…¥çš„æ•°æ®
 void vl53IICWriteByte(u8 devaddr,u8 addr,u8 data)
 {				   	  	    																 
 	vl53IICStart();  
-	vl53IICSendByte(devaddr); //·¢ËÍÆ÷¼şĞ´ÃüÁî 	 
+	vl53IICSendByte(devaddr); //å‘é€å™¨ä»¶å†™å‘½ä»¤ 	 
 	vl53IICWaitAck();	   
-	vl53IICSendByte(addr);   //·¢ËÍµÍµØÖ·
+	vl53IICSendByte(addr);   //å‘é€ä½åœ°å€
 	vl53IICWaitAck(); 	 										  		   
-	vl53IICSendByte(data); //·¢ËÍ×Ö½Ú							   
+	vl53IICSendByte(data); //å‘é€å­—èŠ‚							   
 	vl53IICWaitAck();  		    	   
-	vl53IICStop();		//²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş 	 
+	vl53IICStop();		//äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶ 	 
 }
 
-//Á¬ĞøĞ´¶à¸ö×Ö½Ú
-//addr:ÆğÊ¼µØÖ·
-//wbuf:Ğ´Êı¾İ»º´æ
-//len:Êı¾İµÄ³¤¶È
+//è¿ç»­å†™å¤šä¸ªå­—èŠ‚
+//addr:èµ·å§‹åœ°å€
+//wbuf:å†™æ•°æ®ç¼“å­˜
+//len:æ•°æ®çš„é•¿åº¦
 void vl53IICWrite(u8 devaddr,u8 addr,u8 len,u8 *wbuf)
 {
 	int i=0;
 	vl53IICStart();  
 	vl53IICSendByte(devaddr);  	
 	vl53IICWaitAck();	
-	vl53IICSendByte(addr);  //µØÖ·×ÔÔö
+	vl53IICSendByte(addr);  //åœ°å€è‡ªå¢
 	vl53IICWaitAck();	
 	for(i=0; i<len; i++)
 	{
@@ -260,19 +260,19 @@ void vl53IICWrite(u8 devaddr,u8 addr,u8 len,u8 *wbuf)
 	}
 	vl53IICStop( );	
 }
-//Á¬ĞøĞ´¶à¸ö×Ö½Ú
-//addr:ÆğÊ¼µØÖ·
-//wbuf:Ğ´Êı¾İ»º´æ
-//len:Êı¾İµÄ³¤¶È
+//è¿ç»­å†™å¤šä¸ªå­—èŠ‚
+//addr:èµ·å§‹åœ°å€
+//wbuf:å†™æ•°æ®ç¼“å­˜
+//len:æ•°æ®çš„é•¿åº¦
 void vl53l1Write(u8 devaddr,u16 addr,u8 len,u8 *wbuf)
 {
 	int i=0;
 	vl53IICStart();  
 	vl53IICSendByte(devaddr);  	
 	vl53IICWaitAck();	
-	vl53IICSendByte(addr>>8);  //µØÖ·¸ßÎ»
+	vl53IICSendByte(addr>>8);  //åœ°å€é«˜ä½
 	vl53IICWaitAck();
-	vl53IICSendByte(addr&0x00FF);  //µØÖ·µÍÎ»
+	vl53IICSendByte(addr&0x00FF);  //åœ°å€ä½ä½
 	vl53IICWaitAck();	
 	for(i=0; i<len; i++)
 	{
@@ -281,7 +281,7 @@ void vl53l1Write(u8 devaddr,u16 addr,u8 len,u8 *wbuf)
 	}
 	vl53IICStop( );	
 }
-//iic Ğ´ÈëÄ³¸öÎ»
+//iic å†™å…¥æŸä¸ªä½
 bool vl53IICWriteBit(u8 devaddr,u8 addr, u8 bitNum, u8 data)
 {
     u8 byte;

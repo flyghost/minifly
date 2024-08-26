@@ -3,22 +3,22 @@
 #include "stabilizer_types.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * 6ÖáÊı¾İÈÚºÏ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * 6è½´æ•°æ®èåˆä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-void imuUpdate(Axis3f acc, Axis3f gyro, state_t *state , float dt);	/*Êı¾İÈÚºÏ »¥²¹ÂË²¨*/
+void imuUpdate(Axis3f acc, Axis3f gyro, state_t *state , float dt);	/*æ•°æ®èåˆ äº’è¡¥æ»¤æ³¢*/
 bool getIsCalibrated(void);
-void imuTransformVectorBodyToEarth(Axis3f * v);	/*»úÌåµ½µØÇò*/
-void imuTransformVectorEarthToBody(Axis3f * v);	/*µØÇòµ½»úÌå*/
+void imuTransformVectorBodyToEarth(Axis3f * v);	/*æœºä½“åˆ°åœ°çƒ*/
+void imuTransformVectorEarthToBody(Axis3f * v);	/*åœ°çƒåˆ°æœºä½“*/
 
 #endif
 

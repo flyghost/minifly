@@ -3,15 +3,15 @@
 #include "filter.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ÂË²¨¹¦ÄÜº¯Êı	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * æ»¤æ³¢åŠŸèƒ½å‡½æ•°	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -19,7 +19,7 @@
 #define M_PI_F (float)3.14159265
 
 /**
- * IIRÂË²¨.
+ * IIRæ»¤æ³¢.
  */
 int16_t iirLPFilterSingle(int32_t in, int32_t attenuation,  int32_t* filt)
 {
@@ -48,7 +48,7 @@ int16_t iirLPFilterSingle(int32_t in, int32_t attenuation,  int32_t* filt)
 }
 
 /**
- * ¶ş½×µÍÍ¨ÂË²¨
+ * äºŒé˜¶ä½é€šæ»¤æ³¢
  */
 void lpf2pInit(lpf2pData* lpfData, float sample_freq, float cutoff_freq)
 {
@@ -61,7 +61,7 @@ void lpf2pInit(lpf2pData* lpfData, float sample_freq, float cutoff_freq)
 }
 
 /**
- * ÉèÖÃ¶ş½×µÍÍ¨ÂË²¨½ØÖÁÆµÂÊ
+ * è®¾ç½®äºŒé˜¶ä½é€šæ»¤æ³¢æˆªè‡³é¢‘ç‡
  */
 void lpf2pSetCutoffFreq(lpf2pData* lpfData, float sample_freq, float cutoff_freq)
 {

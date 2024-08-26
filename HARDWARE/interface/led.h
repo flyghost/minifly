@@ -4,15 +4,15 @@
 #include <stdbool.h>
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * LEDÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * LEDé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -27,21 +27,21 @@ typedef enum
 	LED_RED_R,
 } led_e;
 
-#define DATA_RX_LED		LED_GREEN_L	/*ÎŞÏßÊı¾İ½ÓÊÕÖ¸Ê¾µÆ*/
-#define DATA_TX_LED		LED_RED_L	/*ÎŞÏßÊı¾İ·¢ËÍÖ¸Ê¾µÆ*/
-#define CHG_LED 		LED_BLUE_L	/*³äµçÖ¸Ê¾µÆ*/
-#define LOWBAT_LED		LED_RED_R	/*µç³ØµÍµçÁ¿Ö¸Ê¾µÆ*/
-#define SYS_LED   		LED_GREEN_R	/*ÏµÍ³ĞÄÌøÖ¸Ê¾µÆ*/
-#define ERR_LED1       	LED_RED_L	/*³ö´íÖ¸Ê¾µÆ1*/
-#define ERR_LED2       	LED_RED_R	/*³ö´íÖ¸Ê¾µÆ2*/
+#define DATA_RX_LED		LED_GREEN_L	/*æ— çº¿æ•°æ®æ¥æ”¶æŒ‡ç¤ºç¯*/
+#define DATA_TX_LED		LED_RED_L	/*æ— çº¿æ•°æ®å‘é€æŒ‡ç¤ºç¯*/
+#define CHG_LED 		LED_BLUE_L	/*å……ç”µæŒ‡ç¤ºç¯*/
+#define LOWBAT_LED		LED_RED_R	/*ç”µæ± ä½ç”µé‡æŒ‡ç¤ºç¯*/
+#define SYS_LED   		LED_GREEN_R	/*ç³»ç»Ÿå¿ƒè·³æŒ‡ç¤ºç¯*/
+#define ERR_LED1       	LED_RED_L	/*å‡ºé”™æŒ‡ç¤ºç¯1*/
+#define ERR_LED2       	LED_RED_R	/*å‡ºé”™æŒ‡ç¤ºç¯2*/
 
 
-void ledInit(void);		/* LED³õÊ¼»¯ */
-bool ledTest(void);		/* LED²âÊÔ */
-void ledSetAll(void);	/* ¿ªÆôËùÓĞLED */
-void ledClearAll(void);	/* ¹Ø±ÕËùÓĞLED */
-void ledSet(led_e led, bool value);	/* ÉèÖÃÄ³¸öLEDµÄ×´Ì¬ */
-void ledFlashOne(led_e led, u32 onTime, u32 offTime);	/*LEDÉÁË¸1´Î*/
+void ledInit(void);		/* LEDåˆå§‹åŒ– */
+bool ledTest(void);		/* LEDæµ‹è¯• */
+void ledSetAll(void);	/* å¼€å¯æ‰€æœ‰LED */
+void ledClearAll(void);	/* å…³é—­æ‰€æœ‰LED */
+void ledSet(led_e led, bool value);	/* è®¾ç½®æŸä¸ªLEDçš„çŠ¶æ€ */
+void ledFlashOne(led_e led, u32 onTime, u32 offTime);	/*LEDé—ªçƒ1æ¬¡*/
 
 
 #endif

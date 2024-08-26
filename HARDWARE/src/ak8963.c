@@ -4,15 +4,15 @@
 #include "ak8963.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * AK8963Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * AK8963é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -45,7 +45,7 @@ bool ak8963TestConnection()
 	return false;
 }
 
-/*AK8963×Ô¼ì*/
+/*AK8963è‡ªæ£€*/
 bool ak8963SelfTest(void)
 {
 	bool testStatus = true;
@@ -104,21 +104,21 @@ u8 ak8963GetDeviceID()
 	return buffer[0];
 }
 
-// INFO ¼Ä´æÆ÷
+// INFO å¯„å­˜å™¨
 u8 ak8963GetInfo()
 {
 	i2cdevReadByte(I2Cx, devAddr, AK8963_RA_INFO, buffer);
 	return buffer[0];
 }
 
-// ST1 ¼Ä´æÆ÷
+// ST1 å¯„å­˜å™¨
 u8 ak8963GetDataReady()
 {
 	i2cdevReadBit(I2Cx, devAddr, AK8963_RA_ST1, AK8963_ST1_DRDY_BIT, buffer);
 	return buffer[0];
 }
 
-// H* ¼Ä´æÆ÷
+// H* å¯„å­˜å™¨
 void ak8963GetHeading(s16 *x, s16 *y, s16 *z)
 {
 	i2cdevRead(I2Cx, devAddr, AK8963_RA_HXL, 6, buffer);
@@ -145,7 +145,7 @@ s16 ak8963GetHeadingZ()
 	return (((s16) buffer[1]) << 8) | buffer[0];
 }
 
-// ST2 ¼Ä´æÆ÷
+// ST2 å¯„å­˜å™¨
 bool ak8963GetOverflowStatus()
 {
 	i2cdevReadBit(I2Cx, devAddr, AK8963_RA_ST2, AK8963_ST2_HOFL_BIT, buffer);
@@ -157,7 +157,7 @@ bool ak8963GetDataError()
 	return buffer[0];
 }
 
-// CNTL ¼Ä´æÆ÷
+// CNTL å¯„å­˜å™¨
 u8 ak8963GetMode()
 {
 	i2cdevReadByte(I2Cx, devAddr, AK8963_RA_CNTL, buffer);
@@ -173,7 +173,7 @@ void ak8963Reset()
 					AK8963_CNTL_MODE_LENGTH, AK8963_MODE_POWERDOWN);
 }
 
-// ASTC ¼Ä´æÆ÷
+// ASTC å¯„å­˜å™¨
 void ak8963SetSelfTest(bool enabled)
 {
 	i2cdevWriteBit(I2Cx, devAddr, AK8963_RA_ASTC, AK8963_ASTC_SELF_BIT, enabled);
@@ -185,7 +185,7 @@ void ak8963DisableI2C()
 	i2cdevWriteBit(I2Cx, devAddr, AK8963_RA_I2CDIS, AK8963_I2CDIS_BIT, true);
 }
 
-// ASA* ¼Ä´æÆ÷
+// ASA* å¯„å­˜å™¨
 void ak8963GetAdjustment(s8 *x, s8 *y, s8 *z)
 {
 	i2cdevRead(I2Cx, devAddr, AK8963_RA_ASAX, 3, buffer);

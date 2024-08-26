@@ -4,20 +4,20 @@
 #include "led.h"
 #include "FreeRTOSConfig.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ±äÁ¿µ÷ÊÔÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å˜é‡è°ƒè¯•é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -27,7 +27,7 @@ void vApplicationMallocFailedHook( void )
 {
 	portDISABLE_INTERRUPTS();
 	printf("\nMalloc failed!\n");
-	ledSet(ERR_LED1, 1);	/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);	/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 	while(1);
 }
@@ -37,7 +37,7 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed portCHAR *pcTaskN
 {
 	portDISABLE_INTERRUPTS();
 	printf("\nStack overflow!\n");
-	ledSet(ERR_LED1, 1);/*´íÎó¼ì²â*/
+	ledSet(ERR_LED1, 1);/*é”™è¯¯æ£€æµ‹*/
 	ledSet(ERR_LED2, 1);
 	while(1);
 }

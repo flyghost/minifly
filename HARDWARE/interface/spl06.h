@@ -4,15 +4,15 @@
 #include "i2cdev.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * SPL06Çı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * SPL06é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
@@ -44,7 +44,7 @@
 #define TEMPERATURE_INTERNAL_SENSOR		(0)
 #define TEMPERATURE_EXTERNAL_SENSOR		(1)
 
-//²âÁ¿´ÎÊı times / S
+//æµ‹é‡æ¬¡æ•° times / S
 #define SPL06_MWASURE_1					(0x00)
 #define SPL06_MWASURE_2					(0x01)
 #define SPL06_MWASURE_4					(0x02)
@@ -54,7 +54,7 @@
 #define SPL06_MWASURE_64				(0x06)
 #define SPL06_MWASURE_128				(0x07)
 
-//¹ı²ÉÑùÂÊ
+//è¿‡é‡‡æ ·ç‡
 #define SPL06_OVERSAMP_1				(0x00)
 #define SPL06_OVERSAMP_2				(0x01)
 #define SPL06_OVERSAMP_4				(0x02)
@@ -69,7 +69,7 @@ float spl0601_get_pressure(int32_t rawPressure, int32_t rawTemperature);
 
 bool SPL06Init(I2C_Dev *i2cPort);
 void SPL06GetData(float* pressure, float* temperature, float* asl);
-void pressureFilter(float* in, float* out);/*ÏŞ·ùÆ½¾ùÂË²¨·¨*/
+void pressureFilter(float* in, float* out);/*é™å¹…å¹³å‡æ»¤æ³¢æ³•*/
 float SPL06PressureToAltitude(float pressure/*, float* groundPressure, float* groundTemp*/);
 
 #endif

@@ -4,27 +4,27 @@
 #include "config.h"
 #include "delay.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * IICµ×²ãÇı¶¯¿ØÖÆ´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * IICåº•å±‚é©±åŠ¨æ§åˆ¶ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 
-//´«¸ĞÆ÷IIC×ÜÏßËÙ¶È
+//ä¼ æ„Ÿå™¨IICæ€»çº¿é€Ÿåº¦
 #define I2C_SENSORS_CLOCK_SPEED	400000
 #define I2C_DECK_CLOCK_SPEED	400000
 
@@ -53,48 +53,48 @@
 
   
 /**
- * IICµ×²ãÇı¶¯³õÊ¼»¯
+ * IICåº•å±‚é©±åŠ¨åˆå§‹åŒ–
  */
 static void i2cdrvInitBus(I2cDrv* i2c);
 /**
- * IIC DMA³õÊ¼»¯
+ * IIC DMAåˆå§‹åŒ–
  */
 static void i2cdrvDmaSetupBus(I2cDrv* i2c);
 /**
- * Æô¶¯IIC´«Êä
+ * å¯åŠ¨IICä¼ è¾“
  */
 static void i2cdrvStartTransfer(I2cDrv *i2c);
 /**
- * ÖØÆôIIC×ÜÏß
+ * é‡å¯IICæ€»çº¿
  */
 static void i2cdrvTryToRestartBus(I2cDrv* i2c);
 /**
- * »·Â·ÑÓÊ±
+ * ç¯è·¯å»¶æ—¶
  */
 static inline void i2cdrvRoughLoopDelay(uint32_t us);
 /**
- * ½âËøIIC×ÜÏß
+ * è§£é”IICæ€»çº¿
  */
 static void i2cdrvdevUnlockBus(GPIO_TypeDef* portSCL, GPIO_TypeDef* portSDA, uint16_t pinSCL, uint16_t pinSDA);
 /**
- * Çå³ıDMAÊı¾İÁ÷
+ * æ¸…é™¤DMAæ•°æ®æµ
  */
 static void i2cdrvClearDMA(I2cDrv* i2c);
 /**
- * ÊÂ¼şÖĞ¶Ï·şÎñº¯Êı
+ * äº‹ä»¶ä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvEventIsrHandler(I2cDrv* i2c);
 /**
- * ´íÎóÖĞ¶Ï·şÎñº¯Êı
+ * é”™è¯¯ä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvErrorIsrHandler(I2cDrv* i2c);
 /**
- * DMAÖĞ¶Ï·şÎñº¯Êı
+ * DMAä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvDmaIsrHandler(I2cDrv* i2c);
 
 /**
- * ´«¸ĞÆ÷×ÜÏß¶¨Òå
+ * ä¼ æ„Ÿå™¨æ€»çº¿å®šä¹‰
  */
 static const I2cDef sensorsBusDef =
 {
@@ -121,7 +121,7 @@ static const I2cDef sensorsBusDef =
 };
 
 /**
- * ´«¸ĞÆ÷×ÜÏß
+ * ä¼ æ„Ÿå™¨æ€»çº¿
  */
 I2cDrv sensorsBus =
 {
@@ -159,7 +159,7 @@ I2cDrv deckBus =
 
 
 /**
- * »·Â·ÑÓÊ±
+ * ç¯è·¯å»¶æ—¶
  */
 static inline void i2cdrvRoughLoopDelay(uint32_t us)
 {
@@ -168,7 +168,7 @@ static inline void i2cdrvRoughLoopDelay(uint32_t us)
 	for(delay = 0; delay < I2CDEV_LOOPS_PER_US * us; ++delay) { };
 }
 /**
- * Æô¶¯IIC´«Êä
+ * å¯åŠ¨IICä¼ è¾“
  */
 static void i2cdrvStartTransfer(I2cDrv *i2c)
 {
@@ -198,14 +198,14 @@ static void i2cNotifyClient(I2cDrv* i2c)
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 /**
- * ÖØÆôIIC×ÜÏß
+ * é‡å¯IICæ€»çº¿
  */
 static void i2cdrvTryToRestartBus(I2cDrv* i2c)
 {
 	i2cdrvInitBus(i2c);
 }
 /**
- * IIC DMA³õÊ¼»¯
+ * IIC DMAåˆå§‹åŒ–
  */
 static void i2cdrvDmaSetupBus(I2cDrv* i2c)
 {
@@ -237,7 +237,7 @@ static void i2cdrvDmaSetupBus(I2cDrv* i2c)
 	NVIC_Init(&NVIC_InitStructure);
 }
 /**
- * IICµ×²ãÇı¶¯³õÊ¼»¯
+ * IICåº•å±‚é©±åŠ¨åˆå§‹åŒ–
  */
 static void i2cdrvInitBus(I2cDrv* i2c)
 {
@@ -301,7 +301,7 @@ static void i2cdrvInitBus(I2cDrv* i2c)
 	i2c->isBusFreeMutex = xSemaphoreCreateMutex();
 }
 /**
- * ½âËøIIC×ÜÏß
+ * è§£é”IICæ€»çº¿
  */
 static void i2cdrvdevUnlockBus(GPIO_TypeDef* portSCL, GPIO_TypeDef* portSDA, uint16_t pinSCL, uint16_t pinSDA)
 {
@@ -340,7 +340,7 @@ static void i2cdrvdevUnlockBus(GPIO_TypeDef* portSCL, GPIO_TypeDef* portSDA, uin
 
 //-----------------------------------------------------------
 /**
- * IICÍâÉè³õÊ¼»¯
+ * IICå¤–è®¾åˆå§‹åŒ–
  */
 void i2cdrvInit(I2cDrv* i2c)
 {
@@ -348,7 +348,7 @@ void i2cdrvInit(I2cDrv* i2c)
 }
 
 /**
- * ´´½¨Ò»¸ö´«ÊäĞÅÏ¢
+ * åˆ›å»ºä¸€ä¸ªä¼ è¾“ä¿¡æ¯
  */
 void i2cdrvCreateMessage(I2cMessage *message,
                       uint8_t  slaveAddress,
@@ -367,7 +367,7 @@ void i2cdrvCreateMessage(I2cMessage *message,
 }
 
 /**
- * ´´½¨Ò»¸öÓÃÓÚ´«ÊäÄÚ²¿¼Ä´æÆ÷µÄĞÅÏ¢
+ * åˆ›å»ºä¸€ä¸ªç”¨äºä¼ è¾“å†…éƒ¨å¯„å­˜å™¨çš„ä¿¡æ¯
  */
 void i2cdrvCreateMessageIntAddr(I2cMessage *message,
                              uint8_t  slaveAddress,
@@ -388,7 +388,7 @@ void i2cdrvCreateMessageIntAddr(I2cMessage *message,
 }
 
 /**
- * ·¢ËÍ»òÕß½ÓÊÕIICĞÅÏ¢
+ * å‘é€æˆ–è€…æ¥æ”¶IICä¿¡æ¯
  */
 bool i2cdrvMessageTransfer(I2cDrv* i2c, I2cMessage* message)
 {
@@ -420,7 +420,7 @@ bool i2cdrvMessageTransfer(I2cDrv* i2c, I2cMessage* message)
 }
 
 /**
- * ÊÂ¼şÖĞ¶Ï·şÎñº¯Êı
+ * äº‹ä»¶ä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvEventIsrHandler(I2cDrv* i2c)
 {
@@ -553,7 +553,7 @@ static void i2cdrvEventIsrHandler(I2cDrv* i2c)
 }
 
 /**
- * ´íÎóÖĞ¶Ï·şÎñº¯Êı
+ * é”™è¯¯ä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvErrorIsrHandler(I2cDrv* i2c)
 {
@@ -587,7 +587,7 @@ static void i2cdrvErrorIsrHandler(I2cDrv* i2c)
 	}
 }
 /**
- * Çå³ıDMAÖĞ¶Ï±êÖ¾
+ * æ¸…é™¤DMAä¸­æ–­æ ‡å¿—
  */
 static void i2cdrvClearDMA(I2cDrv* i2c)
 {
@@ -598,7 +598,7 @@ static void i2cdrvClearDMA(I2cDrv* i2c)
 	DMA_ITConfig(i2c->def->dmaRxStream, DMA_IT_TC | DMA_IT_TE, DISABLE);
 }
 /**
- * ÊÂ¼şÖĞ¶Ï·şÎñº¯Êı
+ * äº‹ä»¶ä¸­æ–­æœåŠ¡å‡½æ•°
  */
 static void i2cdrvDmaIsrHandler(I2cDrv* i2c)
 {

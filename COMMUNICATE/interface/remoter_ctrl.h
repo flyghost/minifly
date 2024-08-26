@@ -5,39 +5,39 @@
 #include "module_detect.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * Ò£¿ØÆ÷¿ØÖÆÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * é¥æŽ§å™¨æŽ§åˆ¶é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-/*Ò£¿ØÊý¾ÝÀà±ð*/
+/*é¥æŽ§æ•°æ®ç±»åˆ«*/
 typedef enum 
 {
 	REMOTER_CMD,
 	REMOTER_DATA,
 }remoterType_e;
 
-/*ÏÂÐÐÃüÁî*/
-#define  CMD_GET_MSG		0x01	/*»ñÈ¡ËÄÖáÐÅÏ¢£¨×Ô¼ì£©*/
-#define  CMD_GET_CANFLY		0x02	/*»ñÈ¡ËÄÖáÊÇ·ñÄÜ·É*/
-#define  CMD_FLIGHT_LAND	0x03	/*Æð·É¡¢½µÂä*/
-#define  CMD_EMER_STOP		0x04	/*½ô¼±Í£»ú*/
-#define  CMD_FLIP			0x05	/*4D·­¹ö*/
-#define  CMD_POWER_MODULE	0x06	/*´ò¿ª¹Ø±ÕÀ©Õ¹Ä£¿éµçÔ´*/
-#define  CMD_LEDRING_EFFECT	0x07	/*ÉèÖÃRGBµÆ»·Ð§¹û*/
-#define  CMD_POWER_VL53LXX	0x08	/*´ò¿ª¹Ø±Õ¼¤¹â*/
+/*ä¸‹è¡Œå‘½ä»¤*/
+#define  CMD_GET_MSG		0x01	/*èŽ·å–å››è½´ä¿¡æ¯ï¼ˆè‡ªæ£€ï¼‰*/
+#define  CMD_GET_CANFLY		0x02	/*èŽ·å–å››è½´æ˜¯å¦èƒ½é£ž*/
+#define  CMD_FLIGHT_LAND	0x03	/*èµ·é£žã€é™è½*/
+#define  CMD_EMER_STOP		0x04	/*ç´§æ€¥åœæœº*/
+#define  CMD_FLIP			0x05	/*4Dç¿»æ»š*/
+#define  CMD_POWER_MODULE	0x06	/*æ‰“å¼€å…³é—­æ‰©å±•æ¨¡å—ç”µæº*/
+#define  CMD_LEDRING_EFFECT	0x07	/*è®¾ç½®RGBç¯çŽ¯æ•ˆæžœ*/
+#define  CMD_POWER_VL53LXX	0x08	/*æ‰“å¼€å…³é—­æ¿€å…‰*/
 
-/*ÉÏÐÐ±¨¸æ*/
+/*ä¸Šè¡ŒæŠ¥å‘Š*/
 #define  ACK_MSG			0x01
 
-/*Ò£¿ØÊý¾Ý½á¹¹*/
+/*é¥æŽ§æ•°æ®ç»“æž„*/
 typedef __packed struct
 {
 	float roll;      
@@ -60,8 +60,8 @@ typedef __packed struct
 	bool isLowpower;
 	enum expModuleID moduleID;
 	
-	float trimRoll;		/*rollÎ¢µ÷*/
-	float trimPitch;	/*pitchÎ¢µ÷*/
+	float trimRoll;		/*rollå¾®è°ƒ*/
+	float trimPitch;	/*pitchå¾®è°ƒ*/
 } MiniFlyMsg_t;
 
 

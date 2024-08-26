@@ -7,28 +7,28 @@
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly	
- * vl53lxxÓ¦ÓÃ´úÂë, °üÀ¨vl53l0xºÍvl53l1x
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.0
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * vl53lxxåº”ç”¨ä»£ç , åŒ…æ‹¬vl53l0xå’Œvl53l1x
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.0
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
 TaskHandle_t vl53l0xTaskHandle = NULL;
 TaskHandle_t vl53l1xTaskHandle = NULL;
 
-u16 vl53lxxId = 0;	/*vl53Ğ¾Æ¬ID*/
-bool isEnableVl53lxx = true;		/*ÊÇ·ñÊ¹ÄÜ¼¤¹â*/
+u16 vl53lxxId = 0;	/*vl53èŠ¯ç‰‡ID*/
+bool isEnableVl53lxx = true;		/*æ˜¯å¦ä½¿èƒ½æ¿€å…‰*/
 
-static bool isInitvl53l0x = false;	/*³õÊ¼»¯vl53l0x*/
-static bool isInitvl53l1x = false;	/*³õÊ¼»¯vl53l1x*/
-static bool reInitvl53l0x = false;	/*ÔÙ´Î³õÊ¼»¯vl53l0x*/
-static bool reInitvl53l1x = false;	/*ÔÙ´Î³õÊ¼»¯vl53l1x*/
+static bool isInitvl53l0x = false;	/*åˆå§‹åŒ–vl53l0x*/
+static bool isInitvl53l1x = false;	/*åˆå§‹åŒ–vl53l1x*/
+static bool reInitvl53l0x = false;	/*å†æ¬¡åˆå§‹åŒ–vl53l0x*/
+static bool reInitvl53l1x = false;	/*å†æ¬¡åˆå§‹åŒ–vl53l1x*/
 
 static u8 count = 0;
 static u8 validCnt = 0;
@@ -48,37 +48,37 @@ void vl53lxxInit(void)
 	vl53IICInit();	
 	delay_ms(10);
 	
-	/*vl53l0x ³õÊ¼»¯*/
+	/*vl53l0x åˆå§‹åŒ–*/
 	vl53lxxId = vl53l0xGetModelID();
 	if(vl53lxxId == VL53L0X_ID)
 	{
 		if (isInitvl53l0x)
 		{
 			reInitvl53l0x = true;
-			vTaskResume(vl53l0xTaskHandle);	/*»Ö¸´¼¤¹â²â¾àÈÎÎñ*/
+			vTaskResume(vl53l0xTaskHandle);	/*æ¢å¤æ¿€å…‰æµ‹è·ä»»åŠ¡*/
 		}
-		else	/*Ê×´Î½ÓÉÏvl53l0x¹âÁ÷Ä£¿é*/
+		else	/*é¦–æ¬¡æ¥ä¸Švl53l0xå…‰æµæ¨¡å—*/
 		{	
 			isInitvl53l0x = true;
-			xTaskCreate(vl53l0xTask, "VL5310X", 300, NULL, 5, &vl53l0xTaskHandle);	/*´´½¨¼¤¹â²â¾àÄ£¿éÈÎÎñ*/
+			xTaskCreate(vl53l0xTask, "VL5310X", 300, NULL, 5, &vl53l0xTaskHandle);	/*åˆ›å»ºæ¿€å…‰æµ‹è·æ¨¡å—ä»»åŠ¡*/
 		}
 		return;
 	}			
 	delay_ms(10);
 	
-	/*vl53l1x ³õÊ¼»¯*/
+	/*vl53l1x åˆå§‹åŒ–*/
 	VL53L1_RdWord(&dev, 0x010F, &vl53lxxId);
 	if(vl53lxxId == VL53L1X_ID)
 	{
 		if (isInitvl53l1x)
 		{
 			reInitvl53l1x = true;
-			vTaskResume(vl53l1xTaskHandle);	/*»Ö¸´¼¤¹â²â¾àÈÎÎñ*/
+			vTaskResume(vl53l1xTaskHandle);	/*æ¢å¤æ¿€å…‰æµ‹è·ä»»åŠ¡*/
 		}
-		else	/*Ê×´Î½ÓÉÏvl53l1x¹âÁ÷Ä£¿é*/
+		else	/*é¦–æ¬¡æ¥ä¸Švl53l1xå…‰æµæ¨¡å—*/
 		{		
 			isInitvl53l1x = true;			
-			xTaskCreate(vl53l1xTask, "VL53L1X", 300, NULL, 5, &vl53l1xTaskHandle);	/*´´½¨¼¤¹â²â¾àÄ£¿éÈÎÎñ*/
+			xTaskCreate(vl53l1xTask, "VL53L1X", 300, NULL, 5, &vl53l1xTaskHandle);	/*åˆ›å»ºæ¿€å…‰æµ‹è·æ¨¡å—ä»»åŠ¡*/
 		}
 		return;
 	}	
@@ -90,7 +90,7 @@ void vl53l0xTask(void* arg)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
-	vl53l0xSetParam();	/*ÉèÖÃvl53l0x ²ÎÊı*/
+	vl53l0xSetParam();	/*è®¾ç½®vl53l0x å‚æ•°*/
 		
 	while (1) 
 	{
@@ -98,12 +98,12 @@ void vl53l0xTask(void* arg)
 		{
 			count = 0;
 			reInitvl53l0x = false;			
-			vl53l0xSetParam();	/*ÉèÖÃvl53l0x ²ÎÊı*/
+			vl53l0xSetParam();	/*è®¾ç½®vl53l0x å‚æ•°*/
 			xLastWakeTime = xTaskGetTickCount();
 			
 		}else
 		{
-			range_last = vl53l0xReadRangeContinuousMillimeters() * 0.1f;	//µ¥Î»cm
+			range_last = vl53l0xReadRangeContinuousMillimeters() * 0.1f;	//å•ä½cm
 
 			if(range_last < VL53L0X_MAX_RANGE)			
 				validCnt++;			
@@ -112,17 +112,17 @@ void vl53l0xTask(void* arg)
 			
 			if(inValidCnt + validCnt == 10)
 			{
-				quality += (validCnt/10.f - quality) * 0.1f;	/*µÍÍ¨*/
+				quality += (validCnt/10.f - quality) * 0.1f;	/*ä½é€š*/
 				validCnt = 0;
 				inValidCnt = 0;
 			}
 			
-			if(range_last >= 6550)	/*vl53 ´íÎó*/
+			if(range_last >= 6550)	/*vl53 é”™è¯¯*/
 			{
 				if(++count > 30)
 				{
 					count = 0;
-					vTaskSuspend(vl53l0xTaskHandle);	/*¹ÒÆğ¼¤¹â²â¾àÈÎÎñ*/					
+					vTaskSuspend(vl53l0xTaskHandle);	/*æŒ‚èµ·æ¿€å…‰æµ‹è·ä»»åŠ¡*/					
 				}				
 			}else count = 0;						
 
@@ -139,7 +139,7 @@ void vl53l1xTask(void* arg)
 	TickType_t xLastWakeTime = xTaskGetTickCount();;
 	static VL53L1_RangingMeasurementData_t rangingData;
 
-	vl53l1xSetParam();	/*ÉèÖÃvl53l1x ²ÎÊı*/
+	vl53l1xSetParam();	/*è®¾ç½®vl53l1x å‚æ•°*/
 	
 	while(1) 
 	{
@@ -147,7 +147,7 @@ void vl53l1xTask(void* arg)
 		{
 			count = 0;
 			reInitvl53l1x = false;			
-			vl53l1xSetParam();	/*ÉèÖÃvl53l1x ²ÎÊı*/
+			vl53l1xSetParam();	/*è®¾ç½®vl53l1x å‚æ•°*/
 			xLastWakeTime = xTaskGetTickCount();
 		}else
 		{	
@@ -158,7 +158,7 @@ void vl53l1xTask(void* arg)
 				status = VL53L1_GetRangingMeasurementData(&dev, &rangingData);
 				if(status==0)
 				{
-					range_last = rangingData.RangeMilliMeter * 0.1f;	/*µ¥Î»cm*/				
+					range_last = rangingData.RangeMilliMeter * 0.1f;	/*å•ä½cm*/				
 				}
 				status = VL53L1_ClearInterruptAndStartMeasurement(&dev);
 			}	
@@ -170,7 +170,7 @@ void vl53l1xTask(void* arg)
 			
 			if(inValidCnt + validCnt == 10)
 			{
-				quality += (validCnt/10.f - quality) * 0.1f;	/*µÍÍ¨*/
+				quality += (validCnt/10.f - quality) * 0.1f;	/*ä½é€š*/
 				validCnt = 0;
 				inValidCnt = 0;
 			}
@@ -181,7 +181,7 @@ void vl53l1xTask(void* arg)
 				{
 					count = 0;
 					VL53L1_StopMeasurement(&dev);
-					vTaskSuspend(vl53l1xTaskHandle);	/*¹ÒÆğ¼¤¹â²â¾àÈÎÎñ*/					
+					vTaskSuspend(vl53l1xTaskHandle);	/*æŒ‚èµ·æ¿€å…‰æµ‹è·ä»»åŠ¡*/					
 				}				
 			}else count = 0;
 						
@@ -194,24 +194,24 @@ bool vl53lxxReadRange(zRange_t* zrange)
 {
 	if(vl53lxxId == VL53L0X_ID) 
 	{
-		zrange->quality = quality;		//¿ÉĞÅ¶È
+		zrange->quality = quality;		//å¯ä¿¡åº¦
 		vl53lxx.quality = quality;
 		
 		if (range_last != 0 && range_last < VL53L0X_MAX_RANGE) 
 		{			
-			zrange->distance = (float)range_last;	//µ¥Î»[cm]
+			zrange->distance = (float)range_last;	//å•ä½[cm]
 			vl53lxx.distance = 	zrange->distance;		
 			return true;
 		}
 	}
 	else if(vl53lxxId == VL53L1X_ID) 
 	{
-		zrange->quality = quality;		//¿ÉĞÅ¶È
+		zrange->quality = quality;		//å¯ä¿¡åº¦
 		vl53lxx.quality = quality;
 		
 		if (range_last != 0 && range_last < VL53L1X_MAX_RANGE) 
 		{			
-			zrange->distance = (float)range_last;	//µ¥Î»[cm]	
+			zrange->distance = (float)range_last;	//å•ä½[cm]	
 			vl53lxx.distance = 	zrange->distance;
 			return true;
 		}
@@ -219,7 +219,7 @@ bool vl53lxxReadRange(zRange_t* zrange)
 	
 	return false;
 }
-/*Ê¹ÄÜ¼¤¹â*/
+/*ä½¿èƒ½æ¿€å…‰*/
 void setVl53lxxState(u8 enable)
 {
 	isEnableVl53lxx = enable;

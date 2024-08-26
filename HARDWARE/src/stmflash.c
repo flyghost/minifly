@@ -1,29 +1,29 @@
 #include "stmflash.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * STM32ÄÚ²¿FLASH¶ÁÐ´ Çý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * STM32å†…éƒ¨FLASHè¯»å†™ é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
  
  
-//¶ÁÈ¡Ö¸¶¨µØÖ·µÄ°ë×Ö(16Î»Êý¾Ý) 
-//faddr:¶ÁµØÖ· 
-//·µ»ØÖµ:¶ÔÓ¦Êý¾Ý.
+//è¯»å–æŒ‡å®šåœ°å€çš„åŠå­—(16ä½æ•°æ®) 
+//faddr:è¯»åœ°å€ 
+//è¿”å›žå€¼:å¯¹åº”æ•°æ®.
 u32 STMFLASH_ReadWord(u32 faddr)
 {
 	return *(vu32*)faddr; 
 }  
-//»ñÈ¡Ä³¸öµØÖ·ËùÔÚµÄflashÉÈÇø
-//addr:flashµØÖ·
-//·µ»ØÖµ:0~11,¼´addrËùÔÚµÄÉÈÇø
+//èŽ·å–æŸä¸ªåœ°å€æ‰€åœ¨çš„flashæ‰‡åŒº
+//addr:flashåœ°å€
+//è¿”å›žå€¼:0~11,å³addræ‰€åœ¨çš„æ‰‡åŒº
 uint16_t STMFLASH_GetFlashSector(u32 addr)
 {
 	if(addr<ADDR_FLASH_SECTOR_1)return FLASH_Sector_0;
@@ -39,65 +39,65 @@ uint16_t STMFLASH_GetFlashSector(u32 addr)
 	else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_Sector_10; 
 	return FLASH_Sector_11;	
 }
-//´ÓÖ¸¶¨µØÖ·¿ªÊ¼Ð´ÈëÖ¸¶¨³¤¶ÈµÄÊý¾Ý
-//ÌØ±ð×¢Òâ:ÒòÎªSTM32F4µÄÉÈÇøÊµÔÚÌ«´ó,Ã»°ì·¨±¾µØ±£´æÉÈÇøÊý¾Ý,ËùÒÔ±¾º¯Êý
-//         Ð´µØÖ·Èç¹û·Ç0XFF,ÄÇÃ´»áÏÈ²Á³ýÕû¸öÉÈÇøÇÒ²»±£´æÉÈÇøÊý¾Ý.ËùÒÔ
-//         Ð´·Ç0XFFµÄµØÖ·,½«µ¼ÖÂÕû¸öÉÈÇøÊý¾Ý¶ªÊ§.½¨ÒéÐ´Ö®Ç°È·±£ÉÈÇøÀï
-//         Ã»ÓÐÖØÒªÊý¾Ý,×îºÃÊÇÕû¸öÉÈÇøÏÈ²Á³ýÁË,È»ºóÂýÂýÍùºóÐ´. 
-//¸Ãº¯Êý¶ÔOTPÇøÓòÒ²ÓÐÐ§!¿ÉÒÔÓÃÀ´Ð´OTPÇø!
-//OTPÇøÓòµØÖ··¶Î§:0X1FFF7800~0X1FFF7A0F
-//WriteAddr:ÆðÊ¼µØÖ·(´ËµØÖ·±ØÐëÎª4µÄ±¶Êý!!)
-//pBuffer:Êý¾ÝÖ¸Õë
-//NumToWrite:×Ö(32Î»)Êý(¾ÍÊÇÒªÐ´ÈëµÄ32Î»Êý¾ÝµÄ¸öÊý.) 
+//ä»ŽæŒ‡å®šåœ°å€å¼€å§‹å†™å…¥æŒ‡å®šé•¿åº¦çš„æ•°æ®
+//ç‰¹åˆ«æ³¨æ„:å› ä¸ºSTM32F4çš„æ‰‡åŒºå®žåœ¨å¤ªå¤§,æ²¡åŠžæ³•æœ¬åœ°ä¿å­˜æ‰‡åŒºæ•°æ®,æ‰€ä»¥æœ¬å‡½æ•°
+//         å†™åœ°å€å¦‚æžœéž0XFF,é‚£ä¹ˆä¼šå…ˆæ“¦é™¤æ•´ä¸ªæ‰‡åŒºä¸”ä¸ä¿å­˜æ‰‡åŒºæ•°æ®.æ‰€ä»¥
+//         å†™éž0XFFçš„åœ°å€,å°†å¯¼è‡´æ•´ä¸ªæ‰‡åŒºæ•°æ®ä¸¢å¤±.å»ºè®®å†™ä¹‹å‰ç¡®ä¿æ‰‡åŒºé‡Œ
+//         æ²¡æœ‰é‡è¦æ•°æ®,æœ€å¥½æ˜¯æ•´ä¸ªæ‰‡åŒºå…ˆæ“¦é™¤äº†,ç„¶åŽæ…¢æ…¢å¾€åŽå†™. 
+//è¯¥å‡½æ•°å¯¹OTPåŒºåŸŸä¹Ÿæœ‰æ•ˆ!å¯ä»¥ç”¨æ¥å†™OTPåŒº!
+//OTPåŒºåŸŸåœ°å€èŒƒå›´:0X1FFF7800~0X1FFF7A0F
+//WriteAddr:èµ·å§‹åœ°å€(æ­¤åœ°å€å¿…é¡»ä¸º4çš„å€æ•°!!)
+//pBuffer:æ•°æ®æŒ‡é’ˆ
+//NumToWrite:å­—(32ä½)æ•°(å°±æ˜¯è¦å†™å…¥çš„32ä½æ•°æ®çš„ä¸ªæ•°.) 
 void STMFLASH_Write(u32 WriteAddr,u32 *pBuffer,u32 NumToWrite)	
 { 
 	FLASH_Status status = FLASH_COMPLETE;
 	u32 addrx=0;
 	u32 endaddr=0;	
-	if(WriteAddr<STM32_FLASH_BASE||WriteAddr%4)return;	//·Ç·¨µØÖ·
-	FLASH_Unlock();									//½âËø 
-	FLASH_DataCacheCmd(DISABLE);//FLASH²Á³ýÆÚ¼ä,±ØÐë½ûÖ¹Êý¾Ý»º´æ
+	if(WriteAddr<STM32_FLASH_BASE||WriteAddr%4)return;	//éžæ³•åœ°å€
+	FLASH_Unlock();									//è§£é” 
+	FLASH_DataCacheCmd(DISABLE);//FLASHæ“¦é™¤æœŸé—´,å¿…é¡»ç¦æ­¢æ•°æ®ç¼“å­˜
 		
-	addrx=WriteAddr;				//Ð´ÈëµÄÆðÊ¼µØÖ·
-	endaddr=WriteAddr+NumToWrite*4;	//Ð´ÈëµÄ½áÊøµØÖ·
-	if(addrx<0X1FFF0000)			//Ö»ÓÐÖ÷´æ´¢Çø,²ÅÐèÒªÖ´ÐÐ²Á³ý²Ù×÷!!
+	addrx=WriteAddr;				//å†™å…¥çš„èµ·å§‹åœ°å€
+	endaddr=WriteAddr+NumToWrite*4;	//å†™å…¥çš„ç»“æŸåœ°å€
+	if(addrx<0X1FFF0000)			//åªæœ‰ä¸»å­˜å‚¨åŒº,æ‰éœ€è¦æ‰§è¡Œæ“¦é™¤æ“ä½œ!!
 	{
-		while(addrx<endaddr)		//É¨ÇåÒ»ÇÐÕÏ°­.(¶Ô·ÇFFFFFFFFµÄµØ·½,ÏÈ²Á³ý)
+		while(addrx<endaddr)		//æ‰«æ¸…ä¸€åˆ‡éšœç¢.(å¯¹éžFFFFFFFFçš„åœ°æ–¹,å…ˆæ“¦é™¤)
 		{
-			if(STMFLASH_ReadWord(addrx)!=0XFFFFFFFF)//ÓÐ·Ç0XFFFFFFFFµÄµØ·½,Òª²Á³ýÕâ¸öÉÈÇø
+			if(STMFLASH_ReadWord(addrx)!=0XFFFFFFFF)//æœ‰éž0XFFFFFFFFçš„åœ°æ–¹,è¦æ“¦é™¤è¿™ä¸ªæ‰‡åŒº
 			{   
-				status=FLASH_EraseSector(STMFLASH_GetFlashSector(addrx),VoltageRange_3);//VCC=2.7~3.6VÖ®¼ä!!
-				if(status!=FLASH_COMPLETE)break;	//·¢Éú´íÎóÁË
+				status=FLASH_EraseSector(STMFLASH_GetFlashSector(addrx),VoltageRange_3);//VCC=2.7~3.6Vä¹‹é—´!!
+				if(status!=FLASH_COMPLETE)break;	//å‘ç”Ÿé”™è¯¯äº†
 			}else addrx+=4;
 		} 
 	}
 	if(status==FLASH_COMPLETE)
 	{
-		while(WriteAddr<endaddr)//Ð´Êý¾Ý
+		while(WriteAddr<endaddr)//å†™æ•°æ®
 		{
-			if(FLASH_ProgramWord(WriteAddr,*pBuffer)!=FLASH_COMPLETE)//Ð´ÈëÊý¾Ý
+			if(FLASH_ProgramWord(WriteAddr,*pBuffer)!=FLASH_COMPLETE)//å†™å…¥æ•°æ®
 			{ 
-				break;	//Ð´ÈëÒì³£
+				break;	//å†™å…¥å¼‚å¸¸
 			}
 			WriteAddr+=4;
 			pBuffer++;
 		} 
 	}
-	FLASH_DataCacheCmd(ENABLE);	//FLASH²Á³ý½áÊø,¿ªÆôÊý¾Ý»º´æ
-	FLASH_Lock();//ÉÏËø
+	FLASH_DataCacheCmd(ENABLE);	//FLASHæ“¦é™¤ç»“æŸ,å¼€å¯æ•°æ®ç¼“å­˜
+	FLASH_Lock();//ä¸Šé”
 } 
 
-//´ÓÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶¨³¤¶ÈµÄÊý¾Ý
-//ReadAddr:ÆðÊ¼µØÖ·
-//pBuffer:Êý¾ÝÖ¸Õë
-//NumToRead:×Ö(4Î»)Êý
+//ä»ŽæŒ‡å®šåœ°å€å¼€å§‹è¯»å‡ºæŒ‡å®šé•¿åº¦çš„æ•°æ®
+//ReadAddr:èµ·å§‹åœ°å€
+//pBuffer:æ•°æ®æŒ‡é’ˆ
+//NumToRead:å­—(4ä½)æ•°
 void STMFLASH_Read(u32 ReadAddr,u32 *pBuffer,u32 NumToRead)   	
 {
 	u32 i;
 	for(i=0;i<NumToRead;i++)
 	{
-		pBuffer[i]=STMFLASH_ReadWord(ReadAddr);//¶ÁÈ¡4¸ö×Ö½Ú.
-		ReadAddr+=4;//Æ«ÒÆ4¸ö×Ö½Ú.	
+		pBuffer[i]=STMFLASH_ReadWord(ReadAddr);//è¯»å–4ä¸ªå­—èŠ‚.
+		ReadAddr+=4;//åç§»4ä¸ªå­—èŠ‚.	
 	}
 }
 

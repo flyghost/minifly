@@ -13,40 +13,40 @@
 #include "ledring12.h"
 #include "vl53lxx.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼þ*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * Ò£¿ØÆ÷¿ØÖÆÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2017/5/12
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * é¥æŽ§å™¨æŽ§åˆ¶é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2017/5/12
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ÐÞ¸ÄËµÃ÷:
- * °æ±¾V1.3 Ôö¼ÓÉÏµçÐ£×¼Í¨¹ýºóÉÏ´«Î¢µ÷ÐÅÏ¢¡£
+ * ä¿®æ”¹è¯´æ˜Ž:
+ * ç‰ˆæœ¬V1.3 å¢žåŠ ä¸Šç”µæ ¡å‡†é€šè¿‡åŽä¸Šä¼ å¾®è°ƒä¿¡æ¯ã€‚
 ********************************************************************************/
 
-static ctrlVal_t remoterCtrl;/*·¢ËÍµ½commander×ËÌ¬¿ØÖÆÊý¾Ý*/
+static ctrlVal_t remoterCtrl;/*å‘é€åˆ°commanderå§¿æ€æŽ§åˆ¶æ•°æ®*/
 static MiniFlyMsg_t msg;
-static u8 reSendTimes = 3;	/*Î¢µ÷ÖØ·¢´ÎÊý*/
+static u8 reSendTimes = 3;	/*å¾®è°ƒé‡å‘æ¬¡æ•°*/
 
-/*·µ»ØËÄÖáÐÅÏ¢*/
+/*è¿”å›žå››è½´ä¿¡æ¯*/
 void sendMsgACK(void)
 {
 	msg.version = configParam.version;
 	msg.mpu_selfTest = getIsMPU9250Present();
 	msg.baro_slfTest = getIsBaroPresent();
 	msg.isCanFly = getIsCalibrated();
-	if(msg.isCanFly == true)	/*Ð£×¼Í¨¹ýÖ®ºó·¢ËÍÎ¢µ÷Öµ*/
+	if(msg.isCanFly == true)	/*æ ¡å‡†é€šè¿‡ä¹‹åŽå‘é€å¾®è°ƒå€¼*/
 	{
-		if(reSendTimes > 0) /*Î¢µ÷ÖØ·¢´ÎÊý*/
+		if(reSendTimes > 0) /*å¾®è°ƒé‡å‘æ¬¡æ•°*/
 		{
 			reSendTimes--;
 			msg.trimPitch = configParam.trimP;
@@ -64,7 +64,7 @@ void sendMsgACK(void)
 	radiolinkSendPacketBlocking(&p);	
 }
 
-/*Ò£¿ØÊý¾Ý½ÓÊÕ´¦Àí*/
+/*é¥æŽ§æ•°æ®æŽ¥æ”¶å¤„ç†*/
 void remoterCtrlProcess(atkp_t* pk)
 {	
 	if(pk->data[0] == REMOTER_CMD)

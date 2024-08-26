@@ -1,10 +1,10 @@
 #ifndef __SYSTEM_H
 #define __SYSTEM_H
 
-/* freertos ÅäÖÃÎÄ¼ş */
+/* freertos é…ç½®æ–‡ä»¶ */
 #include "FreeRTOSConfig.h"
 
-/*FreeRTOSÏà¹ØÍ·ÎÄ¼ş*/
+/*FreeRTOSç›¸å…³å¤´æ–‡ä»¶*/
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
@@ -16,7 +16,7 @@
 #include "nvic.h"
 #include "exti.h"
 
-/*µ×²ãÓ²¼şÇı¶¯*/
+/*åº•å±‚ç¡¬ä»¶é©±åŠ¨*/
 #include "sys.h"
 #include "delay.h"
 #include "uart1.h"
@@ -32,7 +32,7 @@
 #include "watchdog.h"
 #include "pm.h"
 
-/*À©Õ¹Ä£¿éÇı¶¯*/
+/*æ‰©å±•æ¨¡å—é©±åŠ¨*/
 #include "module_detect.h"
 #include "module_mgt.h"
 

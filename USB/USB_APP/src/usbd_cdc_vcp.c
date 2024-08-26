@@ -53,7 +53,7 @@ LINE_CODING linecoding =
     0x08    /* nb. of bits 8*/
   };
   
-#define USB_RX_LEN	 	200	//USB½ÓÊÕÊı¾İ»º´æÇø
+#define USB_RX_LEN	 	200	//USBæ¥æ”¶æ•°æ®ç¼“å­˜åŒº
 uint8_t usb_rx_buf[USB_RX_LEN];
 uint8_t	usb_rx_ptr_in = 0;
 uint8_t usb_rx_ptr_out = 0;
@@ -229,19 +229,19 @@ static uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 
 void usbd_cdc_vcp_Init(void)
 {
-	// ³õÊ¼»¯usb
+	// åˆå§‹åŒ–usb
 	USBD_Init(&USB_OTG_dev,
 		USB_OTG_FS_CORE_ID,
 		&USR_desc,
 		&USBD_CDC_cb,
 		&USR_cb);
 	
-	usbDataDelivery = xQueueCreate(128, sizeof(uint8_t));	/*¶ÓÁĞ 128¸öÏûÏ¢*/
+	usbDataDelivery = xQueueCreate(128, sizeof(uint8_t));	/*é˜Ÿåˆ— 128ä¸ªæ¶ˆæ¯*/
 }
 
 bool usbGetDataWithTimout(uint8_t *c)
 {
-	if (xQueueReceive(usbDataDelivery, c, 1000) == pdTRUE)	/*½ÓÊÕusbDataDelivery(1024¸öÈİÁ¿)ÏûÏ¢*/
+	if (xQueueReceive(usbDataDelivery, c, 1000) == pdTRUE)	/*æ¥æ”¶usbDataDelivery(1024ä¸ªå®¹é‡)æ¶ˆæ¯*/
 	{
 		return true;
 	}

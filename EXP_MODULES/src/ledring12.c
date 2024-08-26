@@ -10,19 +10,19 @@
 #include "timers.h"
 
 /********************************************************************************	 
- * ±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * RGBµÆ»·Ð§¹ûÇý¶¯´úÂë	
- * ÕýµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2024
+ * RGBç¯çŽ¯æ•ˆæžœé©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŽŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
 ********************************************************************************/
 
-#define NBR_LEDS  12	//ws2812 RGBµÆ¸öÊý
+#define NBR_LEDS  12	//ws2812 RGBç¯ä¸ªæ•°
 
 #define COPY_COLOR(dest, orig)  dest[0]=orig[0]; dest[1]=orig[1]; dest[2]=orig[2]
 #define ADD_COLOR(dest, o1, o2)  dest[0]=(o1[0]>>1)+(o2[0]>>1);dest[1]=(o1[1]>>1)+(o2[1]>>1);dest[2]=(o1[2]>>1)+(o2[2]>>1);
@@ -34,17 +34,17 @@ typedef void (*Ledring12Effect)(uint8_t buffer[][3], bool reset);
 
 static xTimerHandle timer;
 
-static const uint8_t black[3] 	= {0x00, 0x00, 0x00};//ºÚÉ«£¨²»ÁÁ£©
-//static const uint8_t white[3] 	= {0xff, 0xff, 0xff};//°×É«
-//static const uint8_t red[3]		= {0xff, 0x00, 0x00};//ºìÉ«
-//static const uint8_t green[3] 	= {0x00, 0xff, 0x00};//ÂÌÉ«
-static const uint8_t blue[3]	= {0x00, 0x00, 0xff};//À¶É«
+static const uint8_t black[3] 	= {0x00, 0x00, 0x00};//é»‘è‰²ï¼ˆä¸äº®ï¼‰
+//static const uint8_t white[3] 	= {0xff, 0xff, 0xff};//ç™½è‰²
+//static const uint8_t red[3]		= {0xff, 0x00, 0x00};//çº¢è‰²
+//static const uint8_t green[3] 	= {0x00, 0xff, 0x00};//ç»¿è‰²
+static const uint8_t blue[3]	= {0x00, 0x00, 0xff};//è“è‰²
 
 uint32_t effect = 1;
 static bool isInit = false;
 static bool headlightEnable = true;
 
-/**************** blackEffect(LED²»ÁÁ) ***************/
+/**************** blackEffect(LEDä¸äº®) ***************/
 static void blackEffect(uint8_t buffer[][3], bool reset)
 {
 	int i;
@@ -60,19 +60,19 @@ static void blackEffect(uint8_t buffer[][3], bool reset)
 	headlightEnable = false;
 }
 
-/*************** colorTest(10ÖÖÑÕÉ«²âÊÔ) **************/
+/*************** colorTest(10ç§é¢œè‰²æµ‹è¯•) **************/
 #define TEST_COLOR_NUM  9
 #define TEST_DELAY 		10
 static uint8_t test_pat[TEST_COLOR_NUM][3] = {
-{0,  0,  0 },//ºÚÉ«£¨²»ÁÁ£©
-{32, 32, 32},//°×É«
-{64, 0,  0 },//ºìÉ«
-{0,  64, 0 },//ÂÌÉ«
-{0,  0,  64},//À¶É«
-{64, 64, 0 },//»ÆÉ«
-{64, 32, 0 },//³ÈÉ«
-{64, 0,  64},//×ÏºìÉ«
-{0,  64, 64},//ÇàÉ«
+{0,  0,  0 },//é»‘è‰²ï¼ˆä¸äº®ï¼‰
+{32, 32, 32},//ç™½è‰²
+{64, 0,  0 },//çº¢è‰²
+{0,  64, 0 },//ç»¿è‰²
+{0,  0,  64},//è“è‰²
+{64, 64, 0 },//é»„è‰²
+{64, 32, 0 },//æ©™è‰²
+{64, 0,  64},//ç´«çº¢è‰²
+{0,  64, 64},//é’è‰²
 };
 static uint8_t test_eff_nbr = 0;
 static uint8_t test_delay_counter = 0;
@@ -104,7 +104,7 @@ static void colorTest(uint8_t buffer[][3], bool reset)
 	}
 }
 
-/************ attitudeInduceEffect(×ËÌ¬¸ÐÓ¦) *************/
+/************ attitudeInduceEffect(å§¿æ€æ„Ÿåº”) *************/
 static void attitudeInduceEffect(uint8_t buffer[][3], bool reset)
 {
 	attitude_t get;
@@ -148,7 +148,7 @@ static void attitudeInduceEffect(uint8_t buffer[][3], bool reset)
 	buffer[1][2] = LIMIT(led_middle + roll);
 }
 
-/************** gyroInduceEffect(ÍÓÂÝ¸ÐÓ¦) ****************/
+/************** gyroInduceEffect(é™€èžºæ„Ÿåº”) ****************/
 #define MAX_RATE 512
 static void gyroInduceEffect(uint8_t buffer[][3], bool reset)
 {
@@ -182,7 +182,7 @@ static void gyroInduceEffect(uint8_t buffer[][3], bool reset)
 	brightness++;
 }
 
-/************* binkLED(À¶É«LEDÉÁË¸¾¯±¨) **************/
+/************* binkLED(è“è‰²LEDé—ªçƒè­¦æŠ¥) **************/
 static void binkLED(uint8_t buffer[][3], bool reset)
 {
 	int i;
@@ -213,7 +213,7 @@ static void binkLED(uint8_t buffer[][3], bool reset)
 	if(++tic >= 20) tic = 0;
 }
 
-/************* flashlight(°×É«ÊÖµçÍ²) ****************/
+/************* flashlight(ç™½è‰²æ‰‹ç”µç­’) ****************/
 static void flashlight(uint8_t buffer[][3], bool reset)
 {
 	for(int i=0; i<NBR_LEDS; i++) 
@@ -224,7 +224,7 @@ static void flashlight(uint8_t buffer[][3], bool reset)
 	}
 }
 
-/**************** breathingLED(ºôÎüµÆ) ***************/
+/**************** breathingLED(å‘¼å¸ç¯) ***************/
 static float glowstep = 3.0f;
 static void breathingLED(uint8_t buffer[][3], bool reset)
 {
@@ -279,7 +279,7 @@ static void breathingLED(uint8_t buffer[][3], bool reset)
 	}
 }
 
-/******************** Red spin(ºìÉ«Á÷Ë®µÆ) *****************/
+/******************** Red spin(çº¢è‰²æµæ°´ç¯) *****************/
 static const uint8_t blueRing[][3] = {{64, 64, 255}, {32,32,64}, {8,8,16},
 									  {0,0,0}, {0,0,0},{0,0,0},
 									  {0,0,0}, {0,0,0},{0,0,0},
@@ -311,7 +311,7 @@ static void redSpinEffect(uint8_t buffer[][3], bool reset)
 	COPY_COLOR(buffer[(NBR_LEDS-1)], temp);
 }
 
-/****************** Color spin(°×¡¢ºì¡¢À¶ÈýÉ«Á÷Ë®µÆ) *******************/
+/****************** Color spin(ç™½ã€çº¢ã€è“ä¸‰è‰²æµæ°´ç¯) *******************/
 static const uint8_t colorRing[][3] = {{0,0,32},{0,0,16}, 	{0,0,8},
                                        {0,0,4}, {16,16,16}, {8,8,8},
                                        {4,4,4},	{32,0,0},	{16,0,0},
@@ -339,7 +339,7 @@ static void colorSpinEffect(uint8_t buffer[][3], bool reset)
 	COPY_COLOR(buffer[(NBR_LEDS-1)], temp);
 }
 
-/**************** spinEffect2(ÄæÊ±ÕëÁ÷Ë®µÆ) ***************/
+/**************** spinEffect2(é€†æ—¶é’ˆæµæ°´ç¯) ***************/
 static void spinEffect2(uint8_t buffer[][3], bool reset)
 {
 	int i;
@@ -361,7 +361,7 @@ static void spinEffect2(uint8_t buffer[][3], bool reset)
 	COPY_COLOR(buffer[0], temp);
 }
 
-/************ doubleSpinEffect(Ë³ÄæÊ±Õë½áºÏ) **************/
+/************ doubleSpinEffect(é¡ºé€†æ—¶é’ˆç»“åˆ) **************/
 static void doubleSpinEffect(uint8_t buffer[][3], bool reset) 
 {
 	static uint8_t sub1[NBR_LEDS][3];
@@ -373,7 +373,7 @@ static void doubleSpinEffect(uint8_t buffer[][3], bool reset)
 	spinEffect2(sub2, reset);
 	for (i=0; i<NBR_LEDS; i++)
 	{
-		ADD_COLOR(buffer[i], sub1[i], sub2[i]);/*ÑÕÉ«ºÏ²¢*/
+		ADD_COLOR(buffer[i], sub1[i], sub2[i]);/*é¢œè‰²åˆå¹¶*/
 	}
 	step ++;
 }
@@ -381,27 +381,27 @@ static void doubleSpinEffect(uint8_t buffer[][3], bool reset)
 /**************** Effect list ***************/
 Ledring12Effect effectsFct[] =
 {
-	blackEffect,			//È«ºÚ£¬¹Ø±Õ×´Ì¬
-	colorTest,				//10ÖÖÑÕÉ«²âÊÔ
-	attitudeInduceEffect,	//×ËÌ¬Ö¸Ê¾Ð§¹û
-	gyroInduceEffect,		//ÍÓÂÝÒÇÇ¿¶ÈÖ¸Ê¾Ð§¹û
-	binkLED,				//À¶É«ÉÁË¸Ð§¹û
-	flashlight,				//°×É«¸ßÁÁÊÖµçÍ²Ð§¹û
-	breathingLED,			//À¶É«ºôÎüµÆÐ§¹û	
-	redSpinEffect,			//ºìÉ«Á÷Ë®µÆÐ§¹û
-	colorSpinEffect,		//ÈýÉ«Á÷Ë®µÆÐ§¹û
-	doubleSpinEffect,		//Ë«É«Á÷Ë®µÆÐ§¹û
+	blackEffect,			//å…¨é»‘ï¼Œå…³é—­çŠ¶æ€
+	colorTest,				//10ç§é¢œè‰²æµ‹è¯•
+	attitudeInduceEffect,	//å§¿æ€æŒ‡ç¤ºæ•ˆæžœ
+	gyroInduceEffect,		//é™€èžºä»ªå¼ºåº¦æŒ‡ç¤ºæ•ˆæžœ
+	binkLED,				//è“è‰²é—ªçƒæ•ˆæžœ
+	flashlight,				//ç™½è‰²é«˜äº®æ‰‹ç”µç­’æ•ˆæžœ
+	breathingLED,			//è“è‰²å‘¼å¸ç¯æ•ˆæžœ	
+	redSpinEffect,			//çº¢è‰²æµæ°´ç¯æ•ˆæžœ
+	colorSpinEffect,		//ä¸‰è‰²æµæ°´ç¯æ•ˆæžœ
+	doubleSpinEffect,		//åŒè‰²æµæ°´ç¯æ•ˆæžœ
 	spinEffect2,
 };
 
-//µÆ»·Èí¼þ¶¨Ê±Æ÷ÖÐ¶Ï
+//ç¯çŽ¯è½¯ä»¶å®šæ—¶å™¨ä¸­æ–­
 static void ledring12Timer(xTimerHandle timer)
 {
 	bool reset = true;
 	static int current_effect = 0;
 	static uint8_t buffer[NBR_LEDS][3];
 	
-	if(getModuleID() != LED_RING)	/*È¡ÏÂµÆ»·*/
+	if(getModuleID() != LED_RING)	/*å–ä¸‹ç¯çŽ¯*/
 	{				
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		xTimerStopFromISR(timer, &xHigherPriorityTaskWoken);
@@ -422,12 +422,12 @@ static void ledring12Timer(xTimerHandle timer)
 	setHeadlightsOn(headlightEnable);
 }
 
-//µÆ»·³õÊ¼»¯
+//ç¯çŽ¯åˆå§‹åŒ–
 void ledring12Init(void)
 {
 	ws2812Init();
 	
-	if(!isInit)	/*µÚÒ»´Î½ÓÉÏµÆ»·*/
+	if(!isInit)	/*ç¬¬ä¸€æ¬¡æŽ¥ä¸Šç¯çŽ¯*/
 	{	
 		timer = xTimerCreate( "ringTimer", 50, pdTRUE, NULL, ledring12Timer);
 	}	
@@ -436,13 +436,13 @@ void ledring12Init(void)
 	isInit = true;
 }
 
-//µÆ»·µçÔ´¿ØÖÆ
+//ç¯çŽ¯ç”µæºæŽ§åˆ¶
 void ledringPowerControl(bool state)
 {
 	ws2812PowerControl(state);
 }
 
-//µÆ»·Ð§¹ûÉèÖÃ
+//ç¯çŽ¯æ•ˆæžœè®¾ç½®
 void setLedringEffect(u8 set)
 {
 	effect = set;

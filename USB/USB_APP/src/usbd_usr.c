@@ -3,37 +3,37 @@
 #include <stdio.h> 
 #include "usart.h" 
 //////////////////////////////////////////////////////////////////////////////////	 
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//ALIENTEK STM32¿ª·¢°å
-//USBD-USR ´úÂë	   
-//ÕıµãÔ­×Ó@ALIENTEK
-//¼¼ÊõÂÛÌ³:www.openedv.com
-//´´½¨ÈÕÆÚ:2016/1/21
-//°æ±¾£ºV1.3
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
-//Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2009-2019
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ALIENTEK STM32å¼€å‘æ¿
+//USBD-USR ä»£ç 	   
+//æ­£ç‚¹åŸå­@ALIENTEK
+//æŠ€æœ¯è®ºå›:www.openedv.com
+//åˆ›å»ºæ—¥æœŸ:2016/1/21
+//ç‰ˆæœ¬ï¼šV1.3
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+//Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2009-2019
 //All rights reserved									  
 //*******************************************************************************
-//ĞŞ¸ÄĞÅÏ¢
-//ÎŞ
+//ä¿®æ”¹ä¿¡æ¯
+//æ— 
 ////////////////////////////////////////////////////////////////////////////////// 	
 
-//±íÊ¾USBÁ¬½Ó×´Ì¬
-//0,Ã»ÓĞÁ¬½Ó;
-//1,ÒÑ¾­Á¬½Ó;
-vu8 bDeviceState=0;		//Ä¬ÈÏÃ»ÓĞÁ¬½Ó  
+//è¡¨ç¤ºUSBè¿æ¥çŠ¶æ€
+//0,æ²¡æœ‰è¿æ¥;
+//1,å·²ç»è¿æ¥;
+vu8 bDeviceState=0;		//é»˜è®¤æ²¡æœ‰è¿æ¥  
 
 
 extern USB_OTG_CORE_HANDLE  USB_OTG_dev;
 
-//USB OTG ÖĞ¶Ï·şÎñº¯Êı
-//´¦ÀíËùÓĞUSBÖĞ¶Ï
+//USB OTG ä¸­æ–­æœåŠ¡å‡½æ•°
+//å¤„ç†æ‰€æœ‰USBä¸­æ–­
 void OTG_FS_IRQHandler(void)
 {
   	USBD_OTG_ISR_Handler(&USB_OTG_dev);
 }  
-//Ö¸ÏòDEVICE_PROP½á¹¹Ìå
-//USB Device ÓÃ»§»Øµ÷º¯Êı. 
+//æŒ‡å‘DEVICE_PROPç»“æ„ä½“
+//USB Device ç”¨æˆ·å›è°ƒå‡½æ•°. 
 USBD_Usr_cb_TypeDef USR_cb =
 {
   USBD_USR_Init,
@@ -44,13 +44,13 @@ USBD_Usr_cb_TypeDef USR_cb =
   USBD_USR_DeviceConnected,
   USBD_USR_DeviceDisconnected,    
 };
-//USB Device ÓÃ»§×Ô¶¨Òå³õÊ¼»¯º¯Êı
+//USB Device ç”¨æˆ·è‡ªå®šä¹‰åˆå§‹åŒ–å‡½æ•°
 void USBD_USR_Init(void)
 {
 	////printf("USBD_USR_Init\r\n");
 } 
-//USB Device ¸´Î»
-//speed:USBËÙ¶È,0,¸ßËÙ;1,È«ËÙ;ÆäËû,´íÎó.
+//USB Device å¤ä½
+//speed:USBé€Ÿåº¦,0,é«˜é€Ÿ;1,å…¨é€Ÿ;å…¶ä»–,é”™è¯¯.
 void USBD_USR_DeviceReset (uint8_t speed)
 {
 	switch (speed)
@@ -66,30 +66,30 @@ void USBD_USR_DeviceReset (uint8_t speed)
 			break;
 	}
 }
-//USB Device ÅäÖÃ³É¹¦
+//USB Device é…ç½®æˆåŠŸ
 void USBD_USR_DeviceConfigured (void)
 {
     bDeviceState=1;
 	//printf("MSC Interface started.\r\n"); 
 } 
-//USB Device¹ÒÆğ
+//USB DeviceæŒ‚èµ·
 void USBD_USR_DeviceSuspended(void)
 {
     bDeviceState=0;
 	//printf("Device In suspend mode.\r\n");
 } 
-//USB Device»Ö¸´
+//USB Deviceæ¢å¤
 void USBD_USR_DeviceResumed(void)
 { 
 	//printf("Device Resumed\r\n");
 }
-//USB DeviceÁ¬½Ó³É¹¦
+//USB Deviceè¿æ¥æˆåŠŸ
 void USBD_USR_DeviceConnected (void)
 {
 	bDeviceState=1;
 	//printf("USB Device Connected.\r\n");
 }
-//USB DeviceÎ´Á¬½Ó
+//USB Deviceæœªè¿æ¥
 void USBD_USR_DeviceDisconnected (void)
 {
 	bDeviceState=0;

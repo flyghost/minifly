@@ -8,43 +8,43 @@
 #include "vl53lxx.h"
 
 /********************************************************************************	 
- * ±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
+ * æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
  * ALIENTEK MiniFly
- * ¹âÁ÷Ä£¿éÇı¶¯´úÂë	
- * ÕıµãÔ­×Ó@ALIENTEK
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ´´½¨ÈÕÆÚ:2018/5/2
- * °æ±¾£ºV1.3
- * °æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿¡£
- * Copyright(C) ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2024
+ * å…‰æµæ¨¡å—é©±åŠ¨ä»£ç 	
+ * æ­£ç‚¹åŸå­@ALIENTEK
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * åˆ›å»ºæ—¥æœŸ:2018/5/2
+ * ç‰ˆæœ¬ï¼šV1.3
+ * ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶ã€‚
+ * Copyright(C) å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2024
  * All rights reserved
  *
- * ĞŞ¸ÄËµÃ÷:
- * °æ±¾V1.3 Ôö¼Ó¹âÁ÷Êı¾İ½á¹¹ÌåopFlow_t£¬ÓÃÓÚ´æ·Å¹âÁ÷¸÷ÏîÊı¾İ£¬·½±ãÓÃ»§µ÷ÊÔ¡£
+ * ä¿®æ”¹è¯´æ˜:
+ * ç‰ˆæœ¬V1.3 å¢åŠ å…‰æµæ•°æ®ç»“æ„ä½“opFlow_tï¼Œç”¨äºå­˜æ”¾å…‰æµå„é¡¹æ•°æ®ï¼Œæ–¹ä¾¿ç”¨æˆ·è°ƒè¯•ã€‚
 ********************************************************************************/
 
 typedef struct opFlow_s 
 {
-	float pixSum[2];		/*ÀÛ»ıÏñËØ*/
-	float pixComp[2];		/*ÏñËØ²¹³¥*/
-	float pixValid[2];		/*ÓĞĞ§ÏñËØ*/
-	float pixValidLast[2];	/*ÉÏÒ»´ÎÓĞĞ§ÏñËØ*/
+	float pixSum[2];		/*ç´¯ç§¯åƒç´ */
+	float pixComp[2];		/*åƒç´ è¡¥å¿*/
+	float pixValid[2];		/*æœ‰æ•ˆåƒç´ */
+	float pixValidLast[2];	/*ä¸Šä¸€æ¬¡æœ‰æ•ˆåƒç´ */
 	
-	float deltaPos[2];		/*2Ö¡Ö®¼äµÄÎ»ÒÆ µ¥Î»cm*/
-	float deltaVel[2];		/*ËÙ¶È µ¥Î»cm/s*/
-	float posSum[2];		/*ÀÛ»ıÎ»ÒÆ µ¥Î»cm*/
-	float velLpf[2];		/*ËÙ¶ÈµÍÍ¨ µ¥Î»cm/s*/
+	float deltaPos[2];		/*2å¸§ä¹‹é—´çš„ä½ç§» å•ä½cm*/
+	float deltaVel[2];		/*é€Ÿåº¦ å•ä½cm/s*/
+	float posSum[2];		/*ç´¯ç§¯ä½ç§» å•ä½cm*/
+	float velLpf[2];		/*é€Ÿåº¦ä½é€š å•ä½cm/s*/
 	
-	bool isOpFlowOk;		/*¹âÁ÷×´Ì¬*/
-	bool isDataValid;		/*Êı¾İÓĞĞ§*/
+	bool isOpFlowOk;		/*å…‰æµçŠ¶æ€*/
+	bool isDataValid;		/*æ•°æ®æœ‰æ•ˆ*/
 
 } opFlow_t;
 
 extern opFlow_t opFlow;
 
-void opticalFlowPowerControl(bool state);	//¹âÁ÷µçÔ´¿ØÖÆ
-bool getOpFlowData(state_t *state, float dt);	//¶ÁÈ¡¹âÁ÷Êı¾İ
-void opticalFlowInit(void);		/*³õÊ¼»¯¹âÁ÷Ä£¿é*/
-bool getOpDataState(void);		/*¹âÁ÷Êı¾İ×´Ì¬*/
+void opticalFlowPowerControl(bool state);	//å…‰æµç”µæºæ§åˆ¶
+bool getOpFlowData(state_t *state, float dt);	//è¯»å–å…‰æµæ•°æ®
+void opticalFlowInit(void);		/*åˆå§‹åŒ–å…‰æµæ¨¡å—*/
+bool getOpDataState(void);		/*å…‰æµæ•°æ®çŠ¶æ€*/
 
 #endif
