@@ -29,24 +29,26 @@
 #if defined(FAST_MATH) || defined(VERY_FAST_MATH)
 #if defined(VERY_FAST_MATH)
 #define sinPolyCoef3 -1.666568107e-1f
-#define sinPolyCoef5  8.312366210e-3f
+#define sinPolyCoef5 8.312366210e-3f
 #define sinPolyCoef7 -1.849218155e-4f
-#define sinPolyCoef9  0
+#define sinPolyCoef9 0
 #else
-#define sinPolyCoef3 -1.666665710e-1f                                          // Double: -1.666665709650470145824129400050267289858e-1
-#define sinPolyCoef5  8.333017292e-3f                                          // Double:  8.333017291562218127986291618761571373087e-3
-#define sinPolyCoef7 -1.980661520e-4f                                          // Double: -1.980661520135080504411629636078917643846e-4
-#define sinPolyCoef9  2.600054768e-6f                                          // Double:  2.600054767890361277123254766503271638682e-6
+#define sinPolyCoef3 -1.666665710e-1f // Double: -1.666665709650470145824129400050267289858e-1
+#define sinPolyCoef5 8.333017292e-3f  // Double:  8.333017291562218127986291618761571373087e-3
+#define sinPolyCoef7 -1.980661520e-4f // Double: -1.980661520135080504411629636078917643846e-4
+#define sinPolyCoef9 2.600054768e-6f  // Double:  2.600054767890361277123254766503271638682e-6
 #endif
 
 float sin_approx(float x)
 {
     int32_t xint = x;
-    if (xint < -32 || xint > 32) return 0.0f;                               // Stop here on error input (5 * 360 Deg)
-    while (x >  M_PIf) x -= (2.0f * M_PIf);                                 // always wrap input angle to -PI..PI
+    if (xint < -32 || xint > 32) return 0.0f; // Stop here on error input (5 * 360 Deg)
+    while (x > M_PIf) x -= (2.0f * M_PIf);    // always wrap input angle to -PI..PI
     while (x < -M_PIf) x += (2.0f * M_PIf);
-    if (x >  (0.5f * M_PIf)) x =  (0.5f * M_PIf) - (x - (0.5f * M_PIf));   // We just pick -90..+90 Degree
-    else if (x < -(0.5f * M_PIf)) x = -(0.5f * M_PIf) - ((0.5f * M_PIf) + x);
+    if (x > (0.5f * M_PIf))
+        x = (0.5f * M_PIf) - (x - (0.5f * M_PIf)); // We just pick -90..+90 Degree
+    else if (x < -(0.5f * M_PIf))
+        x = -(0.5f * M_PIf) - ((0.5f * M_PIf) + x);
     float x2 = x * x;
     return x + x * x2 * (sinPolyCoef3 + x2 * (sinPolyCoef5 + x2 * (sinPolyCoef7 + x2 * sinPolyCoef9)));
 }
@@ -62,20 +64,22 @@ float cos_approx(float x)
 // Max absolute error 0,000027 degree
 float atan2_approx(float y, float x)
 {
-    #define atanPolyCoef1  3.14551665884836e-07f
-    #define atanPolyCoef2  0.99997356613987f
-    #define atanPolyCoef3  0.14744007058297684f
-    #define atanPolyCoef4  0.3099814292351353f
-    #define atanPolyCoef5  0.05030176425872175f
-    #define atanPolyCoef6  0.1471039133652469f
-    #define atanPolyCoef7  0.6444640676891548f
+#define atanPolyCoef1 3.14551665884836e-07f
+#define atanPolyCoef2 0.99997356613987f
+#define atanPolyCoef3 0.14744007058297684f
+#define atanPolyCoef4 0.3099814292351353f
+#define atanPolyCoef5 0.05030176425872175f
+#define atanPolyCoef6 0.1471039133652469f
+#define atanPolyCoef7 0.6444640676891548f
 
     float res, absX, absY;
     absX = fabsf(x);
     absY = fabsf(y);
     res  = MAX(absX, absY);
-    if (res) res = MIN(absX, absY) / res;
-    else res = 0.0f;
+    if (res)
+        res = MIN(absX, absY) / res;
+    else
+        res = 0.0f;
     res = -((((atanPolyCoef5 * res - atanPolyCoef4) * res - atanPolyCoef3) * res - atanPolyCoef2) * res - atanPolyCoef1) / ((atanPolyCoef7 * res + atanPolyCoef6) * res + 1.0f);
     if (absY > absX) res = (M_PIf / 2.0f) - res;
     if (x < 0) res = M_PIf - res;
@@ -89,7 +93,7 @@ float atan2_approx(float y, float x)
 // Absolute error <= 6.7e-5
 float acos_approx(float x)
 {
-    float xa = fabsf(x);
+    float xa     = fabsf(x);
     float result = sqrtf(1.0f - xa) * (1.5707288f + xa * (-0.2121144f + xa * (0.0742610f + (-0.0187293f * xa))));
     if (x < 0.0f)
         return M_PIf - result;
@@ -100,7 +104,8 @@ float acos_approx(float x)
 
 int gcd(int num, int denom)
 {
-    if (denom == 0) {
+    if (denom == 0)
+    {
         return num;
     }
 
@@ -127,11 +132,16 @@ int32_t wrap_36000(int32_t angle)
 
 int32_t applyDeadband(int32_t value, int32_t deadband)
 {
-    if (ABS(value) < deadband) {
+    if (ABS(value) < deadband)
+    {
         value = 0;
-    } else if (value > 0) {
+    }
+    else if (value > 0)
+    {
         value -= deadband;
-    } else if (value < 0) {
+    }
+    else if (value < 0)
+    {
         value += deadband;
     }
     return value;
@@ -139,11 +149,16 @@ int32_t applyDeadband(int32_t value, int32_t deadband)
 
 float applyDeadbandf(float value, float deadband)
 {
-    if (ABS(value) < deadband) {
+    if (ABS(value) < deadband)
+    {
         value = 0;
-    } else if (value > 0) {
+    }
+    else if (value > 0)
+    {
         value -= deadband;
-    } else if (value < 0) {
+    }
+    else if (value < 0)
+    {
         value += deadband;
     }
     return value;
@@ -178,10 +193,13 @@ void devClear(stdev_t *dev)
 void devPush(stdev_t *dev, float x)
 {
     dev->m_n++;
-    if (dev->m_n == 1) {
+    if (dev->m_n == 1)
+    {
         dev->m_oldM = dev->m_newM = x;
-        dev->m_oldS = 0.0f;
-    } else {
+        dev->m_oldS               = 0.0f;
+    }
+    else
+    {
         dev->m_newM = dev->m_oldM + (x - dev->m_oldM) / dev->m_n;
         dev->m_newS = dev->m_oldS + (x - dev->m_oldM) * (x - dev->m_newM);
         dev->m_oldM = dev->m_newM;
@@ -204,13 +222,15 @@ float degreesToRadians(int16_t degrees)
     return degrees * RAD;
 }
 
-int scaleRange(int x, int srcMin, int srcMax, int destMin, int destMax) {
-    long int a = ((long int) destMax - (long int) destMin) * ((long int) x - (long int) srcMin);
-    long int b = (long int) srcMax - (long int) srcMin;
+int scaleRange(int x, int srcMin, int srcMax, int destMin, int destMax)
+{
+    long int a = ((long int)destMax - (long int)destMin) * ((long int)x - (long int)srcMin);
+    long int b = (long int)srcMax - (long int)srcMin;
     return ((a / b) + destMin);
 }
 
-float scaleRangef(float x, float srcMin, float srcMax, float destMin, float destMax) {
+float scaleRangef(float x, float srcMin, float srcMax, float destMin, float destMax)
+{
     float a = (destMax - destMin) * (x - srcMin);
     float b = srcMax - srcMin;
     return ((a / b) + destMin);
@@ -222,7 +242,8 @@ void normalizeV(struct fp_vector *src, struct fp_vector *dest)
     float length;
 
     length = sqrtf(src->X * src->X + src->Y * src->Y + src->Z * src->Z);
-    if (length != 0) {
+    if (length != 0)
+    {
         dest->X = src->X / length;
         dest->Y = src->Y / length;
         dest->Z = src->Z / length;
@@ -274,80 +295,121 @@ void rotateV(struct fp_vector *v, fp_angles_t *delta)
 // Quick median filter implementation
 // (c) N. Devillard - 1998
 // http://ndevilla.free.fr/median/median.pdf
-#define QMF_SORT(type,a,b) { if ((a)>(b)) QMF_SWAP(type, (a),(b)); }
-#define QMF_SWAP(type,a,b) { type temp=(a);(a)=(b);(b)=temp; }
+#define QMF_SORT(type, a, b)                     \
+    {                                            \
+        if ((a) > (b)) QMF_SWAP(type, (a), (b)); \
+    }
+#define QMF_SWAP(type, a, b) \
+    {                        \
+        type temp = (a);     \
+        (a)       = (b);     \
+        (b)       = temp;    \
+    }
 
-int32_t quickMedianFilter3(int32_t * v)
+int32_t quickMedianFilter3(int32_t *v)
 {
     int32_t p[3];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int32_t, p[0], p[1]); QMF_SORT(int32_t, p[1], p[2]); QMF_SORT(int32_t, p[0], p[1]) ;
+    QMF_SORT(int32_t, p[0], p[1]);
+    QMF_SORT(int32_t, p[1], p[2]);
+    QMF_SORT(int32_t, p[0], p[1]);
     return p[1];
 }
 
-int16_t quickMedianFilter3_16(int16_t * v)
+int16_t quickMedianFilter3_16(int16_t *v)
 {
     int16_t p[3];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int16_t, p[0], p[1]); QMF_SORT(int16_t, p[1], p[2]); QMF_SORT(int16_t, p[0], p[1]) ;
+    QMF_SORT(int16_t, p[0], p[1]);
+    QMF_SORT(int16_t, p[1], p[2]);
+    QMF_SORT(int16_t, p[0], p[1]);
     return p[1];
 }
 
-int32_t quickMedianFilter5(int32_t * v)
+int32_t quickMedianFilter5(int32_t *v)
 {
     int32_t p[5];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int32_t, p[0], p[1]); QMF_SORT(int32_t, p[3], p[4]); QMF_SORT(int32_t, p[0], p[3]);
-    QMF_SORT(int32_t, p[1], p[4]); QMF_SORT(int32_t, p[1], p[2]); QMF_SORT(int32_t, p[2], p[3]);
+    QMF_SORT(int32_t, p[0], p[1]);
+    QMF_SORT(int32_t, p[3], p[4]);
+    QMF_SORT(int32_t, p[0], p[3]);
+    QMF_SORT(int32_t, p[1], p[4]);
+    QMF_SORT(int32_t, p[1], p[2]);
+    QMF_SORT(int32_t, p[2], p[3]);
     QMF_SORT(int32_t, p[1], p[2]);
     return p[2];
 }
 
-int16_t quickMedianFilter5_16(int16_t * v)
+int16_t quickMedianFilter5_16(int16_t *v)
 {
     int16_t p[5];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int16_t, p[0], p[1]); QMF_SORT(int16_t, p[3], p[4]); QMF_SORT(int16_t, p[0], p[3]);
-    QMF_SORT(int16_t, p[1], p[4]); QMF_SORT(int16_t, p[1], p[2]); QMF_SORT(int16_t, p[2], p[3]);
+    QMF_SORT(int16_t, p[0], p[1]);
+    QMF_SORT(int16_t, p[3], p[4]);
+    QMF_SORT(int16_t, p[0], p[3]);
+    QMF_SORT(int16_t, p[1], p[4]);
+    QMF_SORT(int16_t, p[1], p[2]);
+    QMF_SORT(int16_t, p[2], p[3]);
     QMF_SORT(int16_t, p[1], p[2]);
     return p[2];
 }
 
-int32_t quickMedianFilter7(int32_t * v)
+int32_t quickMedianFilter7(int32_t *v)
 {
     int32_t p[7];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int32_t, p[0], p[5]); QMF_SORT(int32_t, p[0], p[3]); QMF_SORT(int32_t, p[1], p[6]);
-    QMF_SORT(int32_t, p[2], p[4]); QMF_SORT(int32_t, p[0], p[1]); QMF_SORT(int32_t, p[3], p[5]);
-    QMF_SORT(int32_t, p[2], p[6]); QMF_SORT(int32_t, p[2], p[3]); QMF_SORT(int32_t, p[3], p[6]);
-    QMF_SORT(int32_t, p[4], p[5]); QMF_SORT(int32_t, p[1], p[4]); QMF_SORT(int32_t, p[1], p[3]);
+    QMF_SORT(int32_t, p[0], p[5]);
+    QMF_SORT(int32_t, p[0], p[3]);
+    QMF_SORT(int32_t, p[1], p[6]);
+    QMF_SORT(int32_t, p[2], p[4]);
+    QMF_SORT(int32_t, p[0], p[1]);
+    QMF_SORT(int32_t, p[3], p[5]);
+    QMF_SORT(int32_t, p[2], p[6]);
+    QMF_SORT(int32_t, p[2], p[3]);
+    QMF_SORT(int32_t, p[3], p[6]);
+    QMF_SORT(int32_t, p[4], p[5]);
+    QMF_SORT(int32_t, p[1], p[4]);
+    QMF_SORT(int32_t, p[1], p[3]);
     QMF_SORT(int32_t, p[3], p[4]);
     return p[3];
 }
 
-int32_t quickMedianFilter9(int32_t * v)
+int32_t quickMedianFilter9(int32_t *v)
 {
     int32_t p[9];
     memcpy(p, v, sizeof(p));
 
-    QMF_SORT(int32_t, p[1], p[2]); QMF_SORT(int32_t, p[4], p[5]); QMF_SORT(int32_t, p[7], p[8]);
-    QMF_SORT(int32_t, p[0], p[1]); QMF_SORT(int32_t, p[3], p[4]); QMF_SORT(int32_t, p[6], p[7]);
-    QMF_SORT(int32_t, p[1], p[2]); QMF_SORT(int32_t, p[4], p[5]); QMF_SORT(int32_t, p[7], p[8]);
-    QMF_SORT(int32_t, p[0], p[3]); QMF_SORT(int32_t, p[5], p[8]); QMF_SORT(int32_t, p[4], p[7]);
-    QMF_SORT(int32_t, p[3], p[6]); QMF_SORT(int32_t, p[1], p[4]); QMF_SORT(int32_t, p[2], p[5]);
-    QMF_SORT(int32_t, p[4], p[7]); QMF_SORT(int32_t, p[4], p[2]); QMF_SORT(int32_t, p[6], p[4]);
+    QMF_SORT(int32_t, p[1], p[2]);
+    QMF_SORT(int32_t, p[4], p[5]);
+    QMF_SORT(int32_t, p[7], p[8]);
+    QMF_SORT(int32_t, p[0], p[1]);
+    QMF_SORT(int32_t, p[3], p[4]);
+    QMF_SORT(int32_t, p[6], p[7]);
+    QMF_SORT(int32_t, p[1], p[2]);
+    QMF_SORT(int32_t, p[4], p[5]);
+    QMF_SORT(int32_t, p[7], p[8]);
+    QMF_SORT(int32_t, p[0], p[3]);
+    QMF_SORT(int32_t, p[5], p[8]);
+    QMF_SORT(int32_t, p[4], p[7]);
+    QMF_SORT(int32_t, p[3], p[6]);
+    QMF_SORT(int32_t, p[1], p[4]);
+    QMF_SORT(int32_t, p[2], p[5]);
+    QMF_SORT(int32_t, p[4], p[7]);
+    QMF_SORT(int32_t, p[4], p[2]);
+    QMF_SORT(int32_t, p[6], p[4]);
     QMF_SORT(int32_t, p[4], p[2]);
     return p[4];
 }
 
 void arraySubInt32(int32_t *dest, int32_t *array1, int32_t *array2, int count)
 {
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         dest[i] = array1[i] - array2[i];
     }
 }
@@ -357,10 +419,12 @@ void arraySubInt32(int32_t *dest, int32_t *array1, int32_t *array2, int count)
  * Initial implementation by @HaukeRa
  * Modified to be re-usable by @DigitalEntity
  */
-void sensorCalibrationResetState(sensorCalibrationState_t * state)
+void sensorCalibrationResetState(sensorCalibrationState_t *state)
 {
-    for (int i = 0; i < 4; i++){
-        for (int j = 0; j < 4; j++){
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
             state->XtX[i][j] = 0;
         }
 
@@ -368,7 +432,7 @@ void sensorCalibrationResetState(sensorCalibrationState_t * state)
     }
 }
 
-void sensorCalibrationPushSampleForOffsetCalculation(sensorCalibrationState_t * state, int32_t sample[3])
+void sensorCalibrationPushSampleForOffsetCalculation(sensorCalibrationState_t *state, int32_t sample[3])
 {
     state->XtX[0][0] += (float)sample[0] * sample[0];
     state->XtX[0][1] += (float)sample[0] * sample[1];
@@ -390,39 +454,46 @@ void sensorCalibrationPushSampleForOffsetCalculation(sensorCalibrationState_t * 
     state->XtX[3][2] += (float)sample[2];
     state->XtX[3][3] += 1;
 
-    float squareSum = ((float)sample[0] * sample[0]) + ((float)sample[1] * sample[1]) + ((float)sample[2] * sample[2]);
-    state->XtY[0] += sample[0] * squareSum;
-    state->XtY[1] += sample[1] * squareSum;
-    state->XtY[2] += sample[2] * squareSum;
-    state->XtY[3] += squareSum;
+    float squareSum  = ((float)sample[0] * sample[0]) + ((float)sample[1] * sample[1]) + ((float)sample[2] * sample[2]);
+    state->XtY[0]   += sample[0] * squareSum;
+    state->XtY[1]   += sample[1] * squareSum;
+    state->XtY[2]   += sample[2] * squareSum;
+    state->XtY[3]   += squareSum;
 }
 
-void sensorCalibrationPushSampleForScaleCalculation(sensorCalibrationState_t * state, int axis, int32_t sample[3], int target)
+void sensorCalibrationPushSampleForScaleCalculation(sensorCalibrationState_t *state, int axis, int32_t sample[3], int target)
 {
-    for (int i = 0; i < 3; i++) {
-        float scaledSample = (float)sample[i] / (float)target;
+    for (int i = 0; i < 3; i++)
+    {
+        float scaledSample   = (float)sample[i] / (float)target;
         state->XtX[axis][i] += scaledSample * scaledSample;
-        state->XtX[3][i] += scaledSample * scaledSample;
+        state->XtX[3][i]    += scaledSample * scaledSample;
     }
 
     state->XtX[axis][3] += 1;
-    state->XtY[axis] += 1;
-    state->XtY[3] += 1;
+    state->XtY[axis]    += 1;
+    state->XtY[3]       += 1;
 }
 
-static void sensorCalibration_gaussLR(float mat[4][4]) {
+static void sensorCalibration_gaussLR(float mat[4][4])
+{
     uint8_t n = 4;
-    int i, j, k;
-    for (i = 0; i < 4; i++) {
+    int     i, j, k;
+    for (i = 0; i < 4; i++)
+    {
         // Determine R
-        for (j = i; j < 4; j++) {
-            for (k = 0; k < i; k++) {
+        for (j = i; j < 4; j++)
+        {
+            for (k = 0; k < i; k++)
+            {
                 mat[i][j] -= mat[i][k] * mat[k][j];
             }
         }
         // Determine L
-        for (j = i + 1; j < n; j++) {
-            for (k = 0; k < i; k++) {
+        for (j = i + 1; j < n; j++)
+        {
+            for (k = 0; k < i; k++)
+            {
                 mat[j][i] -= mat[j][k] * mat[k][i];
             }
             mat[j][i] /= mat[i][i];
@@ -430,22 +501,28 @@ static void sensorCalibration_gaussLR(float mat[4][4]) {
     }
 }
 
-void sensorCalibration_ForwardSubstitution(float LR[4][4], float y[4], float b[4]) {
+void sensorCalibration_ForwardSubstitution(float LR[4][4], float y[4], float b[4])
+{
     int i, k;
-    for (i = 0; i < 4; ++i) {
+    for (i = 0; i < 4; ++i)
+    {
         y[i] = b[i];
-        for (k = 0; k < i; ++k) {
+        for (k = 0; k < i; ++k)
+        {
             y[i] -= LR[i][k] * y[k];
         }
         //y[i] /= MAT_ELEM_AT(LR,i,i); //Do not use, LR(i,i) is 1 anyways and not stored in this matrix
     }
 }
 
-void sensorCalibration_BackwardSubstitution(float LR[4][4], float x[4], float y[4]) {
+void sensorCalibration_BackwardSubstitution(float LR[4][4], float x[4], float y[4])
+{
     int i, k;
-    for (i = 3 ; i >= 0; --i) {
+    for (i = 3; i >= 0; --i)
+    {
         x[i] = y[i];
-        for (k = i + 1; k < 4; ++k) {
+        for (k = i + 1; k < 4; ++k)
+        {
             x[i] -= LR[i][k] * x[k];
         }
         x[i] /= LR[i][i];
@@ -454,13 +531,15 @@ void sensorCalibration_BackwardSubstitution(float LR[4][4], float x[4], float y[
 
 // solve linear equation
 // https://en.wikipedia.org/wiki/Gaussian_elimination
-static void sensorCalibration_SolveLGS(float A[4][4], float x[4], float b[4]) {
-    int i;
+static void sensorCalibration_SolveLGS(float A[4][4], float x[4], float b[4])
+{
+    int   i;
     float y[4];
 
     sensorCalibration_gaussLR(A);
 
-    for (i = 0; i < 4; ++i) {
+    for (i = 0; i < 4; ++i)
+    {
         y[i] = 0;
     }
 
@@ -468,22 +547,24 @@ static void sensorCalibration_SolveLGS(float A[4][4], float x[4], float b[4]) {
     sensorCalibration_BackwardSubstitution(A, x, y);
 }
 
-void sensorCalibrationSolveForOffset(sensorCalibrationState_t * state, float result[3])
+void sensorCalibrationSolveForOffset(sensorCalibrationState_t *state, float result[3])
 {
     float beta[4];
     sensorCalibration_SolveLGS(state->XtX, beta, state->XtY);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++)
+    {
         result[i] = beta[i] / 2;
     }
 }
 
-void sensorCalibrationSolveForScale(sensorCalibrationState_t * state, float result[3])
+void sensorCalibrationSolveForScale(sensorCalibrationState_t *state, float result[3])
 {
     float beta[4];
     sensorCalibration_SolveLGS(state->XtX, beta, state->XtY);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++)
+    {
         result[i] = sqrtf(beta[i]);
     }
 }

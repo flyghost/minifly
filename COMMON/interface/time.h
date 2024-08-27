@@ -6,7 +6,7 @@
 // time difference, 32 bits always sufficient
 typedef int32_t timeDelta_t;
 // millisecond time
-typedef uint32_t timeMs_t ;
+typedef uint32_t timeMs_t;
 // microsecond time
 #ifdef USE_64BIT_TIME
 typedef uint64_t timeUs_t;
@@ -16,9 +16,13 @@ typedef uint32_t timeUs_t;
 #define TIMEUS_MAX UINT32_MAX
 #endif
 
-static inline timeDelta_t cmpTimeUs(timeUs_t a, timeUs_t b) { return (timeDelta_t)(a - b); }
+static inline timeDelta_t cmpTimeUs(timeUs_t a, timeUs_t b)
+{
+    return (timeDelta_t)(a - b);
+}
 
-typedef struct timeConfig_s {
+typedef struct timeConfig_s
+{
     int16_t tz_offset; // Offset from UTC in minutes, might be positive or negative
 } timeConfig_t;
 
@@ -28,10 +32,11 @@ extern timeConfig_t timeConfig;
 typedef int64_t rtcTime_t;
 
 rtcTime_t rtcTimeMake(int32_t secs, uint16_t millis);
-int32_t rtcTimeGetSeconds(rtcTime_t *t);
-uint16_t rtcTimeGetMillis(rtcTime_t *t);
+int32_t   rtcTimeGetSeconds(rtcTime_t *t);
+uint16_t  rtcTimeGetMillis(rtcTime_t *t);
 
-typedef struct _dateTime_s {
+typedef struct _dateTime_s
+{
     // full year
     uint16_t year;
     // 1-12

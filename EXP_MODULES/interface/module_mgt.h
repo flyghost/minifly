@@ -17,8 +17,8 @@
 ********************************************************************************/
 
 enum expModuleID getModuleID(void);
-void expModulePower(bool state);
-void expModuleMgtTask(void* param);
+void             expModulePower(bool state);
+void             expModuleMgtTask(void *param);
 
 
 #endif /* __EXP_MODULE_H */

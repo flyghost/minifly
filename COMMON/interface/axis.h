@@ -1,6 +1,7 @@
 #pragma once
 
-typedef enum {
+typedef enum
+{
     X = 0,
     Y,
     Z
@@ -9,7 +10,8 @@ typedef enum {
 #define XYZ_AXIS_COUNT 3
 
 // See http://en.wikipedia.org/wiki/Flight_dynamics
-typedef enum {
+typedef enum
+{
     FD_ROLL = 0,
     FD_PITCH,
     FD_YAW
@@ -17,7 +19,8 @@ typedef enum {
 
 #define FLIGHT_DYNAMICS_INDEX_COUNT 3
 
-typedef enum {
+typedef enum
+{
     AI_ROLL = 0,
     AI_PITCH,
 } angle_index_t;

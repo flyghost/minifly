@@ -21,13 +21,13 @@
 ********************************************************************************/
 
 
-extern u16 vl53lxxId;	/*vl53芯片ID*/
-extern bool isEnableVl53lxx;
+extern u16      vl53lxxId; /*vl53芯片ID*/
+extern bool     isEnableVl53lxx;
 extern zRange_t vl53lxx;
 
 
 void vl53lxxInit(void);
-bool vl53lxxReadRange(zRange_t* zrange);
+bool vl53lxxReadRange(zRange_t *zrange);
 void setVl53lxxState(u8 enable);
 
 #endif /* __VL53LXX_H */

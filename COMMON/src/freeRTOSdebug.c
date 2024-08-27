@@ -23,37 +23,37 @@
 
 u32 traceTickCount;
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
-	portDISABLE_INTERRUPTS();
-	printf("\nMalloc failed!\n");
-	ledSet(ERR_LED1, 1);	/*错误检测*/
-	ledSet(ERR_LED2, 1);
-	while(1);
+    portDISABLE_INTERRUPTS();
+    printf("\nMalloc failed!\n");
+    ledSet(ERR_LED1, 1); /*错误检测*/
+    ledSet(ERR_LED2, 1);
+    while (1);
 }
 
 #if (configCHECK_FOR_STACK_OVERFLOW == 1)
 void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed portCHAR *pcTaskName)
 {
-	portDISABLE_INTERRUPTS();
-	printf("\nStack overflow!\n");
-	ledSet(ERR_LED1, 1);/*错误检测*/
-	ledSet(ERR_LED2, 1);
-	while(1);
+    portDISABLE_INTERRUPTS();
+    printf("\nStack overflow!\n");
+    ledSet(ERR_LED1, 1); /*错误检测*/
+    ledSet(ERR_LED2, 1);
+    while (1);
 }
 #endif
 
 #ifdef UART_OUTPUT_TRACE_DATA
 void debugSendTraceInfo(u32 taskNbr)
 {
-	u32 traceData;
-	traceData = (taskNbr << 29) | (((traceTickCount << 16) + TIM1->CNT) & 0x1FFFFFF);
-	uartSendDataDma(sizeof(traceData), (u8*)&traceData);
+    u32 traceData;
+    traceData = (taskNbr << 29) | (((traceTickCount << 16) + TIM1->CNT) & 0x1FFFFFF);
+    uartSendDataDma(sizeof(traceData), (u8 *)&traceData);
 }
 
 void debugInitTrace(void)
 {
-	/*TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+    /*TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	//Enable the Timer

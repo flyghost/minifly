@@ -13,37 +13,41 @@ D、缺点：
     平滑度差。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
 int Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
-  Value = 300;
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
+    Value = 300;
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Value = Filter_Value;          // 最近一次有效采样的值，该变量为全局变量
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Value        = Filter_Value;  // 最近一次有效采样的值，该变量为全局变量
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 限幅滤波法（又称程序判断滤波法）
 #define FILTER_A 1
-int Filter() {
-  int NewValue;
-  NewValue = Get_AD();
-  if(((NewValue - Value) > FILTER_A) || ((Value - NewValue) > FILTER_A))
-    return Value;
-  else
-    return NewValue;
+int Filter()
+{
+    int NewValue;
+    NewValue = Get_AD();
+    if (((NewValue - Value) > FILTER_A) || ((Value - NewValue) > FILTER_A))
+        return Value;
+    else
+        return NewValue;
 }
 
 
@@ -60,46 +64,54 @@ D、缺点：
     对流量、速度等快速变化的参数不宜。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 中位值滤波法
 #define FILTER_N 101
-int Filter() {
-  int filter_buf[FILTER_N];
-  int i, j;
-  int filter_temp;
-  for(i = 0; i < FILTER_N; i++) {
-    filter_buf[i] = Get_AD();
-    delay(1);
-  }
-  // 采样值从小到大排列（冒泡法）
-  for(j = 0; j < FILTER_N - 1; j++) {
-    for(i = 0; i < FILTER_N - 1 - j; i++) {
-      if(filter_buf[i] > filter_buf[i + 1]) {
-        filter_temp = filter_buf[i];
-        filter_buf[i] = filter_buf[i + 1];
-        filter_buf[i + 1] = filter_temp;
-      }
+int Filter()
+{
+    int filter_buf[FILTER_N];
+    int i, j;
+    int filter_temp;
+    for (i = 0; i < FILTER_N; i++)
+    {
+        filter_buf[i] = Get_AD();
+        delay(1);
     }
-  }
-  return filter_buf[(FILTER_N - 1) / 2];
+    // 采样值从小到大排列（冒泡法）
+    for (j = 0; j < FILTER_N - 1; j++)
+    {
+        for (i = 0; i < FILTER_N - 1 - j; i++)
+        {
+            if (filter_buf[i] > filter_buf[i + 1])
+            {
+                filter_temp       = filter_buf[i];
+                filter_buf[i]     = filter_buf[i + 1];
+                filter_buf[i + 1] = filter_temp;
+            }
+        }
+    }
+    return filter_buf[(FILTER_N - 1) / 2];
 }
 
 /*3、算术平均滤波法*/
@@ -118,35 +130,40 @@ D、缺点：
     比较浪费RAM。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 算术平均滤波法
 #define FILTER_N 12
-int Filter() {
-  int i;
-  int filter_sum = 0;
-  for(i = 0; i < FILTER_N; i++) {
-    filter_sum += Get_AD();
-    delay(1);
-  }
-  return (int)(filter_sum / FILTER_N);
+int Filter()
+{
+    int i;
+    int filter_sum = 0;
+    for (i = 0; i < FILTER_N; i++)
+    {
+        filter_sum += Get_AD();
+        delay(1);
+    }
+    return (int)(filter_sum / FILTER_N);
 }
 
 /*4、递推平均滤波法（又称滑动平均滤波法）*/
@@ -167,37 +184,42 @@ D、缺点：
     比较浪费RAM。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 递推平均滤波法（又称滑动平均滤波法）
 #define FILTER_N 12
 int filter_buf[FILTER_N + 1];
-int Filter() {
-  int i;
-  int filter_sum = 0;
-  filter_buf[FILTER_N] = Get_AD();
-  for(i = 0; i < FILTER_N; i++) {
-    filter_buf[i] = filter_buf[i + 1]; // 所有数据左移，低位仍掉
-    filter_sum += filter_buf[i];
-  }
-  return (int)(filter_sum / FILTER_N);
+int Filter()
+{
+    int i;
+    int filter_sum       = 0;
+    filter_buf[FILTER_N] = Get_AD();
+    for (i = 0; i < FILTER_N; i++)
+    {
+        filter_buf[i]  = filter_buf[i + 1]; // 所有数据左移，低位仍掉
+        filter_sum    += filter_buf[i];
+    }
+    return (int)(filter_sum / FILTER_N);
 }
 
 /*5.中位值平均滤波法(又称防脉冲干扰平均滤波法)*/
@@ -219,51 +241,59 @@ D、缺点：
     比较浪费RAM。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 中位值平均滤波法（又称防脉冲干扰平均滤波法）（算法1）
 #define FILTER_N 100
-int Filter() {
-  int i, j;
-  int filter_temp, filter_sum = 0;
-  int filter_buf[FILTER_N];
-  for(i = 0; i < FILTER_N; i++) {
-    filter_buf[i] = Get_AD();
-    delay(1);
-  }
-  // 采样值从小到大排列（冒泡法）
-  for(j = 0; j < FILTER_N - 1; j++) {
-    for(i = 0; i < FILTER_N - 1 - j; i++) {
-      if(filter_buf[i] > filter_buf[i + 1]) {
-        filter_temp = filter_buf[i];
-        filter_buf[i] = filter_buf[i + 1];
-        filter_buf[i + 1] = filter_temp;
-      }
+int Filter()
+{
+    int i, j;
+    int filter_temp, filter_sum = 0;
+    int filter_buf[FILTER_N];
+    for (i = 0; i < FILTER_N; i++)
+    {
+        filter_buf[i] = Get_AD();
+        delay(1);
     }
-  }
-  // 去除最大最小极值后求平均
-  for(i = 1; i < FILTER_N - 1; i++) filter_sum += filter_buf[i];
-  return filter_sum / (FILTER_N - 2);
+    // 采样值从小到大排列（冒泡法）
+    for (j = 0; j < FILTER_N - 1; j++)
+    {
+        for (i = 0; i < FILTER_N - 1 - j; i++)
+        {
+            if (filter_buf[i] > filter_buf[i + 1])
+            {
+                filter_temp       = filter_buf[i];
+                filter_buf[i]     = filter_buf[i + 1];
+                filter_buf[i + 1] = filter_temp;
+            }
+        }
+    }
+    // 去除最大最小极值后求平均
+    for (i = 1; i < FILTER_N - 1; i++) filter_sum += filter_buf[i];
+    return filter_sum / (FILTER_N - 2);
 }
- 
- 
+
+
 //  中位值平均滤波法（又称防脉冲干扰平均滤波法）（算法2）
 /*
 #define FILTER_N 100
@@ -307,41 +337,46 @@ D、缺点：
     比较浪费RAM。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 #define FILTER_N 12
 int Filter_Value;
 int filter_buf[FILTER_N];
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
-  filter_buf[FILTER_N - 2] = 300;
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
+    filter_buf[FILTER_N - 2] = 300;
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 限幅平均滤波法
 #define FILTER_A 1
-int Filter() {
-  int i;
-  int filter_sum = 0;
-  filter_buf[FILTER_N - 1] = Get_AD();
-  if(((filter_buf[FILTER_N - 1] - filter_buf[FILTER_N - 2]) > FILTER_A) || ((filter_buf[FILTER_N - 2] - filter_buf[FILTER_N - 1]) > FILTER_A))
-    filter_buf[FILTER_N - 1] = filter_buf[FILTER_N - 2];
-  for(i = 0; i < FILTER_N - 1; i++) {
-    filter_buf[i] = filter_buf[i + 1];
-    filter_sum += filter_buf[i];
-  }
-  return (int)filter_sum / (FILTER_N - 1);
+int Filter()
+{
+    int i;
+    int filter_sum           = 0;
+    filter_buf[FILTER_N - 1] = Get_AD();
+    if (((filter_buf[FILTER_N - 1] - filter_buf[FILTER_N - 2]) > FILTER_A) || ((filter_buf[FILTER_N - 2] - filter_buf[FILTER_N - 1]) > FILTER_A))
+        filter_buf[FILTER_N - 1] = filter_buf[FILTER_N - 2];
+    for (i = 0; i < FILTER_N - 1; i++)
+    {
+        filter_buf[i]  = filter_buf[i + 1];
+        filter_sum    += filter_buf[i];
+    }
+    return (int)filter_sum / (FILTER_N - 1);
 }
 
 /*7.一阶滞后滤波法*/
@@ -358,34 +393,38 @@ D、缺点：
     不能消除滤波频率高于采样频率1/2的干扰信号。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
 int Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
-  Value = 300;
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
+    Value = 300;
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 一阶滞后滤波法
 #define FILTER_A 0.01
-int Filter() {
-  int NewValue;
-  NewValue = Get_AD();
-  Value = (int)((float)NewValue * FILTER_A + (1.0 - FILTER_A) * (float)Value);
-  return Value;
+int Filter()
+{
+    int NewValue;
+    NewValue = Get_AD();
+    Value    = (int)((float)NewValue * FILTER_A + (1.0 - FILTER_A) * (float)Value);
+    return Value;
 }
 
 /*8.加权递推平均滤波法*/
@@ -402,40 +441,45 @@ D、缺点：
     不能迅速反应系统当前所受干扰的严重程度，滤波效果差。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 加权递推平均滤波法
 #define FILTER_N 12
-int coe[FILTER_N] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};    // 加权系数表
-int sum_coe = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12; // 加权系数和
+int coe[FILTER_N] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};          // 加权系数表
+int sum_coe       = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12; // 加权系数和
 int filter_buf[FILTER_N + 1];
-int Filter() {
-  int i;
-  int filter_sum = 0;
-  filter_buf[FILTER_N] = Get_AD();
-  for(i = 0; i < FILTER_N; i++) {
-    filter_buf[i] = filter_buf[i + 1]; // 所有数据左移，低位仍掉
-    filter_sum += filter_buf[i] * coe[i];
-  }
-  filter_sum /= sum_coe;
-  return filter_sum;
+int Filter()
+{
+    int i;
+    int filter_sum       = 0;
+    filter_buf[FILTER_N] = Get_AD();
+    for (i = 0; i < FILTER_N; i++)
+    {
+        filter_buf[i]  = filter_buf[i + 1]; // 所有数据左移，低位仍掉
+        filter_sum    += filter_buf[i] * coe[i];
+    }
+    filter_sum /= sum_coe;
+    return filter_sum;
 }
 
 /*9.消抖滤波法*/
@@ -454,46 +498,52 @@ D、缺点：
     如果在计数器溢出的那一次采样到的值恰好是干扰值,则会将干扰值当作有效值导入系统。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
 int Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
-  Value = 300;
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
+    Value = 300;
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 消抖滤波法
 #define FILTER_N 12
 int i = 0;
-int Filter() {
-  int new_value;
-  new_value = Get_AD();
-  if(Value != new_value) {
-    i++;
-    if(i > FILTER_N) {
-      i = 0;
-      Value = new_value;
+int Filter()
+{
+    int new_value;
+    new_value = Get_AD();
+    if (Value != new_value)
+    {
+        i++;
+        if (i > FILTER_N)
+        {
+            i     = 0;
+            Value = new_value;
+        }
     }
-  }
-  else
-    i = 0;
-  return Value;
+    else
+        i = 0;
+    return Value;
 }
 
- /*10.限幅消抖滤波法*/
+/*10.限幅消抖滤波法*/
 /*
 A、名称：限幅消抖滤波法
 B、方法：
@@ -506,93 +556,55 @@ D、缺点：
     对于快速变化的参数不宜。
 E、整理：shenhaiyu 2013-11-01
 */
- 
+
 int Filter_Value;
 int Value;
- 
-void setup() {
-  Serial.begin(9600);       // 初始化串口通信
-  randomSeed(analogRead(0)); // 产生随机种子
-  Value = 300;
+
+void setup()
+{
+    Serial.begin(9600);        // 初始化串口通信
+    randomSeed(analogRead(0)); // 产生随机种子
+    Value = 300;
 }
- 
-void loop() {
-  Filter_Value = Filter();       // 获得滤波器输出值
-  Serial.println(Filter_Value); // 串口输出
-  delay(50);
+
+void loop()
+{
+    Filter_Value = Filter();      // 获得滤波器输出值
+    Serial.println(Filter_Value); // 串口输出
+    delay(50);
 }
- 
+
 // 用于随机产生一个300左右的当前值
-int Get_AD() {
-  return random(295, 305);
+int Get_AD()
+{
+    return random(295, 305);
 }
- 
+
 // 限幅消抖滤波法
 #define FILTER_A 1
 #define FILTER_N 5
 int i = 0;
-int Filter() {
-  int NewValue;
-  int new_value;
-  NewValue = Get_AD();
-  if(((NewValue - Value) > FILTER_A) || ((Value - NewValue) > FILTER_A))
-    new_value = Value;
-  else
-    new_value = NewValue;
-  if(Value != new_value) {
-    i++;
-    if(i > FILTER_N) {
-      i = 0;
-      Value = new_value;
+int Filter()
+{
+    int NewValue;
+    int new_value;
+    NewValue = Get_AD();
+    if (((NewValue - Value) > FILTER_A) || ((Value - NewValue) > FILTER_A))
+        new_value = Value;
+    else
+        new_value = NewValue;
+    if (Value != new_value)
+    {
+        i++;
+        if (i > FILTER_N)
+        {
+            i     = 0;
+            Value = new_value;
+        }
     }
-  }
-  else
-    i = 0;
-  return Value;
+    else
+        i = 0;
+    return Value;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

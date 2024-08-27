@@ -23,8 +23,8 @@
 #include "filter2.h"
 #include "maths.h"
 
-#define BIQUAD_BANDWIDTH 1.9f     /* bandwidth in octaves */
-#define BIQUAD_Q 1.0f / sqrtf(2.0f)     /* quality factor - butterworth*/
+#define BIQUAD_BANDWIDTH 1.9f               /* bandwidth in octaves */
+#define BIQUAD_Q         1.0f / sqrtf(2.0f) /* quality factor - butterworth*/
 
 
 // PT1 Low Pass filter
@@ -32,7 +32,7 @@
 // f_cut = cutoff frequency
 void pt1FilterInit(pt1Filter_t *filter, uint8_t f_cut, float dT)
 {
-    filter->RC = 1.0f / ( 2.0f * M_PIf * f_cut );
+    filter->RC = 1.0f / (2.0f * M_PIf * f_cut);
     filter->dT = dT;
 }
 
@@ -45,11 +45,12 @@ float pt1FilterApply(pt1Filter_t *filter, float input)
 float pt1FilterApply4(pt1Filter_t *filter, float input, uint16_t f_cut, float dT)
 {
     // Pre calculate and store RC
-    if (!filter->RC) {
-        filter->RC = 1.0f / ( 2.0f * M_PIf * f_cut );
+    if (!filter->RC)
+    {
+        filter->RC = 1.0f / (2.0f * M_PIf * f_cut);
     }
 
-    filter->dT = dT;    // cache latest dT for possible use in pt1FilterApply
+    filter->dT    = dT; // cache latest dT for possible use in pt1FilterApply
     filter->state = filter->state + dT / (filter->RC + dT) * (input - filter->state);
     return filter->state;
 }
@@ -67,11 +68,13 @@ void rateLimitFilterInit(rateLimitFilter_t *filter)
 
 float rateLimitFilterApply4(rateLimitFilter_t *filter, float input, float rate_limit, float dT)
 {
-    if (rate_limit > 0) {
+    if (rate_limit > 0)
+    {
         const float rateLimitPerSample = rate_limit * dT;
-        filter->state = constrainf(input, filter->state - rateLimitPerSample, filter->state + rateLimitPerSample);
+        filter->state                  = constrainf(input, filter->state - rateLimitPerSample, filter->state + rateLimitPerSample);
     }
-    else {
+    else
+    {
         filter->state = input;
     }
 
@@ -80,7 +83,7 @@ float rateLimitFilterApply4(rateLimitFilter_t *filter, float input, float rate_l
 
 float filterGetNotchQ(uint16_t centerFreq, uint16_t cutoff)
 {
-    const float octaves = log2f((float)centerFreq  / (float)cutoff) * 2;
+    const float octaves = log2f((float)centerFreq / (float)cutoff) * 2;
     return sqrtf(powf(2, octaves)) / (powf(2, octaves) - 1);
 }
 
@@ -99,30 +102,32 @@ void biquadFilterInitLPF(biquadFilter_t *filter, uint16_t filterFreq, uint32_t s
 void biquadFilterInit(biquadFilter_t *filter, uint16_t filterFreq, uint32_t samplingIntervalUs, float Q, biquadFilterType_e filterType)
 {
     // Check for Nyquist frequency and if it's not possible to initialize filter as requested - set to no filtering at all
-    if (filterFreq < (1000000 / samplingIntervalUs / 2)) {
+    if (filterFreq < (1000000 / samplingIntervalUs / 2))
+    {
         // setup variables
         const float sampleRate = 1.0f / ((float)samplingIntervalUs * 0.000001f);
-        const float omega = 2.0f * M_PIf * ((float)filterFreq) / sampleRate;
-        const float sn = sin_approx(omega);
-        const float cs = cos_approx(omega);
-        const float alpha = sn / (2 * Q);
+        const float omega      = 2.0f * M_PIf * ((float)filterFreq) / sampleRate;
+        const float sn         = sin_approx(omega);
+        const float cs         = cos_approx(omega);
+        const float alpha      = sn / (2 * Q);
 
         float b0, b1, b2;
-        switch (filterType) {
+        switch (filterType)
+        {
         case FILTER_LPF:
             b0 = (1 - cs) / 2;
             b1 = 1 - cs;
             b2 = (1 - cs) / 2;
             break;
         case FILTER_NOTCH:
-            b0 =  1;
+            b0 = 1;
             b1 = -2 * cs;
-            b2 =  1;
+            b2 = 1;
             break;
         }
-        const float a0 =  1 + alpha;
+        const float a0 = 1 + alpha;
         const float a1 = -2 * cs;
-        const float a2 =  1 - alpha;
+        const float a2 = 1 - alpha;
 
         // precompute the coefficients
         filter->b0 = b0 / a0;
@@ -131,7 +136,8 @@ void biquadFilterInit(biquadFilter_t *filter, uint16_t filterFreq, uint32_t samp
         filter->a1 = a1 / a0;
         filter->a2 = a2 / a0;
     }
-    else {
+    else
+    {
         // Not possible to filter frequencies above Nyquist frequency - passthrough
         filter->b0 = 1.0f;
         filter->b1 = 0.0f;
@@ -148,8 +154,8 @@ void biquadFilterInit(biquadFilter_t *filter, uint16_t filterFreq, uint32_t samp
 float biquadFilterApply(biquadFilter_t *filter, float input)
 {
     const float result = filter->b0 * input + filter->d1;
-    filter->d1 = filter->b1 * input - filter->a1 * result + filter->d2;
-    filter->d2 = filter->b2 * input - filter->a2 * result;
+    filter->d1         = filter->b1 * input - filter->a1 * result + filter->d2;
+    filter->d2         = filter->b2 * input - filter->a2 * result;
     return result;
 }
 
@@ -158,9 +164,9 @@ float biquadFilterApply(biquadFilter_t *filter, float input)
  */
 void firFilterInit2(firFilter_t *filter, float *buf, uint8_t bufLength, const float *coeffs, uint8_t coeffsLength)
 {
-    filter->buf = buf;
-    filter->bufLength = bufLength;
-    filter->coeffs = coeffs;
+    filter->buf          = buf;
+    filter->bufLength    = bufLength;
+    filter->coeffs       = coeffs;
     filter->coeffsLength = coeffsLength;
     memset(filter->buf, 0, sizeof(float) * filter->bufLength);
 }
@@ -176,14 +182,15 @@ void firFilterInit(firFilter_t *filter, float *buf, uint8_t bufLength, const flo
 
 void firFilterUpdate(firFilter_t *filter, float input)
 {
-    memmove(&filter->buf[1], &filter->buf[0], (filter->bufLength-1) * sizeof(float));
+    memmove(&filter->buf[1], &filter->buf[0], (filter->bufLength - 1) * sizeof(float));
     filter->buf[0] = input;
 }
 
 float firFilterApply(const firFilter_t *filter)
 {
     float ret = 0.0f;
-    for (int ii = 0; ii < filter->coeffsLength; ++ii) {
+    for (int ii = 0; ii < filter->coeffsLength; ++ii)
+    {
         ret += filter->coeffs[ii] * filter->buf[ii];
     }
     return ret;

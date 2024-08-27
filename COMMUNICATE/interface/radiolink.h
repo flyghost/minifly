@@ -21,7 +21,7 @@ void radiolinkInit(void);
 void radiolinkTask(void *param);
 bool radiolinkSendPacket(const atkp_t *p);
 bool radiolinkSendPacketBlocking(const atkp_t *p);
-int radiolinkGetFreeTxQueuePackets(void);
+int  radiolinkGetFreeTxQueuePackets(void);
 
 #endif /*__RADIO_H */
 
