@@ -30,7 +30,7 @@
 #define __STM32F4xx_DBGMCU_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -42,17 +42,17 @@
 
 /** @addtogroup DBGMCU
   * @{
-  */ 
+  */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup DBGMCU_Exported_Constants
   * @{
-  */ 
-#define DBGMCU_SLEEP                 ((uint32_t)0x00000001)
-#define DBGMCU_STOP                  ((uint32_t)0x00000002)
-#define DBGMCU_STANDBY               ((uint32_t)0x00000004)
+  */
+#define DBGMCU_SLEEP             ((uint32_t)0x00000001)
+#define DBGMCU_STOP              ((uint32_t)0x00000002)
+#define DBGMCU_STANDBY           ((uint32_t)0x00000004)
 #define IS_DBGMCU_PERIPH(PERIPH) ((((PERIPH) & 0xFFFFFFF8) == 0x00) && ((PERIPH) != 0x00))
 
 #define DBGMCU_TIM2_STOP             ((uint32_t)0x00000001)
@@ -82,15 +82,15 @@
 #define IS_DBGMCU_APB2PERIPH(PERIPH) ((((PERIPH) & 0xFFF8FFFC) == 0x00) && ((PERIPH) != 0x00))
 /**
   * @}
-  */ 
+  */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/ 
+/* Exported functions --------------------------------------------------------*/
 uint32_t DBGMCU_GetREVID(void);
 uint32_t DBGMCU_GetDEVID(void);
-void DBGMCU_Config(uint32_t DBGMCU_Periph, FunctionalState NewState);
-void DBGMCU_APB1PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
-void DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
+void     DBGMCU_Config(uint32_t DBGMCU_Periph, FunctionalState NewState);
+void     DBGMCU_APB1PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
+void     DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
 
 #ifdef __cplusplus
 }
@@ -100,10 +100,10 @@ void DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState);
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
