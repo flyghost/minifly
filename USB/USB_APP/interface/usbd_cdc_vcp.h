@@ -43,14 +43,14 @@
    command class requests. */
 typedef struct
 {
-  uint32_t bitrate;
-  uint8_t  format;
-  uint8_t  paritytype;
-  uint8_t  datatype;
-}LINE_CODING;
+    uint32_t bitrate;
+    uint8_t  format;
+    uint8_t  paritytype;
+    uint8_t  datatype;
+} LINE_CODING;
 
 void usbd_cdc_vcp_Init(void);
-void usbsendData(u8* data, u16 length);
+void usbsendData(u8 *data, u16 length);
 bool usbGetDataWithTimout(uint8_t *c);
 
 #endif /* __USBD_CDC_VCP_H */

@@ -24,7 +24,7 @@
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usb_bsp.h"
@@ -36,52 +36,49 @@
 /** @defgroup USB_BSP
   * @brief This file is responsible to offer board support package
   * @{
-  */ 
+  */
 
 /** @defgroup USB_BSP_Private_Defines
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup USB_BSP_Private_TypesDefinitions
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
-
-
-
+  */
 
 
 /** @defgroup USB_BSP_Private_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_BSP_Private_Variables
   * @{
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_BSP_Private_FunctionPrototypes
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USB_BSP_Private_Functions
   * @{
-  */ 
+  */
 
 
 /**
@@ -93,7 +90,6 @@
 
 void USB_OTG_BSP_Init(void)
 {
-
 }
 /**
   * @brief  USB_OTG_BSP_EnableInterrupt
@@ -103,7 +99,6 @@ void USB_OTG_BSP_Init(void)
   */
 void USB_OTG_BSP_EnableInterrupt(void)
 {
-
 }
 
 /**
@@ -116,7 +111,6 @@ void USB_OTG_BSP_EnableInterrupt(void)
 
 void USB_OTG_BSP_DriveVBUS(uint32_t speed, uint8_t state)
 {
-
 }
 
 /**
@@ -126,9 +120,8 @@ void USB_OTG_BSP_DriveVBUS(uint32_t speed, uint8_t state)
   * @retval None
   */
 
-void  USB_OTG_BSP_ConfigVBUS(uint32_t speed)
+void USB_OTG_BSP_ConfigVBUS(uint32_t speed)
 {
-
 }
 
 /**
@@ -137,9 +130,8 @@ void  USB_OTG_BSP_ConfigVBUS(uint32_t speed)
   * @param  None
   * @retval None
   */
-void USB_OTG_BSP_TimeInit ( void )
+void USB_OTG_BSP_TimeInit(void)
 {
-
 }
 
 /**
@@ -148,20 +140,17 @@ void USB_OTG_BSP_TimeInit ( void )
   * @param  usec : Value of delay required in micro sec
   * @retval None
   */
-void USB_OTG_BSP_uDelay (const uint32_t usec)
+void USB_OTG_BSP_uDelay(const uint32_t usec)
 {
-
-  uint32_t count = 0;
-  const uint32_t utime = (120 * usec / 7);
-  do
-  {
-    if ( ++count > utime )
+    uint32_t       count = 0;
+    const uint32_t utime = (120 * usec / 7);
+    do
     {
-      return ;
-    }
-  }
-  while (1); 
-  
+        if (++count > utime)
+        {
+            return;
+        }
+    } while (1);
 }
 
 
@@ -171,11 +160,9 @@ void USB_OTG_BSP_uDelay (const uint32_t usec)
   * @param  msec : Value of delay required in milli sec
   * @retval None
   */
-void USB_OTG_BSP_mDelay (const uint32_t msec)
+void USB_OTG_BSP_mDelay(const uint32_t msec)
 {
-
-    USB_OTG_BSP_uDelay(msec * 1000);    
-
+    USB_OTG_BSP_uDelay(msec * 1000);
 }
 
 
@@ -186,18 +173,17 @@ void USB_OTG_BSP_mDelay (const uint32_t msec)
   * @retval None
   */
 
-void USB_OTG_BSP_TimerIRQ (void)
+void USB_OTG_BSP_TimerIRQ(void)
 {
-
-} 
-
-/**
-* @}
-*/ 
+}
 
 /**
 * @}
-*/ 
+*/
+
+/**
+* @}
+*/
 
 /**
 * @}

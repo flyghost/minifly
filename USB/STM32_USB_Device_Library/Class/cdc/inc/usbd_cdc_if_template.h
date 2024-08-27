@@ -37,7 +37,7 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-extern CDC_IF_Prop_TypeDef  TEMPLATE_fops;
+extern CDC_IF_Prop_TypeDef TEMPLATE_fops;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
