@@ -140,8 +140,8 @@ VL53L1_Error VL53L1_run_ref_spad_char(VL53L1_DEV Dev, VL53L1_Error *pcal_status)
 
 #ifndef VL53L1_NOCALIB
 VL53L1_Error VL53L1_run_device_test(
-	VL53L1_DEV                 Dev,
-	VL53L1_DeviceTestMode      device_test_mode);
+    VL53L1_DEV            Dev,
+    VL53L1_DeviceTestMode device_test_mode);
 #endif
 
 
@@ -170,11 +170,11 @@ VL53L1_Error VL53L1_run_device_test(
 
 #ifndef VL53L1_NOCALIB
 VL53L1_Error VL53L1_run_spad_rate_map(
-	VL53L1_DEV                 Dev,
-	VL53L1_DeviceTestMode      device_test_mode,
-	VL53L1_DeviceSscArray      array_select,
-	uint32_t                   ssc_config_timeout_us,
-	VL53L1_spad_rate_data_t   *pspad_rate_data);
+    VL53L1_DEV               Dev,
+    VL53L1_DeviceTestMode    device_test_mode,
+    VL53L1_DeviceSscArray    array_select,
+    uint32_t                 ssc_config_timeout_us,
+    VL53L1_spad_rate_data_t *pspad_rate_data);
 #endif
 
 
@@ -222,10 +222,10 @@ VL53L1_Error VL53L1_run_spad_rate_map(
  */
 
 #ifndef VL53L1_NOCALIB
-VL53L1_Error   VL53L1_run_offset_calibration(
-	VL53L1_DEV	                  Dev,
-	int16_t                       cal_distance_mm,
-	VL53L1_Error                 *pcal_status);
+VL53L1_Error VL53L1_run_offset_calibration(
+    VL53L1_DEV    Dev,
+    int16_t       cal_distance_mm,
+    VL53L1_Error *pcal_status);
 #endif
 
 

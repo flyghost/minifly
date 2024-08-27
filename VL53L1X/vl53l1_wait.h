@@ -88,7 +88,7 @@ extern "C" {
  */
 
 VL53L1_Error VL53L1_wait_for_boot_completion(
-	VL53L1_DEV      Dev);
+    VL53L1_DEV Dev);
 
 
 /**
@@ -106,7 +106,7 @@ VL53L1_Error VL53L1_wait_for_boot_completion(
  */
 
 VL53L1_Error VL53L1_wait_for_firmware_ready(
-	VL53L1_DEV      Dev);
+    VL53L1_DEV Dev);
 
 
 /**
@@ -121,7 +121,7 @@ VL53L1_Error VL53L1_wait_for_firmware_ready(
  */
 
 VL53L1_Error VL53L1_wait_for_range_completion(
-	VL53L1_DEV   Dev);
+    VL53L1_DEV Dev);
 
 
 /**
@@ -136,9 +136,7 @@ VL53L1_Error VL53L1_wait_for_range_completion(
  */
 
 VL53L1_Error VL53L1_wait_for_test_completion(
-	VL53L1_DEV   Dev);
-
-
+    VL53L1_DEV Dev);
 
 
 /**
@@ -155,8 +153,8 @@ VL53L1_Error VL53L1_wait_for_test_completion(
  */
 
 VL53L1_Error VL53L1_is_boot_complete(
-	VL53L1_DEV      Dev,
-	uint8_t        *pready);
+    VL53L1_DEV Dev,
+    uint8_t   *pready);
 
 /**
  * @brief Reads FIRMWARE__SYSTEM_STATUS register to detect if the
@@ -172,8 +170,8 @@ VL53L1_Error VL53L1_is_boot_complete(
  */
 
 VL53L1_Error VL53L1_is_firmware_ready(
-	VL53L1_DEV      Dev,
-	uint8_t        *pready);
+    VL53L1_DEV Dev,
+    uint8_t   *pready);
 
 
 /**
@@ -197,10 +195,8 @@ VL53L1_Error VL53L1_is_firmware_ready(
  */
 
 VL53L1_Error VL53L1_is_new_data_ready(
-	VL53L1_DEV      Dev,
-	uint8_t        *pready);
-
-
+    VL53L1_DEV Dev,
+    uint8_t   *pready);
 
 
 /**
@@ -223,8 +219,8 @@ VL53L1_Error VL53L1_is_new_data_ready(
  */
 
 VL53L1_Error VL53L1_poll_for_boot_completion(
-	VL53L1_DEV      Dev,
-	uint32_t        timeout_ms);
+    VL53L1_DEV Dev,
+    uint32_t   timeout_ms);
 
 
 /**
@@ -240,8 +236,8 @@ VL53L1_Error VL53L1_poll_for_boot_completion(
  */
 
 VL53L1_Error VL53L1_poll_for_firmware_ready(
-	VL53L1_DEV      Dev,
-	uint32_t        timeout_ms);
+    VL53L1_DEV Dev,
+    uint32_t   timeout_ms);
 
 
 /**
@@ -264,9 +260,8 @@ VL53L1_Error VL53L1_poll_for_firmware_ready(
  */
 
 VL53L1_Error VL53L1_poll_for_range_completion(
-	VL53L1_DEV   Dev,
-	uint32_t     timeout_ms);
-
+    VL53L1_DEV Dev,
+    uint32_t   timeout_ms);
 
 
 #ifdef __cplusplus

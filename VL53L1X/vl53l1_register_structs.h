@@ -71,49 +71,49 @@
 #include "vl53l1_types.h"
 #include "vl53l1_register_map.h"
 
-#define VL53L1_STATIC_NVM_MANAGED_I2C_INDEX               VL53L1_I2C_SLAVE__DEVICE_ADDRESS
-#define VL53L1_CUSTOMER_NVM_MANAGED_I2C_INDEX             VL53L1_GLOBAL_CONFIG__SPAD_ENABLES_REF_0
-#define VL53L1_STATIC_CONFIG_I2C_INDEX                    VL53L1_DSS_CONFIG__TARGET_TOTAL_RATE_MCPS
-#define VL53L1_GENERAL_CONFIG_I2C_INDEX                   VL53L1_GPH_CONFIG__STREAM_COUNT_UPDATE_VALUE
-#define VL53L1_TIMING_CONFIG_I2C_INDEX                    VL53L1_MM_CONFIG__TIMEOUT_MACROP_A_HI
-#define VL53L1_DYNAMIC_CONFIG_I2C_INDEX                   VL53L1_SYSTEM__GROUPED_PARAMETER_HOLD_0
-#define VL53L1_SYSTEM_CONTROL_I2C_INDEX                   VL53L1_POWER_MANAGEMENT__GO1_POWER_FORCE
-#define VL53L1_SYSTEM_RESULTS_I2C_INDEX                   VL53L1_RESULT__INTERRUPT_STATUS
-#define VL53L1_CORE_RESULTS_I2C_INDEX                     VL53L1_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
-#define VL53L1_DEBUG_RESULTS_I2C_INDEX                    VL53L1_PHASECAL_RESULT__REFERENCE_PHASE
-#define VL53L1_NVM_COPY_DATA_I2C_INDEX                    VL53L1_IDENTIFICATION__MODEL_ID
-#define VL53L1_PREV_SHADOW_SYSTEM_RESULTS_I2C_INDEX       VL53L1_PREV_SHADOW_RESULT__INTERRUPT_STATUS
-#define VL53L1_PREV_SHADOW_CORE_RESULTS_I2C_INDEX         VL53L1_PREV_SHADOW_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
-#define VL53L1_PATCH_DEBUG_I2C_INDEX                      VL53L1_RESULT__DEBUG_STATUS
-#define VL53L1_GPH_GENERAL_CONFIG_I2C_INDEX               VL53L1_GPH__SYSTEM__THRESH_RATE_HIGH
-#define VL53L1_GPH_STATIC_CONFIG_I2C_INDEX                VL53L1_GPH__DSS_CONFIG__ROI_MODE_CONTROL
-#define VL53L1_GPH_TIMING_CONFIG_I2C_INDEX                VL53L1_GPH__MM_CONFIG__TIMEOUT_MACROP_A_HI
-#define VL53L1_FW_INTERNAL_I2C_INDEX                      VL53L1_FIRMWARE__INTERNAL_STREAM_COUNT_DIV
-#define VL53L1_PATCH_RESULTS_I2C_INDEX                    VL53L1_DSS_CALC__ROI_CTRL
-#define VL53L1_SHADOW_SYSTEM_RESULTS_I2C_INDEX            VL53L1_SHADOW_PHASECAL_RESULT__VCSEL_START
-#define VL53L1_SHADOW_CORE_RESULTS_I2C_INDEX              VL53L1_SHADOW_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
+#define VL53L1_STATIC_NVM_MANAGED_I2C_INDEX         VL53L1_I2C_SLAVE__DEVICE_ADDRESS
+#define VL53L1_CUSTOMER_NVM_MANAGED_I2C_INDEX       VL53L1_GLOBAL_CONFIG__SPAD_ENABLES_REF_0
+#define VL53L1_STATIC_CONFIG_I2C_INDEX              VL53L1_DSS_CONFIG__TARGET_TOTAL_RATE_MCPS
+#define VL53L1_GENERAL_CONFIG_I2C_INDEX             VL53L1_GPH_CONFIG__STREAM_COUNT_UPDATE_VALUE
+#define VL53L1_TIMING_CONFIG_I2C_INDEX              VL53L1_MM_CONFIG__TIMEOUT_MACROP_A_HI
+#define VL53L1_DYNAMIC_CONFIG_I2C_INDEX             VL53L1_SYSTEM__GROUPED_PARAMETER_HOLD_0
+#define VL53L1_SYSTEM_CONTROL_I2C_INDEX             VL53L1_POWER_MANAGEMENT__GO1_POWER_FORCE
+#define VL53L1_SYSTEM_RESULTS_I2C_INDEX             VL53L1_RESULT__INTERRUPT_STATUS
+#define VL53L1_CORE_RESULTS_I2C_INDEX               VL53L1_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
+#define VL53L1_DEBUG_RESULTS_I2C_INDEX              VL53L1_PHASECAL_RESULT__REFERENCE_PHASE
+#define VL53L1_NVM_COPY_DATA_I2C_INDEX              VL53L1_IDENTIFICATION__MODEL_ID
+#define VL53L1_PREV_SHADOW_SYSTEM_RESULTS_I2C_INDEX VL53L1_PREV_SHADOW_RESULT__INTERRUPT_STATUS
+#define VL53L1_PREV_SHADOW_CORE_RESULTS_I2C_INDEX   VL53L1_PREV_SHADOW_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
+#define VL53L1_PATCH_DEBUG_I2C_INDEX                VL53L1_RESULT__DEBUG_STATUS
+#define VL53L1_GPH_GENERAL_CONFIG_I2C_INDEX         VL53L1_GPH__SYSTEM__THRESH_RATE_HIGH
+#define VL53L1_GPH_STATIC_CONFIG_I2C_INDEX          VL53L1_GPH__DSS_CONFIG__ROI_MODE_CONTROL
+#define VL53L1_GPH_TIMING_CONFIG_I2C_INDEX          VL53L1_GPH__MM_CONFIG__TIMEOUT_MACROP_A_HI
+#define VL53L1_FW_INTERNAL_I2C_INDEX                VL53L1_FIRMWARE__INTERNAL_STREAM_COUNT_DIV
+#define VL53L1_PATCH_RESULTS_I2C_INDEX              VL53L1_DSS_CALC__ROI_CTRL
+#define VL53L1_SHADOW_SYSTEM_RESULTS_I2C_INDEX      VL53L1_SHADOW_PHASECAL_RESULT__VCSEL_START
+#define VL53L1_SHADOW_CORE_RESULTS_I2C_INDEX        VL53L1_SHADOW_RESULT_CORE__AMBIENT_WINDOW_EVENTS_SD0
 
-#define VL53L1_STATIC_NVM_MANAGED_I2C_SIZE_BYTES           11
-#define VL53L1_CUSTOMER_NVM_MANAGED_I2C_SIZE_BYTES         23
-#define VL53L1_STATIC_CONFIG_I2C_SIZE_BYTES                32
-#define VL53L1_GENERAL_CONFIG_I2C_SIZE_BYTES               22
-#define VL53L1_TIMING_CONFIG_I2C_SIZE_BYTES                23
-#define VL53L1_DYNAMIC_CONFIG_I2C_SIZE_BYTES               18
-#define VL53L1_SYSTEM_CONTROL_I2C_SIZE_BYTES                5
-#define VL53L1_SYSTEM_RESULTS_I2C_SIZE_BYTES               44
-#define VL53L1_CORE_RESULTS_I2C_SIZE_BYTES                 33
-#define VL53L1_DEBUG_RESULTS_I2C_SIZE_BYTES                56
-#define VL53L1_NVM_COPY_DATA_I2C_SIZE_BYTES                49
-#define VL53L1_PREV_SHADOW_SYSTEM_RESULTS_I2C_SIZE_BYTES   44
-#define VL53L1_PREV_SHADOW_CORE_RESULTS_I2C_SIZE_BYTES     33
-#define VL53L1_PATCH_DEBUG_I2C_SIZE_BYTES                   2
-#define VL53L1_GPH_GENERAL_CONFIG_I2C_SIZE_BYTES            5
-#define VL53L1_GPH_STATIC_CONFIG_I2C_SIZE_BYTES             6
-#define VL53L1_GPH_TIMING_CONFIG_I2C_SIZE_BYTES            16
-#define VL53L1_FW_INTERNAL_I2C_SIZE_BYTES                   2
-#define VL53L1_PATCH_RESULTS_I2C_SIZE_BYTES                90
-#define VL53L1_SHADOW_SYSTEM_RESULTS_I2C_SIZE_BYTES        82
-#define VL53L1_SHADOW_CORE_RESULTS_I2C_SIZE_BYTES          33
+#define VL53L1_STATIC_NVM_MANAGED_I2C_SIZE_BYTES         11
+#define VL53L1_CUSTOMER_NVM_MANAGED_I2C_SIZE_BYTES       23
+#define VL53L1_STATIC_CONFIG_I2C_SIZE_BYTES              32
+#define VL53L1_GENERAL_CONFIG_I2C_SIZE_BYTES             22
+#define VL53L1_TIMING_CONFIG_I2C_SIZE_BYTES              23
+#define VL53L1_DYNAMIC_CONFIG_I2C_SIZE_BYTES             18
+#define VL53L1_SYSTEM_CONTROL_I2C_SIZE_BYTES             5
+#define VL53L1_SYSTEM_RESULTS_I2C_SIZE_BYTES             44
+#define VL53L1_CORE_RESULTS_I2C_SIZE_BYTES               33
+#define VL53L1_DEBUG_RESULTS_I2C_SIZE_BYTES              56
+#define VL53L1_NVM_COPY_DATA_I2C_SIZE_BYTES              49
+#define VL53L1_PREV_SHADOW_SYSTEM_RESULTS_I2C_SIZE_BYTES 44
+#define VL53L1_PREV_SHADOW_CORE_RESULTS_I2C_SIZE_BYTES   33
+#define VL53L1_PATCH_DEBUG_I2C_SIZE_BYTES                2
+#define VL53L1_GPH_GENERAL_CONFIG_I2C_SIZE_BYTES         5
+#define VL53L1_GPH_STATIC_CONFIG_I2C_SIZE_BYTES          6
+#define VL53L1_GPH_TIMING_CONFIG_I2C_SIZE_BYTES          16
+#define VL53L1_FW_INTERNAL_I2C_SIZE_BYTES                2
+#define VL53L1_PATCH_RESULTS_I2C_SIZE_BYTES              90
+#define VL53L1_SHADOW_SYSTEM_RESULTS_I2C_SIZE_BYTES      82
+#define VL53L1_SHADOW_CORE_RESULTS_I2C_SIZE_BYTES        33
 
 
 /**
@@ -125,9 +125,10 @@
  * - i2c_size     =     11
  */
 
-typedef struct {
-	uint8_t   i2c_slave__device_address;
-/*!<
+typedef struct
+{
+    uint8_t i2c_slave__device_address;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -136,8 +137,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = i2c_slave_device_address
 */
-	uint8_t   ana_config__vhv_ref_sel_vddpix;
-/*!<
+    uint8_t ana_config__vhv_ref_sel_vddpix;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -146,8 +147,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = ref_sel_vddpix
 */
-	uint8_t   ana_config__vhv_ref_sel_vquench;
-/*!<
+    uint8_t ana_config__vhv_ref_sel_vquench;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  3
@@ -156,8 +157,8 @@ typedef struct {
 	fields: \n
 		- [6:3] = ref_sel_vquench
 */
-	uint8_t   ana_config__reg_avdd1v2_sel;
-/*!<
+    uint8_t ana_config__reg_avdd1v2_sel;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -166,8 +167,8 @@ typedef struct {
 	fields: \n
 		- [1:0] = reg_avdd1v2_sel
 */
-	uint8_t   ana_config__fast_osc__trim;
-/*!<
+    uint8_t ana_config__fast_osc__trim;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -176,8 +177,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = fast_osc_trim
 */
-	uint16_t  osc_measured__fast_osc__frequency;
-/*!<
+    uint16_t osc_measured__fast_osc__frequency;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -186,8 +187,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = osc_frequency (fixed point 4.12)
 */
-	uint8_t   vhv_config__timeout_macrop_loop_bound;
-/*!<
+    uint8_t vhv_config__timeout_macrop_loop_bound;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -197,8 +198,8 @@ typedef struct {
 		- [1:0] = vhv_timeout__macrop
 		- [7:2] = vhv_loop_bound
 */
-	uint8_t   vhv_config__count_thresh;
-/*!<
+    uint8_t vhv_config__count_thresh;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -207,8 +208,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = vhv_count_thresh
 */
-	uint8_t   vhv_config__offset;
-/*!<
+    uint8_t vhv_config__offset;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -217,8 +218,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = vhv_step_val
 */
-	uint8_t   vhv_config__init;
-/*!<
+    uint8_t vhv_config__init;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -240,9 +241,10 @@ typedef struct {
  * - i2c_size     =     23
  */
 
-typedef struct {
-	uint8_t   global_config__spad_enables_ref_0;
-/*!<
+typedef struct
+{
+    uint8_t global_config__spad_enables_ref_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -251,8 +253,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_ref_0
 */
-	uint8_t   global_config__spad_enables_ref_1;
-/*!<
+    uint8_t global_config__spad_enables_ref_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -261,8 +263,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_ref_1
 */
-	uint8_t   global_config__spad_enables_ref_2;
-/*!<
+    uint8_t global_config__spad_enables_ref_2;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -271,8 +273,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_ref_2
 */
-	uint8_t   global_config__spad_enables_ref_3;
-/*!<
+    uint8_t global_config__spad_enables_ref_3;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -281,8 +283,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_ref_3
 */
-	uint8_t   global_config__spad_enables_ref_4;
-/*!<
+    uint8_t global_config__spad_enables_ref_4;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -291,8 +293,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_ref_4
 */
-	uint8_t   global_config__spad_enables_ref_5;
-/*!<
+    uint8_t global_config__spad_enables_ref_5;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -301,8 +303,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = spad_enables_ref_5
 */
-	uint8_t   global_config__ref_en_start_select;
-/*!<
+    uint8_t global_config__ref_en_start_select;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -311,8 +313,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = ref_en_start_select
 */
-	uint8_t   ref_spad_man__num_requested_ref_spads;
-/*!<
+    uint8_t ref_spad_man__num_requested_ref_spads;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -321,8 +323,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = ref_spad_man__num_requested_ref_spad
 */
-	uint8_t   ref_spad_man__ref_location;
-/*!<
+    uint8_t ref_spad_man__ref_location;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -331,8 +333,8 @@ typedef struct {
 	fields: \n
 		- [1:0] = ref_spad_man__ref_location
 */
-	uint16_t  algo__crosstalk_compensation_plane_offset_kcps;
-/*!<
+    uint16_t algo__crosstalk_compensation_plane_offset_kcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -341,8 +343,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = crosstalk_compensation_plane_offset_kcps (fixed point 7.9)
 */
-	int16_t   algo__crosstalk_compensation_x_plane_gradient_kcps;
-/*!<
+    int16_t algo__crosstalk_compensation_x_plane_gradient_kcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -351,8 +353,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = crosstalk_compensation_x_plane_gradient_kcps (fixed point 5.11)
 */
-	int16_t   algo__crosstalk_compensation_y_plane_gradient_kcps;
-/*!<
+    int16_t algo__crosstalk_compensation_y_plane_gradient_kcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -361,8 +363,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = crosstalk_compensation_y_plane_gradient_kcps (fixed point 5.11)
 */
-	uint16_t  ref_spad_char__total_rate_target_mcps;
-/*!<
+    uint16_t ref_spad_char__total_rate_target_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -371,8 +373,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = ref_spad_char__total_rate_target_mcps (fixed point 9.7)
 */
-	int16_t   algo__part_to_part_range_offset_mm;
-/*!<
+    int16_t algo__part_to_part_range_offset_mm;
+    /*!<
 	info: \n
 		- msb = 12
 		- lsb =  0
@@ -381,8 +383,8 @@ typedef struct {
 	fields: \n
 		- [12:0] = part_to_part_offset_mm (fixed point 11.2)
 */
-	int16_t   mm_config__inner_offset_mm;
-/*!<
+    int16_t mm_config__inner_offset_mm;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -391,8 +393,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = mm_config__inner_offset_mm
 */
-	int16_t   mm_config__outer_offset_mm;
-/*!<
+    int16_t mm_config__outer_offset_mm;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -413,9 +415,10 @@ typedef struct {
  * - i2c_size     =     32
  */
 
-typedef struct {
-	uint16_t  dss_config__target_total_rate_mcps;
-/*!<
+typedef struct
+{
+    uint16_t dss_config__target_total_rate_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -424,8 +427,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = dss_config__target_total_rate_mcps (fixed point 9.7)
 */
-	uint8_t   debug__ctrl;
-/*!<
+    uint8_t debug__ctrl;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -434,8 +437,8 @@ typedef struct {
 	fields: \n
 		-   [0] = enable_result_logging
 */
-	uint8_t   test_mode__ctrl;
-/*!<
+    uint8_t test_mode__ctrl;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -444,8 +447,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = test_mode__cmd
 */
-	uint8_t   clk_gating__ctrl;
-/*!<
+    uint8_t clk_gating__ctrl;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -457,8 +460,8 @@ typedef struct {
 		-   [2] = clk_gate_en__mcu_timers
 		-   [3] = clk_gate_en__mcu_mult_div
 */
-	uint8_t   nvm_bist__ctrl;
-/*!<
+    uint8_t nvm_bist__ctrl;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -468,8 +471,8 @@ typedef struct {
 		- [2:0] = nvm_bist__cmd
 		-   [4] = nvm_bist__ctrl
 */
-	uint8_t   nvm_bist__num_nvm_words;
-/*!<
+    uint8_t nvm_bist__num_nvm_words;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -478,8 +481,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = nvm_bist__num_nvm_words
 */
-	uint8_t   nvm_bist__start_address;
-/*!<
+    uint8_t nvm_bist__start_address;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -488,8 +491,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = nvm_bist__start_address
 */
-	uint8_t   host_if__status;
-/*!<
+    uint8_t host_if__status;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -498,8 +501,8 @@ typedef struct {
 	fields: \n
 		-   [0] = host_interface
 */
-	uint8_t   pad_i2c_hv__config;
-/*!<
+    uint8_t pad_i2c_hv__config;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -513,8 +516,8 @@ typedef struct {
 		-   [5] = pad_sda__fpen_hv
 		- [7:6] = pad_sda__progdel_hv
 */
-	uint8_t   pad_i2c_hv__extsup_config;
-/*!<
+    uint8_t pad_i2c_hv__extsup_config;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -523,8 +526,8 @@ typedef struct {
 	fields: \n
 		-   [0] = pad_scl_sda__extsup_hv
 */
-	uint8_t   gpio_hv_pad__ctrl;
-/*!<
+    uint8_t gpio_hv_pad__ctrl;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -534,8 +537,8 @@ typedef struct {
 		-   [0] = gpio__extsup_hv
 		-   [1] = gpio__vmodeint_hv
 */
-	uint8_t   gpio_hv_mux__ctrl;
-/*!<
+    uint8_t gpio_hv_mux__ctrl;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -545,8 +548,8 @@ typedef struct {
 		- [3:0] = gpio__mux_select_hv
 		-   [4] = gpio__mux_active_high_hv
 */
-	uint8_t   gpio__tio_hv_status;
-/*!<
+    uint8_t gpio__tio_hv_status;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -556,8 +559,8 @@ typedef struct {
 		-   [0] = gpio__tio_hv
 		-   [1] = fresh_out_of_reset
 */
-	uint8_t   gpio__fio_hv_status;
-/*!<
+    uint8_t gpio__fio_hv_status;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  1
@@ -566,8 +569,8 @@ typedef struct {
 	fields: \n
 		-   [1] = gpio__fio_hv
 */
-	uint8_t   ana_config__spad_sel_pswidth;
-/*!<
+    uint8_t ana_config__spad_sel_pswidth;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -576,8 +579,8 @@ typedef struct {
 	fields: \n
 		- [2:0] = spad_sel_pswidth
 */
-	uint8_t   ana_config__vcsel_pulse_width_offset;
-/*!<
+    uint8_t ana_config__vcsel_pulse_width_offset;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -586,8 +589,8 @@ typedef struct {
 	fields: \n
 		- [4:0] = vcsel_pulse_width_offset (fixed point 1.4)
 */
-	uint8_t   ana_config__fast_osc__config_ctrl;
-/*!<
+    uint8_t ana_config__fast_osc__config_ctrl;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -596,8 +599,8 @@ typedef struct {
 	fields: \n
 		-   [0] = osc_config__latch_bypass
 */
-	uint8_t   sigma_estimator__effective_pulse_width_ns;
-/*!<
+    uint8_t sigma_estimator__effective_pulse_width_ns;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -606,8 +609,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sigma_estimator__eff_pulse_width
 */
-	uint8_t   sigma_estimator__effective_ambient_width_ns;
-/*!<
+    uint8_t sigma_estimator__effective_ambient_width_ns;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -616,8 +619,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sigma_estimator__eff_ambient_width
 */
-	uint8_t   sigma_estimator__sigma_ref_mm;
-/*!<
+    uint8_t sigma_estimator__sigma_ref_mm;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -626,8 +629,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sigma_estimator__sigma_ref
 */
-	uint8_t   algo__crosstalk_compensation_valid_height_mm;
-/*!<
+    uint8_t algo__crosstalk_compensation_valid_height_mm;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -636,8 +639,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = crosstalk_compensation_valid_height_mm
 */
-	uint8_t   spare_host_config__static_config_spare_0;
-/*!<
+    uint8_t spare_host_config__static_config_spare_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -646,8 +649,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = static_config_spare_0
 */
-	uint8_t   spare_host_config__static_config_spare_1;
-/*!<
+    uint8_t spare_host_config__static_config_spare_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -656,8 +659,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = static_config_spare_1
 */
-	uint16_t  algo__range_ignore_threshold_mcps;
-/*!<
+    uint16_t algo__range_ignore_threshold_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -666,8 +669,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = range_ignore_thresh_mcps (fixed point 3.13)
 */
-	uint8_t   algo__range_ignore_valid_height_mm;
-/*!<
+    uint8_t algo__range_ignore_valid_height_mm;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -676,8 +679,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = range_ignore_height_mm
 */
-	uint8_t   algo__range_min_clip;
-/*!<
+    uint8_t algo__range_min_clip;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -687,8 +690,8 @@ typedef struct {
 		-   [0] = algo__range_min_clip_enable
 		- [7:1] = algo__range_min_clip_value_mm
 */
-	uint8_t   algo__consistency_check__tolerance;
-/*!<
+    uint8_t algo__consistency_check__tolerance;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -697,8 +700,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = consistency_check_tolerance (fixed point 1.3)
 */
-	uint8_t   spare_host_config__static_config_spare_2;
-/*!<
+    uint8_t spare_host_config__static_config_spare_2;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -707,8 +710,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = static_config_spare_2
 */
-	uint8_t   sd_config__reset_stages_msb;
-/*!<
+    uint8_t sd_config__reset_stages_msb;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -717,8 +720,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = loop_init__clear_stage
 */
-	uint8_t   sd_config__reset_stages_lsb;
-/*!<
+    uint8_t sd_config__reset_stages_lsb;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -740,9 +743,10 @@ typedef struct {
  * - i2c_size     =     22
  */
 
-typedef struct {
-	uint8_t   gph_config__stream_count_update_value;
-/*!<
+typedef struct
+{
+    uint8_t gph_config__stream_count_update_value;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -751,8 +755,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = stream_count_update_value
 */
-	uint8_t   global_config__stream_divider;
-/*!<
+    uint8_t global_config__stream_divider;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -761,8 +765,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = stream_count_internal_div
 */
-	uint8_t   system__interrupt_config_gpio;
-/*!<
+    uint8_t system__interrupt_config_gpio;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -776,8 +780,8 @@ typedef struct {
 		-   [6] = int_no_target_en
 		-   [7] = int_combined_mode
 */
-	uint8_t   cal_config__vcsel_start;
-/*!<
+    uint8_t cal_config__vcsel_start;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -786,8 +790,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = cal_config__vcsel_start
 */
-	uint16_t  cal_config__repeat_rate;
-/*!<
+    uint16_t cal_config__repeat_rate;
+    /*!<
 	info: \n
 		- msb = 11
 		- lsb =  0
@@ -796,8 +800,8 @@ typedef struct {
 	fields: \n
 		- [11:0] = cal_config__repeat_rate
 */
-	uint8_t   global_config__vcsel_width;
-/*!<
+    uint8_t global_config__vcsel_width;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -806,8 +810,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = global_config__vcsel_width
 */
-	uint8_t   phasecal_config__timeout_macrop;
-/*!<
+    uint8_t phasecal_config__timeout_macrop;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -816,8 +820,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = phasecal_config__timeout_macrop
 */
-	uint8_t   phasecal_config__target;
-/*!<
+    uint8_t phasecal_config__target;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -826,8 +830,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = algo_phasecal_lim
 */
-	uint8_t   phasecal_config__override;
-/*!<
+    uint8_t phasecal_config__override;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -836,8 +840,8 @@ typedef struct {
 	fields: \n
 		-   [0] = phasecal_config__override
 */
-	uint8_t   dss_config__roi_mode_control;
-/*!<
+    uint8_t dss_config__roi_mode_control;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -847,8 +851,8 @@ typedef struct {
 		- [1:0] = dss_config__input_mode
 		-   [2] = calculate_roi_enable
 */
-	uint16_t  system__thresh_rate_high;
-/*!<
+    uint16_t system__thresh_rate_high;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -857,8 +861,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = thresh_rate_high (fixed point 9.7)
 */
-	uint16_t  system__thresh_rate_low;
-/*!<
+    uint16_t system__thresh_rate_low;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -867,8 +871,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = thresh_rate_low (fixed point 9.7)
 */
-	uint16_t  dss_config__manual_effective_spads_select;
-/*!<
+    uint16_t dss_config__manual_effective_spads_select;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -877,8 +881,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = dss_config__manual_effective_spads_select
 */
-	uint8_t   dss_config__manual_block_select;
-/*!<
+    uint8_t dss_config__manual_block_select;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -887,8 +891,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_config__manual_block_select
 */
-	uint8_t   dss_config__aperture_attenuation;
-/*!<
+    uint8_t dss_config__aperture_attenuation;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -897,8 +901,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_config__aperture_attenuation
 */
-	uint8_t   dss_config__max_spads_limit;
-/*!<
+    uint8_t dss_config__max_spads_limit;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -907,8 +911,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_config__max_spads_limit
 */
-	uint8_t   dss_config__min_spads_limit;
-/*!<
+    uint8_t dss_config__min_spads_limit;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -929,9 +933,10 @@ typedef struct {
  * - i2c_size     =     23
  */
 
-typedef struct {
-	uint8_t   mm_config__timeout_macrop_a_hi;
-/*!<
+typedef struct
+{
+    uint8_t mm_config__timeout_macrop_a_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -940,8 +945,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = mm_config__config_timeout_macrop_a_hi
 */
-	uint8_t   mm_config__timeout_macrop_a_lo;
-/*!<
+    uint8_t mm_config__timeout_macrop_a_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -950,8 +955,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = mm_config__config_timeout_macrop_a_lo
 */
-	uint8_t   mm_config__timeout_macrop_b_hi;
-/*!<
+    uint8_t mm_config__timeout_macrop_b_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -960,8 +965,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = mm_config__config_timeout_macrop_b_hi
 */
-	uint8_t   mm_config__timeout_macrop_b_lo;
-/*!<
+    uint8_t mm_config__timeout_macrop_b_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -970,8 +975,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = mm_config__config_timeout_macrop_b_lo
 */
-	uint8_t   range_config__timeout_macrop_a_hi;
-/*!<
+    uint8_t range_config__timeout_macrop_a_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -980,8 +985,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = range_timeout_overall_periods_macrop_a_hi
 */
-	uint8_t   range_config__timeout_macrop_a_lo;
-/*!<
+    uint8_t range_config__timeout_macrop_a_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -990,8 +995,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = range_timeout_overall_periods_macrop_a_lo
 */
-	uint8_t   range_config__vcsel_period_a;
-/*!<
+    uint8_t range_config__vcsel_period_a;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1000,8 +1005,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = range_config__vcsel_period_a
 */
-	uint8_t   range_config__timeout_macrop_b_hi;
-/*!<
+    uint8_t range_config__timeout_macrop_b_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -1010,8 +1015,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = range_timeout_overall_periods_macrop_b_hi
 */
-	uint8_t   range_config__timeout_macrop_b_lo;
-/*!<
+    uint8_t range_config__timeout_macrop_b_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1020,8 +1025,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = range_timeout_overall_periods_macrop_b_lo
 */
-	uint8_t   range_config__vcsel_period_b;
-/*!<
+    uint8_t range_config__vcsel_period_b;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1030,8 +1035,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = range_config__vcsel_period_b
 */
-	uint16_t  range_config__sigma_thresh;
-/*!<
+    uint16_t range_config__sigma_thresh;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1040,8 +1045,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = range_config__sigma_thresh (fixed point 14.2)
 */
-	uint16_t  range_config__min_count_rate_rtn_limit_mcps;
-/*!<
+    uint16_t range_config__min_count_rate_rtn_limit_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1050,8 +1055,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = range_config__min_count_rate_rtn_limit_mcps (fixed point 9.7)
 */
-	uint8_t   range_config__valid_phase_low;
-/*!<
+    uint8_t range_config__valid_phase_low;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1060,8 +1065,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = range_config__valid_phase_low (fixed point 5.3)
 */
-	uint8_t   range_config__valid_phase_high;
-/*!<
+    uint8_t range_config__valid_phase_high;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1070,8 +1075,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = range_config__valid_phase_high (fixed point 5.3)
 */
-	uint32_t  system__intermeasurement_period;
-/*!<
+    uint32_t system__intermeasurement_period;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1080,8 +1085,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = intermeasurement_period
 */
-	uint8_t   system__fractional_enable;
-/*!<
+    uint8_t system__fractional_enable;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1102,9 +1107,10 @@ typedef struct {
  * - i2c_size     =     18
  */
 
-typedef struct {
-	uint8_t   system__grouped_parameter_hold_0;
-/*!<
+typedef struct
+{
+    uint8_t system__grouped_parameter_hold_0;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1114,8 +1120,8 @@ typedef struct {
 		-   [0] = grouped_parameter_hold
 		-   [1] = grouped_parameter_hold_id
 */
-	uint16_t  system__thresh_high;
-/*!<
+    uint16_t system__thresh_high;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1124,8 +1130,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = thresh_high
 */
-	uint16_t  system__thresh_low;
-/*!<
+    uint16_t system__thresh_low;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1134,8 +1140,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = thresh_low
 */
-	uint8_t   system__enable_xtalk_per_quadrant;
-/*!<
+    uint8_t system__enable_xtalk_per_quadrant;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1144,8 +1150,8 @@ typedef struct {
 	fields: \n
 		-   [0] = system__enable_xtalk_per_quadrant
 */
-	uint8_t   system__seed_config;
-/*!<
+    uint8_t system__seed_config;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -1155,8 +1161,8 @@ typedef struct {
 		- [1:0] = system__seed_config
 		-   [2] = system__fw_pause_ctrl
 */
-	uint8_t   sd_config__woi_sd0;
-/*!<
+    uint8_t sd_config__woi_sd0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1165,8 +1171,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sd_config__woi_sd0
 */
-	uint8_t   sd_config__woi_sd1;
-/*!<
+    uint8_t sd_config__woi_sd1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1175,8 +1181,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sd_config__woi_sd1
 */
-	uint8_t   sd_config__initial_phase_sd0;
-/*!<
+    uint8_t sd_config__initial_phase_sd0;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -1185,8 +1191,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = sd_config__initial_phase_sd0
 */
-	uint8_t   sd_config__initial_phase_sd1;
-/*!<
+    uint8_t sd_config__initial_phase_sd1;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -1195,8 +1201,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = sd_config__initial_phase_sd1
 */
-	uint8_t   system__grouped_parameter_hold_1;
-/*!<
+    uint8_t system__grouped_parameter_hold_1;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1206,8 +1212,8 @@ typedef struct {
 		-   [0] = grouped_parameter_hold
 		-   [1] = grouped_parameter_hold_id
 */
-	uint8_t   sd_config__first_order_select;
-/*!<
+    uint8_t sd_config__first_order_select;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1217,8 +1223,8 @@ typedef struct {
 		-   [0] = sd_config__first_order_select_rtn
 		-   [1] = sd_config__first_order_select_ref
 */
-	uint8_t   sd_config__quantifier;
-/*!<
+    uint8_t sd_config__quantifier;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -1227,8 +1233,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = sd_config__quantifier
 */
-	uint8_t   roi_config__user_roi_centre_spad;
-/*!<
+    uint8_t roi_config__user_roi_centre_spad;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1237,8 +1243,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = user_roi_center_spad
 */
-	uint8_t   roi_config__user_roi_requested_global_xy_size;
-/*!<
+    uint8_t roi_config__user_roi_requested_global_xy_size;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1247,8 +1253,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = roi_config__user_roi_requested_global_xy_size
 */
-	uint8_t   system__sequence_config;
-/*!<
+    uint8_t system__sequence_config;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1264,8 +1270,8 @@ typedef struct {
 		-   [6] = sequence_mm2_en
 		-   [7] = sequence_range_en
 */
-	uint8_t   system__grouped_parameter_hold;
-/*!<
+    uint8_t system__grouped_parameter_hold;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1287,9 +1293,10 @@ typedef struct {
  * - i2c_size     =      5
  */
 
-typedef struct {
-	uint8_t   power_management__go1_power_force;
-/*!<
+typedef struct
+{
+    uint8_t power_management__go1_power_force;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1298,8 +1305,8 @@ typedef struct {
 	fields: \n
 		-   [0] = go1_dig_powerforce
 */
-	uint8_t   system__stream_count_ctrl;
-/*!<
+    uint8_t system__stream_count_ctrl;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1308,8 +1315,8 @@ typedef struct {
 	fields: \n
 		-   [0] = retain_stream_count
 */
-	uint8_t   firmware__enable;
-/*!<
+    uint8_t firmware__enable;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1318,8 +1325,8 @@ typedef struct {
 	fields: \n
 		-   [0] = firmware_enable
 */
-	uint8_t   system__interrupt_clear;
-/*!<
+    uint8_t system__interrupt_clear;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1329,8 +1336,8 @@ typedef struct {
 		-   [0] = sys_interrupt_clear_range
 		-   [1] = sys_interrupt_clear_error
 */
-	uint8_t   system__mode_start;
-/*!<
+    uint8_t system__mode_start;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1356,9 +1363,10 @@ typedef struct {
  * - i2c_size     =     44
  */
 
-typedef struct {
-	uint8_t   result__interrupt_status;
-/*!<
+typedef struct
+{
+    uint8_t result__interrupt_status;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1369,8 +1377,8 @@ typedef struct {
 		- [4:3] = int_error_status
 		-   [5] = gph_id_gpio_status
 */
-	uint8_t   result__range_status;
-/*!<
+    uint8_t result__range_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1382,8 +1390,8 @@ typedef struct {
 		-   [6] = min_threshold_hit
 		-   [7] = gph_id_range_status
 */
-	uint8_t   result__report_status;
-/*!<
+    uint8_t result__report_status;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -1392,8 +1400,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = report_status
 */
-	uint8_t   result__stream_count;
-/*!<
+    uint8_t result__stream_count;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1402,8 +1410,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = result__stream_count
 */
-	uint16_t  result__dss_actual_effective_spads_sd0;
-/*!<
+    uint16_t result__dss_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1412,8 +1420,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__dss_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  result__peak_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t result__peak_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1422,8 +1430,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__peak_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  result__ambient_count_rate_mcps_sd0;
-/*!<
+    uint16_t result__ambient_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1432,8 +1440,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__ambient_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  result__sigma_sd0;
-/*!<
+    uint16_t result__sigma_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1442,8 +1450,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__sigma_sd0 (fixed point 14.2)
 */
-	uint16_t  result__phase_sd0;
-/*!<
+    uint16_t result__phase_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1452,8 +1460,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__phase_sd0 (fixed point 5.11)
 */
-	uint16_t  result__final_crosstalk_corrected_range_mm_sd0;
-/*!<
+    uint16_t result__final_crosstalk_corrected_range_mm_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1462,8 +1470,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__final_crosstalk_corrected_range_mm_sd0
 */
-	uint16_t  result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
-/*!<
+    uint16_t result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1472,8 +1480,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  result__mm_inner_actual_effective_spads_sd0;
-/*!<
+    uint16_t result__mm_inner_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1482,8 +1490,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__mm_inner_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  result__mm_outer_actual_effective_spads_sd0;
-/*!<
+    uint16_t result__mm_outer_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1492,8 +1500,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__mm_outer_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  result__avg_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t result__avg_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1502,8 +1510,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__avg_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  result__dss_actual_effective_spads_sd1;
-/*!<
+    uint16_t result__dss_actual_effective_spads_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1512,8 +1520,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__dss_actual_effective_spads_sd1 (fixed point 8.8)
 */
-	uint16_t  result__peak_signal_count_rate_mcps_sd1;
-/*!<
+    uint16_t result__peak_signal_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1522,8 +1530,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__peak_signal_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  result__ambient_count_rate_mcps_sd1;
-/*!<
+    uint16_t result__ambient_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1532,8 +1540,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__ambient_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  result__sigma_sd1;
-/*!<
+    uint16_t result__sigma_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1542,8 +1550,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__sigma_sd1 (fixed point 14.2)
 */
-	uint16_t  result__phase_sd1;
-/*!<
+    uint16_t result__phase_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1552,8 +1560,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__phase_sd1 (fixed point 5.11)
 */
-	uint16_t  result__final_crosstalk_corrected_range_mm_sd1;
-/*!<
+    uint16_t result__final_crosstalk_corrected_range_mm_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1562,8 +1570,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__final_crosstalk_corrected_range_mm_sd1
 */
-	uint16_t  result__spare_0_sd1;
-/*!<
+    uint16_t result__spare_0_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1572,8 +1580,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__spare_0_sd1
 */
-	uint16_t  result__spare_1_sd1;
-/*!<
+    uint16_t result__spare_1_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1582,8 +1590,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__spare_1_sd1
 */
-	uint16_t  result__spare_2_sd1;
-/*!<
+    uint16_t result__spare_2_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1592,8 +1600,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result__spare_2_sd1
 */
-	uint8_t   result__spare_3_sd1;
-/*!<
+    uint8_t result__spare_3_sd1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1602,8 +1610,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = result__spare_3_sd1
 */
-	uint8_t   result__thresh_info;
-/*!<
+    uint8_t result__thresh_info;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1625,9 +1633,10 @@ typedef struct {
  * - i2c_size     =     33
  */
 
-typedef struct {
-	uint32_t  result_core__ambient_window_events_sd0;
-/*!<
+typedef struct
+{
+    uint32_t result_core__ambient_window_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1636,8 +1645,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__ambient_window_events_sd0
 */
-	uint32_t  result_core__ranging_total_events_sd0;
-/*!<
+    uint32_t result_core__ranging_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1646,8 +1655,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__ranging_total_events_sd0
 */
-	int32_t   result_core__signal_total_events_sd0;
-/*!<
+    int32_t result_core__signal_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1656,8 +1665,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__signal_total_events_sd0
 */
-	uint32_t  result_core__total_periods_elapsed_sd0;
-/*!<
+    uint32_t result_core__total_periods_elapsed_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1666,8 +1675,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__total_periods_elapsed_sd0
 */
-	uint32_t  result_core__ambient_window_events_sd1;
-/*!<
+    uint32_t result_core__ambient_window_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1676,8 +1685,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__ambient_window_events_sd1
 */
-	uint32_t  result_core__ranging_total_events_sd1;
-/*!<
+    uint32_t result_core__ranging_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1686,8 +1695,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__ranging_total_events_sd1
 */
-	int32_t   result_core__signal_total_events_sd1;
-/*!<
+    int32_t result_core__signal_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1696,8 +1705,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__signal_total_events_sd1
 */
-	uint32_t  result_core__total_periods_elapsed_sd1;
-/*!<
+    uint32_t result_core__total_periods_elapsed_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -1706,8 +1715,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = result_core__total_periods_elapsed_sd1
 */
-	uint8_t   result_core__spare_0;
-/*!<
+    uint8_t result_core__spare_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1728,9 +1737,10 @@ typedef struct {
  * - i2c_size     =     56
  */
 
-typedef struct {
-	uint16_t  phasecal_result__reference_phase;
-/*!<
+typedef struct
+{
+    uint16_t phasecal_result__reference_phase;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1739,8 +1749,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = result_phasecal__reference_phase (fixed point 5.11)
 */
-	uint8_t   phasecal_result__vcsel_start;
-/*!<
+    uint8_t phasecal_result__vcsel_start;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -1749,8 +1759,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = result_phasecal__vcsel_start
 */
-	uint8_t   ref_spad_char_result__num_actual_ref_spads;
-/*!<
+    uint8_t ref_spad_char_result__num_actual_ref_spads;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1759,8 +1769,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = ref_spad_char_result__num_actual_ref_spads
 */
-	uint8_t   ref_spad_char_result__ref_location;
-/*!<
+    uint8_t ref_spad_char_result__ref_location;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1769,8 +1779,8 @@ typedef struct {
 	fields: \n
 		- [1:0] = ref_spad_char_result__ref_location
 */
-	uint8_t   vhv_result__coldboot_status;
-/*!<
+    uint8_t vhv_result__coldboot_status;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1779,8 +1789,8 @@ typedef struct {
 	fields: \n
 		-   [0] = vhv_result__coldboot_status
 */
-	uint8_t   vhv_result__search_result;
-/*!<
+    uint8_t vhv_result__search_result;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1789,8 +1799,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = cp_sel_result
 */
-	uint8_t   vhv_result__latest_setting;
-/*!<
+    uint8_t vhv_result__latest_setting;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -1799,8 +1809,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = cp_sel_latest_setting
 */
-	uint16_t  result__osc_calibrate_val;
-/*!<
+    uint16_t result__osc_calibrate_val;
+    /*!<
 	info: \n
 		- msb =  9
 		- lsb =  0
@@ -1809,8 +1819,8 @@ typedef struct {
 	fields: \n
 		- [9:0] = osc_calibrate_val
 */
-	uint8_t   ana_config__powerdown_go1;
-/*!<
+    uint8_t ana_config__powerdown_go1;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1820,8 +1830,8 @@ typedef struct {
 		-   [0] = go2_ref_bg_disable_avdd
 		-   [1] = go2_regdvdd1v2_enable_avdd
 */
-	uint8_t   ana_config__ref_bg_ctrl;
-/*!<
+    uint8_t ana_config__ref_bg_ctrl;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1831,8 +1841,8 @@ typedef struct {
 		-   [0] = go2_ref_overdrvbg_avdd
 		-   [1] = go2_ref_forcebgison_avdd
 */
-	uint8_t   ana_config__regdvdd1v2_ctrl;
-/*!<
+    uint8_t ana_config__regdvdd1v2_ctrl;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -1843,8 +1853,8 @@ typedef struct {
 		-   [1] = go2_regdvdd1v2_sel_boost_avdd
 		- [3:2] = go2_regdvdd1v2_selv_avdd
 */
-	uint8_t   ana_config__osc_slow_ctrl;
-/*!<
+    uint8_t ana_config__osc_slow_ctrl;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -1855,8 +1865,8 @@ typedef struct {
 		-   [1] = osc_slow_op_en
 		-   [2] = osc_slow_freq_sel
 */
-	uint8_t   test_mode__status;
-/*!<
+    uint8_t test_mode__status;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1865,8 +1875,8 @@ typedef struct {
 	fields: \n
 		-   [0] = test_mode_status
 */
-	uint8_t   firmware__system_status;
-/*!<
+    uint8_t firmware__system_status;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1876,8 +1886,8 @@ typedef struct {
 		-   [0] = firmware_bootup
 		-   [1] = firmware_first_range
 */
-	uint8_t   firmware__mode_status;
-/*!<
+    uint8_t firmware__mode_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1886,8 +1896,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = firmware_mode_status
 */
-	uint8_t   firmware__secondary_mode_status;
-/*!<
+    uint8_t firmware__secondary_mode_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1896,8 +1906,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = fw_secondary_mode_status
 */
-	uint16_t  firmware__cal_repeat_rate_counter;
-/*!<
+    uint16_t firmware__cal_repeat_rate_counter;
+    /*!<
 	info: \n
 		- msb = 11
 		- lsb =  0
@@ -1906,8 +1916,8 @@ typedef struct {
 	fields: \n
 		- [11:0] = firmware_cal_repeat_rate
 */
-	uint16_t  gph__system__thresh_high;
-/*!<
+    uint16_t gph__system__thresh_high;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1916,8 +1926,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_thresh_high
 */
-	uint16_t  gph__system__thresh_low;
-/*!<
+    uint16_t gph__system__thresh_low;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -1926,8 +1936,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_thresh_low
 */
-	uint8_t   gph__system__enable_xtalk_per_quadrant;
-/*!<
+    uint8_t gph__system__enable_xtalk_per_quadrant;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -1936,8 +1946,8 @@ typedef struct {
 	fields: \n
 		-   [0] = shadow__enable_xtalk_per_quadrant
 */
-	uint8_t   gph__spare_0;
-/*!<
+    uint8_t gph__spare_0;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -1948,8 +1958,8 @@ typedef struct {
 		-   [1] = shadow__spare_0
 		-   [2] = shadow__spare_1
 */
-	uint8_t   gph__sd_config__woi_sd0;
-/*!<
+    uint8_t gph__sd_config__woi_sd0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1958,8 +1968,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_sd_config__woi_sd0
 */
-	uint8_t   gph__sd_config__woi_sd1;
-/*!<
+    uint8_t gph__sd_config__woi_sd1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -1968,8 +1978,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_sd_config__woi_sd1
 */
-	uint8_t   gph__sd_config__initial_phase_sd0;
-/*!<
+    uint8_t gph__sd_config__initial_phase_sd0;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -1978,8 +1988,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = shadow_sd_config__initial_phase_sd0
 */
-	uint8_t   gph__sd_config__initial_phase_sd1;
-/*!<
+    uint8_t gph__sd_config__initial_phase_sd1;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -1988,8 +1998,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = shadow_sd_config__initial_phase_sd1
 */
-	uint8_t   gph__sd_config__first_order_select;
-/*!<
+    uint8_t gph__sd_config__first_order_select;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -1999,8 +2009,8 @@ typedef struct {
 		-   [0] = shadow_sd_config__first_order_select_rtn
 		-   [1] = shadow_sd_config__first_order_select_ref
 */
-	uint8_t   gph__sd_config__quantifier;
-/*!<
+    uint8_t gph__sd_config__quantifier;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -2009,8 +2019,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = shadow_sd_config__quantifier
 */
-	uint8_t   gph__roi_config__user_roi_centre_spad;
-/*!<
+    uint8_t gph__roi_config__user_roi_centre_spad;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2019,8 +2029,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_user_roi_center_spad_q0
 */
-	uint8_t   gph__roi_config__user_roi_requested_global_xy_size;
-/*!<
+    uint8_t gph__roi_config__user_roi_requested_global_xy_size;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2029,8 +2039,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_user_roi_requested_global_xy_size
 */
-	uint8_t   gph__system__sequence_config;
-/*!<
+    uint8_t gph__system__sequence_config;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2046,8 +2056,8 @@ typedef struct {
 		-   [6] = shadow_sequence_mm2_en
 		-   [7] = shadow_sequence_range_en
 */
-	uint8_t   gph__gph_id;
-/*!<
+    uint8_t gph__gph_id;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2056,8 +2066,8 @@ typedef struct {
 	fields: \n
 		-   [0] = shadow_gph_id
 */
-	uint8_t   system__interrupt_set;
-/*!<
+    uint8_t system__interrupt_set;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -2067,8 +2077,8 @@ typedef struct {
 		-   [0] = sys_interrupt_set_range
 		-   [1] = sys_interrupt_set_error
 */
-	uint8_t   interrupt_manager__enables;
-/*!<
+    uint8_t interrupt_manager__enables;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -2081,8 +2091,8 @@ typedef struct {
 		-   [3] = interrupt_enable__abort
 		-   [4] = interrupt_enable__test
 */
-	uint8_t   interrupt_manager__clear;
-/*!<
+    uint8_t interrupt_manager__clear;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -2095,8 +2105,8 @@ typedef struct {
 		-   [3] = interrupt_clear__abort
 		-   [4] = interrupt_clear__test
 */
-	uint8_t   interrupt_manager__status;
-/*!<
+    uint8_t interrupt_manager__status;
+    /*!<
 	info: \n
 		- msb =  4
 		- lsb =  0
@@ -2109,8 +2119,8 @@ typedef struct {
 		-   [3] = interrupt_status__abort
 		-   [4] = interrupt_status__test
 */
-	uint8_t   mcu_to_host_bank__wr_access_en;
-/*!<
+    uint8_t mcu_to_host_bank__wr_access_en;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2119,8 +2129,8 @@ typedef struct {
 	fields: \n
 		-   [0] = mcu_to_host_bank_wr_en
 */
-	uint8_t   power_management__go1_reset_status;
-/*!<
+    uint8_t power_management__go1_reset_status;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2129,8 +2139,8 @@ typedef struct {
 	fields: \n
 		-   [0] = go1_status
 */
-	uint8_t   pad_startup_mode__value_ro;
-/*!<
+    uint8_t pad_startup_mode__value_ro;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -2140,8 +2150,8 @@ typedef struct {
 		-   [0] = pad_atest1_val_ro
 		-   [1] = pad_atest2_val_ro
 */
-	uint8_t   pad_startup_mode__value_ctrl;
-/*!<
+    uint8_t pad_startup_mode__value_ctrl;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2153,8 +2163,8 @@ typedef struct {
 		-   [4] = pad_atest1_dig_enable
 		-   [5] = pad_atest2_dig_enable
 */
-	uint32_t  pll_period_us;
-/*!<
+    uint32_t pll_period_us;
+    /*!<
 	info: \n
 		- msb = 17
 		- lsb =  0
@@ -2163,8 +2173,8 @@ typedef struct {
 	fields: \n
 		- [17:0] = pll_period_us (fixed point 0.24)
 */
-	uint32_t  interrupt_scheduler__data_out;
-/*!<
+    uint32_t interrupt_scheduler__data_out;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -2173,8 +2183,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = interrupt_scheduler_data_out
 */
-	uint8_t   nvm_bist__complete;
-/*!<
+    uint8_t nvm_bist__complete;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2183,8 +2193,8 @@ typedef struct {
 	fields: \n
 		-   [0] = nvm_bist__complete
 */
-	uint8_t   nvm_bist__status;
-/*!<
+    uint8_t nvm_bist__status;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2205,9 +2215,10 @@ typedef struct {
  * - i2c_size     =     49
  */
 
-typedef struct {
-	uint8_t   identification__model_id;
-/*!<
+typedef struct
+{
+    uint8_t identification__model_id;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2216,8 +2227,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = model_id
 */
-	uint8_t   identification__module_type;
-/*!<
+    uint8_t identification__module_type;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2226,8 +2237,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = module_type
 */
-	uint8_t   identification__revision_id;
-/*!<
+    uint8_t identification__revision_id;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2237,8 +2248,8 @@ typedef struct {
 		- [3:0] = nvm_revision_id
 		- [7:4] = mask_revision_id
 */
-	uint16_t  identification__module_id;
-/*!<
+    uint16_t identification__module_id;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2247,8 +2258,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = module_id
 */
-	uint8_t   ana_config__fast_osc__trim_max;
-/*!<
+    uint8_t ana_config__fast_osc__trim_max;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -2257,8 +2268,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = osc_trim_max
 */
-	uint8_t   ana_config__fast_osc__freq_set;
-/*!<
+    uint8_t ana_config__fast_osc__freq_set;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -2267,8 +2278,8 @@ typedef struct {
 	fields: \n
 		- [2:0] = osc_freq_set
 */
-	uint8_t   ana_config__vcsel_trim;
-/*!<
+    uint8_t ana_config__vcsel_trim;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -2277,8 +2288,8 @@ typedef struct {
 	fields: \n
 		- [2:0] = vcsel_trim
 */
-	uint8_t   ana_config__vcsel_selion;
-/*!<
+    uint8_t ana_config__vcsel_selion;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2287,8 +2298,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = vcsel_selion
 */
-	uint8_t   ana_config__vcsel_selion_max;
-/*!<
+    uint8_t ana_config__vcsel_selion_max;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2297,8 +2308,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = vcsel_selion_max
 */
-	uint8_t   protected_laser_safety__lock_bit;
-/*!<
+    uint8_t protected_laser_safety__lock_bit;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2307,8 +2318,8 @@ typedef struct {
 	fields: \n
 		-   [0] = laser_safety__lock_bit
 */
-	uint8_t   laser_safety__key;
-/*!<
+    uint8_t laser_safety__key;
+    /*!<
 	info: \n
 		- msb =  6
 		- lsb =  0
@@ -2317,8 +2328,8 @@ typedef struct {
 	fields: \n
 		- [6:0] = laser_safety__key
 */
-	uint8_t   laser_safety__key_ro;
-/*!<
+    uint8_t laser_safety__key_ro;
+    /*!<
 	info: \n
 		- msb =  0
 		- lsb =  0
@@ -2327,8 +2338,8 @@ typedef struct {
 	fields: \n
 		-   [0] = laser_safety__key_ro
 */
-	uint8_t   laser_safety__clip;
-/*!<
+    uint8_t laser_safety__clip;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2337,8 +2348,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = vcsel_pulse_width_clip
 */
-	uint8_t   laser_safety__mult;
-/*!<
+    uint8_t laser_safety__mult;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2347,8 +2358,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = vcsel_pulse_width_mult
 */
-	uint8_t   global_config__spad_enables_rtn_0;
-/*!<
+    uint8_t global_config__spad_enables_rtn_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2357,8 +2368,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_0
 */
-	uint8_t   global_config__spad_enables_rtn_1;
-/*!<
+    uint8_t global_config__spad_enables_rtn_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2367,8 +2378,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_1
 */
-	uint8_t   global_config__spad_enables_rtn_2;
-/*!<
+    uint8_t global_config__spad_enables_rtn_2;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2377,8 +2388,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_2
 */
-	uint8_t   global_config__spad_enables_rtn_3;
-/*!<
+    uint8_t global_config__spad_enables_rtn_3;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2387,8 +2398,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_3
 */
-	uint8_t   global_config__spad_enables_rtn_4;
-/*!<
+    uint8_t global_config__spad_enables_rtn_4;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2397,8 +2408,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_4
 */
-	uint8_t   global_config__spad_enables_rtn_5;
-/*!<
+    uint8_t global_config__spad_enables_rtn_5;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2407,8 +2418,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_5
 */
-	uint8_t   global_config__spad_enables_rtn_6;
-/*!<
+    uint8_t global_config__spad_enables_rtn_6;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2417,8 +2428,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_6
 */
-	uint8_t   global_config__spad_enables_rtn_7;
-/*!<
+    uint8_t global_config__spad_enables_rtn_7;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2427,8 +2438,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_7
 */
-	uint8_t   global_config__spad_enables_rtn_8;
-/*!<
+    uint8_t global_config__spad_enables_rtn_8;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2437,8 +2448,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_8
 */
-	uint8_t   global_config__spad_enables_rtn_9;
-/*!<
+    uint8_t global_config__spad_enables_rtn_9;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2447,8 +2458,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_9
 */
-	uint8_t   global_config__spad_enables_rtn_10;
-/*!<
+    uint8_t global_config__spad_enables_rtn_10;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2457,8 +2468,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_10
 */
-	uint8_t   global_config__spad_enables_rtn_11;
-/*!<
+    uint8_t global_config__spad_enables_rtn_11;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2467,8 +2478,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_11
 */
-	uint8_t   global_config__spad_enables_rtn_12;
-/*!<
+    uint8_t global_config__spad_enables_rtn_12;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2477,8 +2488,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_12
 */
-	uint8_t   global_config__spad_enables_rtn_13;
-/*!<
+    uint8_t global_config__spad_enables_rtn_13;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2487,8 +2498,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_13
 */
-	uint8_t   global_config__spad_enables_rtn_14;
-/*!<
+    uint8_t global_config__spad_enables_rtn_14;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2497,8 +2508,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_14
 */
-	uint8_t   global_config__spad_enables_rtn_15;
-/*!<
+    uint8_t global_config__spad_enables_rtn_15;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2507,8 +2518,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_15
 */
-	uint8_t   global_config__spad_enables_rtn_16;
-/*!<
+    uint8_t global_config__spad_enables_rtn_16;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2517,8 +2528,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_16
 */
-	uint8_t   global_config__spad_enables_rtn_17;
-/*!<
+    uint8_t global_config__spad_enables_rtn_17;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2527,8 +2538,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_17
 */
-	uint8_t   global_config__spad_enables_rtn_18;
-/*!<
+    uint8_t global_config__spad_enables_rtn_18;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2537,8 +2548,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_18
 */
-	uint8_t   global_config__spad_enables_rtn_19;
-/*!<
+    uint8_t global_config__spad_enables_rtn_19;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2547,8 +2558,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_19
 */
-	uint8_t   global_config__spad_enables_rtn_20;
-/*!<
+    uint8_t global_config__spad_enables_rtn_20;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2557,8 +2568,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_20
 */
-	uint8_t   global_config__spad_enables_rtn_21;
-/*!<
+    uint8_t global_config__spad_enables_rtn_21;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2567,8 +2578,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_21
 */
-	uint8_t   global_config__spad_enables_rtn_22;
-/*!<
+    uint8_t global_config__spad_enables_rtn_22;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2577,8 +2588,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_22
 */
-	uint8_t   global_config__spad_enables_rtn_23;
-/*!<
+    uint8_t global_config__spad_enables_rtn_23;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2587,8 +2598,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_23
 */
-	uint8_t   global_config__spad_enables_rtn_24;
-/*!<
+    uint8_t global_config__spad_enables_rtn_24;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2597,8 +2608,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_24
 */
-	uint8_t   global_config__spad_enables_rtn_25;
-/*!<
+    uint8_t global_config__spad_enables_rtn_25;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2607,8 +2618,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_25
 */
-	uint8_t   global_config__spad_enables_rtn_26;
-/*!<
+    uint8_t global_config__spad_enables_rtn_26;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2617,8 +2628,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_26
 */
-	uint8_t   global_config__spad_enables_rtn_27;
-/*!<
+    uint8_t global_config__spad_enables_rtn_27;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2627,8 +2638,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_27
 */
-	uint8_t   global_config__spad_enables_rtn_28;
-/*!<
+    uint8_t global_config__spad_enables_rtn_28;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2637,8 +2648,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_28
 */
-	uint8_t   global_config__spad_enables_rtn_29;
-/*!<
+    uint8_t global_config__spad_enables_rtn_29;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2647,8 +2658,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_29
 */
-	uint8_t   global_config__spad_enables_rtn_30;
-/*!<
+    uint8_t global_config__spad_enables_rtn_30;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2657,8 +2668,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_30
 */
-	uint8_t   global_config__spad_enables_rtn_31;
-/*!<
+    uint8_t global_config__spad_enables_rtn_31;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2667,8 +2678,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = spad_enables_rtn_31
 */
-	uint8_t   roi_config__mode_roi_centre_spad;
-/*!<
+    uint8_t roi_config__mode_roi_centre_spad;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2677,8 +2688,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = mode_roi_center_spad
 */
-	uint8_t   roi_config__mode_roi_xy_size;
-/*!<
+    uint8_t roi_config__mode_roi_xy_size;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2699,9 +2710,10 @@ typedef struct {
  * - i2c_size     =     44
  */
 
-typedef struct {
-	uint8_t   prev_shadow_result__interrupt_status;
-/*!<
+typedef struct
+{
+    uint8_t prev_shadow_result__interrupt_status;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -2712,8 +2724,8 @@ typedef struct {
 		- [4:3] = prev_shadow_int_error_status
 		-   [5] = prev_shadow_gph_id_gpio_status
 */
-	uint8_t   prev_shadow_result__range_status;
-/*!<
+    uint8_t prev_shadow_result__range_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2725,8 +2737,8 @@ typedef struct {
 		-   [6] = prev_shadow_min_threshold_hit
 		-   [7] = prev_shadow_gph_id_range_status
 */
-	uint8_t   prev_shadow_result__report_status;
-/*!<
+    uint8_t prev_shadow_result__report_status;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -2735,8 +2747,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = prev_shadow_report_status
 */
-	uint8_t   prev_shadow_result__stream_count;
-/*!<
+    uint8_t prev_shadow_result__stream_count;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -2745,8 +2757,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = prev_shadow_result__stream_count
 */
-	uint16_t  prev_shadow_result__dss_actual_effective_spads_sd0;
-/*!<
+    uint16_t prev_shadow_result__dss_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2755,8 +2767,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__dss_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  prev_shadow_result__peak_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t prev_shadow_result__peak_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2765,8 +2777,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__peak_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__ambient_count_rate_mcps_sd0;
-/*!<
+    uint16_t prev_shadow_result__ambient_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2775,8 +2787,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__ambient_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__sigma_sd0;
-/*!<
+    uint16_t prev_shadow_result__sigma_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2785,8 +2797,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__sigma_sd0 (fixed point 14.2)
 */
-	uint16_t  prev_shadow_result__phase_sd0;
-/*!<
+    uint16_t prev_shadow_result__phase_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2795,8 +2807,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__phase_sd0 (fixed point 5.11)
 */
-	uint16_t  prev_shadow_result__final_crosstalk_corrected_range_mm_sd0;
-/*!<
+    uint16_t prev_shadow_result__final_crosstalk_corrected_range_mm_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2805,8 +2817,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__final_crosstalk_corrected_range_mm_sd0
 */
-	uint16_t  prev_shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
-/*!<
+    uint16_t prev_shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2815,8 +2827,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__mm_inner_actual_effective_spads_sd0;
-/*!<
+    uint16_t prev_shadow_result__mm_inner_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2825,8 +2837,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__mm_inner_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  prev_shadow_result__mm_outer_actual_effective_spads_sd0;
-/*!<
+    uint16_t prev_shadow_result__mm_outer_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2835,8 +2847,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__mm_outer_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  prev_shadow_result__avg_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t prev_shadow_result__avg_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2845,8 +2857,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__avg_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__dss_actual_effective_spads_sd1;
-/*!<
+    uint16_t prev_shadow_result__dss_actual_effective_spads_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2855,8 +2867,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__dss_actual_effective_spads_sd1 (fixed point 8.8)
 */
-	uint16_t  prev_shadow_result__peak_signal_count_rate_mcps_sd1;
-/*!<
+    uint16_t prev_shadow_result__peak_signal_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2865,8 +2877,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__peak_signal_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__ambient_count_rate_mcps_sd1;
-/*!<
+    uint16_t prev_shadow_result__ambient_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2875,8 +2887,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__ambient_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  prev_shadow_result__sigma_sd1;
-/*!<
+    uint16_t prev_shadow_result__sigma_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2885,8 +2897,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__sigma_sd1 (fixed point 14.2)
 */
-	uint16_t  prev_shadow_result__phase_sd1;
-/*!<
+    uint16_t prev_shadow_result__phase_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2895,8 +2907,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__phase_sd1 (fixed point 5.11)
 */
-	uint16_t  prev_shadow_result__final_crosstalk_corrected_range_mm_sd1;
-/*!<
+    uint16_t prev_shadow_result__final_crosstalk_corrected_range_mm_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2905,8 +2917,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__final_crosstalk_corrected_range_mm_sd1
 */
-	uint16_t  prev_shadow_result__spare_0_sd1;
-/*!<
+    uint16_t prev_shadow_result__spare_0_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2915,8 +2927,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__spare_0_sd1
 */
-	uint16_t  prev_shadow_result__spare_1_sd1;
-/*!<
+    uint16_t prev_shadow_result__spare_1_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2925,8 +2937,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__spare_1_sd1
 */
-	uint16_t  prev_shadow_result__spare_2_sd1;
-/*!<
+    uint16_t prev_shadow_result__spare_2_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2935,8 +2947,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = prev_shadow_result__spare_2_sd1
 */
-	uint16_t  prev_shadow_result__spare_3_sd1;
-/*!<
+    uint16_t prev_shadow_result__spare_3_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -2957,9 +2969,10 @@ typedef struct {
  * - i2c_size     =     33
  */
 
-typedef struct {
-	uint32_t  prev_shadow_result_core__ambient_window_events_sd0;
-/*!<
+typedef struct
+{
+    uint32_t prev_shadow_result_core__ambient_window_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -2968,8 +2981,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__ambient_window_events_sd0
 */
-	uint32_t  prev_shadow_result_core__ranging_total_events_sd0;
-/*!<
+    uint32_t prev_shadow_result_core__ranging_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -2978,8 +2991,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__ranging_total_events_sd0
 */
-	int32_t   prev_shadow_result_core__signal_total_events_sd0;
-/*!<
+    int32_t prev_shadow_result_core__signal_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -2988,8 +3001,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__signal_total_events_sd0
 */
-	uint32_t  prev_shadow_result_core__total_periods_elapsed_sd0;
-/*!<
+    uint32_t prev_shadow_result_core__total_periods_elapsed_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -2998,8 +3011,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__total_periods_elapsed_sd0
 */
-	uint32_t  prev_shadow_result_core__ambient_window_events_sd1;
-/*!<
+    uint32_t prev_shadow_result_core__ambient_window_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3008,8 +3021,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__ambient_window_events_sd1
 */
-	uint32_t  prev_shadow_result_core__ranging_total_events_sd1;
-/*!<
+    uint32_t prev_shadow_result_core__ranging_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3018,8 +3031,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__ranging_total_events_sd1
 */
-	int32_t   prev_shadow_result_core__signal_total_events_sd1;
-/*!<
+    int32_t prev_shadow_result_core__signal_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3028,8 +3041,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__signal_total_events_sd1
 */
-	uint32_t  prev_shadow_result_core__total_periods_elapsed_sd1;
-/*!<
+    uint32_t prev_shadow_result_core__total_periods_elapsed_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3038,8 +3051,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = prev_shadow_result_core__total_periods_elapsed_sd1
 */
-	uint8_t   prev_shadow_result_core__spare_0;
-/*!<
+    uint8_t prev_shadow_result_core__spare_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3060,9 +3073,10 @@ typedef struct {
  * - i2c_size     =      2
  */
 
-typedef struct {
-	uint8_t   result__debug_status;
-/*!<
+typedef struct
+{
+    uint8_t result__debug_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3071,8 +3085,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = result_debug_status
 */
-	uint8_t   result__debug_stage;
-/*!<
+    uint8_t result__debug_stage;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3093,9 +3107,10 @@ typedef struct {
  * - i2c_size     =      5
  */
 
-typedef struct {
-	uint16_t  gph__system__thresh_rate_high;
-/*!<
+typedef struct
+{
+    uint16_t gph__system__thresh_rate_high;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3104,8 +3119,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = gph__system_thresh_rate_high (fixed point 9.7)
 */
-	uint16_t  gph__system__thresh_rate_low;
-/*!<
+    uint16_t gph__system__thresh_rate_low;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3114,8 +3129,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = gph__system_thresh_rate_low (fixed point 9.7)
 */
-	uint8_t   gph__system__interrupt_config_gpio;
-/*!<
+    uint8_t gph__system__interrupt_config_gpio;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3141,9 +3156,10 @@ typedef struct {
  * - i2c_size     =      6
  */
 
-typedef struct {
-	uint8_t   gph__dss_config__roi_mode_control;
-/*!<
+typedef struct
+{
+    uint8_t gph__dss_config__roi_mode_control;
+    /*!<
 	info: \n
 		- msb =  2
 		- lsb =  0
@@ -3153,8 +3169,8 @@ typedef struct {
 		- [1:0] = gph__dss_config__input_mode
 		-   [2] = gph__calculate_roi_enable
 */
-	uint16_t  gph__dss_config__manual_effective_spads_select;
-/*!<
+    uint16_t gph__dss_config__manual_effective_spads_select;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3163,8 +3179,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = gph__dss_config__manual_effective_spads_select
 */
-	uint8_t   gph__dss_config__manual_block_select;
-/*!<
+    uint8_t gph__dss_config__manual_block_select;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3173,8 +3189,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph__dss_config__manual_block_select
 */
-	uint8_t   gph__dss_config__max_spads_limit;
-/*!<
+    uint8_t gph__dss_config__max_spads_limit;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3183,8 +3199,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph__dss_config__max_spads_limit
 */
-	uint8_t   gph__dss_config__min_spads_limit;
-/*!<
+    uint8_t gph__dss_config__min_spads_limit;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3205,9 +3221,10 @@ typedef struct {
  * - i2c_size     =     16
  */
 
-typedef struct {
-	uint8_t   gph__mm_config__timeout_macrop_a_hi;
-/*!<
+typedef struct
+{
+    uint8_t gph__mm_config__timeout_macrop_a_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -3216,8 +3233,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = gph_mm_config__config_timeout_macrop_a_hi
 */
-	uint8_t   gph__mm_config__timeout_macrop_a_lo;
-/*!<
+    uint8_t gph__mm_config__timeout_macrop_a_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3226,8 +3243,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph_mm_config__config_timeout_macrop_a_lo
 */
-	uint8_t   gph__mm_config__timeout_macrop_b_hi;
-/*!<
+    uint8_t gph__mm_config__timeout_macrop_b_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -3236,8 +3253,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = gph_mm_config__config_timeout_macrop_b_hi
 */
-	uint8_t   gph__mm_config__timeout_macrop_b_lo;
-/*!<
+    uint8_t gph__mm_config__timeout_macrop_b_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3246,8 +3263,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph_mm_config__config_timeout_macrop_b_lo
 */
-	uint8_t   gph__range_config__timeout_macrop_a_hi;
-/*!<
+    uint8_t gph__range_config__timeout_macrop_a_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -3256,8 +3273,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = gph_range_timeout_overall_periods_macrop_a_hi
 */
-	uint8_t   gph__range_config__timeout_macrop_a_lo;
-/*!<
+    uint8_t gph__range_config__timeout_macrop_a_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3266,8 +3283,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph_range_timeout_overall_periods_macrop_a_lo
 */
-	uint8_t   gph__range_config__vcsel_period_a;
-/*!<
+    uint8_t gph__range_config__vcsel_period_a;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -3276,8 +3293,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = gph_range_config__vcsel_period_a
 */
-	uint8_t   gph__range_config__vcsel_period_b;
-/*!<
+    uint8_t gph__range_config__vcsel_period_b;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -3286,8 +3303,8 @@ typedef struct {
 	fields: \n
 		- [5:0] = gph_range_config__vcsel_period_b
 */
-	uint8_t   gph__range_config__timeout_macrop_b_hi;
-/*!<
+    uint8_t gph__range_config__timeout_macrop_b_hi;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -3296,8 +3313,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = gph_range_timeout_overall_periods_macrop_b_hi
 */
-	uint8_t   gph__range_config__timeout_macrop_b_lo;
-/*!<
+    uint8_t gph__range_config__timeout_macrop_b_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3306,8 +3323,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph_range_timeout_overall_periods_macrop_b_lo
 */
-	uint16_t  gph__range_config__sigma_thresh;
-/*!<
+    uint16_t gph__range_config__sigma_thresh;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3316,8 +3333,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = gph_range_config__sigma_thresh (fixed point 14.2)
 */
-	uint16_t  gph__range_config__min_count_rate_rtn_limit_mcps;
-/*!<
+    uint16_t gph__range_config__min_count_rate_rtn_limit_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3326,8 +3343,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = gph_range_config__min_count_rate_rtn_limit_mcps (fixed point 9.7)
 */
-	uint8_t   gph__range_config__valid_phase_low;
-/*!<
+    uint8_t gph__range_config__valid_phase_low;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3336,8 +3353,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = gph_range_config__valid_phase_low (fixed point 5.3)
 */
-	uint8_t   gph__range_config__valid_phase_high;
-/*!<
+    uint8_t gph__range_config__valid_phase_high;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3358,9 +3375,10 @@ typedef struct {
  * - i2c_size     =      2
  */
 
-typedef struct {
-	uint8_t   firmware__internal_stream_count_div;
-/*!<
+typedef struct
+{
+    uint8_t firmware__internal_stream_count_div;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3369,8 +3387,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = fw__internal_stream_count_div
 */
-	uint8_t   firmware__internal_stream_counter_val;
-/*!<
+    uint8_t firmware__internal_stream_counter_val;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3391,9 +3409,10 @@ typedef struct {
  * - i2c_size     =     90
  */
 
-typedef struct {
-	uint8_t   dss_calc__roi_ctrl;
-/*!<
+typedef struct
+{
+    uint8_t dss_calc__roi_ctrl;
+    /*!<
 	info: \n
 		- msb =  1
 		- lsb =  0
@@ -3403,8 +3422,8 @@ typedef struct {
 		-   [0] = dss_calc__roi_intersect_enable
 		-   [1] = dss_calc__roi_subtract_enable
 */
-	uint8_t   dss_calc__spare_1;
-/*!<
+    uint8_t dss_calc__spare_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3413,8 +3432,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_1
 */
-	uint8_t   dss_calc__spare_2;
-/*!<
+    uint8_t dss_calc__spare_2;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3423,8 +3442,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_2
 */
-	uint8_t   dss_calc__spare_3;
-/*!<
+    uint8_t dss_calc__spare_3;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3433,8 +3452,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_3
 */
-	uint8_t   dss_calc__spare_4;
-/*!<
+    uint8_t dss_calc__spare_4;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3443,8 +3462,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_4
 */
-	uint8_t   dss_calc__spare_5;
-/*!<
+    uint8_t dss_calc__spare_5;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3453,8 +3472,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_5
 */
-	uint8_t   dss_calc__spare_6;
-/*!<
+    uint8_t dss_calc__spare_6;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3463,8 +3482,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_6
 */
-	uint8_t   dss_calc__spare_7;
-/*!<
+    uint8_t dss_calc__spare_7;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3473,8 +3492,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__spare_7
 */
-	uint8_t   dss_calc__user_roi_spad_en_0;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3483,8 +3502,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_0
 */
-	uint8_t   dss_calc__user_roi_spad_en_1;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3493,8 +3512,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_1
 */
-	uint8_t   dss_calc__user_roi_spad_en_2;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_2;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3503,8 +3522,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_2
 */
-	uint8_t   dss_calc__user_roi_spad_en_3;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_3;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3513,8 +3532,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_3
 */
-	uint8_t   dss_calc__user_roi_spad_en_4;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_4;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3523,8 +3542,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_4
 */
-	uint8_t   dss_calc__user_roi_spad_en_5;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_5;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3533,8 +3552,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_5
 */
-	uint8_t   dss_calc__user_roi_spad_en_6;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_6;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3543,8 +3562,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_6
 */
-	uint8_t   dss_calc__user_roi_spad_en_7;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_7;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3553,8 +3572,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_7
 */
-	uint8_t   dss_calc__user_roi_spad_en_8;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_8;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3563,8 +3582,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_8
 */
-	uint8_t   dss_calc__user_roi_spad_en_9;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_9;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3573,8 +3592,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_9
 */
-	uint8_t   dss_calc__user_roi_spad_en_10;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_10;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3583,8 +3602,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_10
 */
-	uint8_t   dss_calc__user_roi_spad_en_11;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_11;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3593,8 +3612,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_11
 */
-	uint8_t   dss_calc__user_roi_spad_en_12;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_12;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3603,8 +3622,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_12
 */
-	uint8_t   dss_calc__user_roi_spad_en_13;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_13;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3613,8 +3632,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_13
 */
-	uint8_t   dss_calc__user_roi_spad_en_14;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_14;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3623,8 +3642,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_14
 */
-	uint8_t   dss_calc__user_roi_spad_en_15;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_15;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3633,8 +3652,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_15
 */
-	uint8_t   dss_calc__user_roi_spad_en_16;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_16;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3643,8 +3662,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_16
 */
-	uint8_t   dss_calc__user_roi_spad_en_17;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_17;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3653,8 +3672,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_17
 */
-	uint8_t   dss_calc__user_roi_spad_en_18;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_18;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3663,8 +3682,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_18
 */
-	uint8_t   dss_calc__user_roi_spad_en_19;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_19;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3673,8 +3692,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_19
 */
-	uint8_t   dss_calc__user_roi_spad_en_20;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_20;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3683,8 +3702,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_20
 */
-	uint8_t   dss_calc__user_roi_spad_en_21;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_21;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3693,8 +3712,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_21
 */
-	uint8_t   dss_calc__user_roi_spad_en_22;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_22;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3703,8 +3722,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_22
 */
-	uint8_t   dss_calc__user_roi_spad_en_23;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_23;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3713,8 +3732,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_23
 */
-	uint8_t   dss_calc__user_roi_spad_en_24;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_24;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3723,8 +3742,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_24
 */
-	uint8_t   dss_calc__user_roi_spad_en_25;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_25;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3733,8 +3752,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_25
 */
-	uint8_t   dss_calc__user_roi_spad_en_26;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_26;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3743,8 +3762,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_26
 */
-	uint8_t   dss_calc__user_roi_spad_en_27;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_27;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3753,8 +3772,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_27
 */
-	uint8_t   dss_calc__user_roi_spad_en_28;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_28;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3763,8 +3782,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_28
 */
-	uint8_t   dss_calc__user_roi_spad_en_29;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_29;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3773,8 +3792,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_29
 */
-	uint8_t   dss_calc__user_roi_spad_en_30;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_30;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3783,8 +3802,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_30
 */
-	uint8_t   dss_calc__user_roi_spad_en_31;
-/*!<
+    uint8_t dss_calc__user_roi_spad_en_31;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3793,8 +3812,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_spad_en_31
 */
-	uint8_t   dss_calc__user_roi_0;
-/*!<
+    uint8_t dss_calc__user_roi_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3803,8 +3822,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_0
 */
-	uint8_t   dss_calc__user_roi_1;
-/*!<
+    uint8_t dss_calc__user_roi_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3813,8 +3832,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__user_roi_1
 */
-	uint8_t   dss_calc__mode_roi_0;
-/*!<
+    uint8_t dss_calc__mode_roi_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3823,8 +3842,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__mode_roi_0
 */
-	uint8_t   dss_calc__mode_roi_1;
-/*!<
+    uint8_t dss_calc__mode_roi_1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3833,8 +3852,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_calc__mode_roi_1
 */
-	uint8_t   sigma_estimator_calc__spare_0;
-/*!<
+    uint8_t sigma_estimator_calc__spare_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3843,8 +3862,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = sigma_estimator_calc__spare_0
 */
-	uint16_t  vhv_result__peak_signal_rate_mcps;
-/*!<
+    uint16_t vhv_result__peak_signal_rate_mcps;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3853,8 +3872,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = vhv_result__peak_signal_rate_mcps
 */
-	uint32_t  vhv_result__signal_total_events_ref;
-/*!<
+    uint32_t vhv_result__signal_total_events_ref;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3863,8 +3882,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = vhv_result__signal_total_events_ref
 */
-	uint16_t  phasecal_result__phase_output_ref;
-/*!<
+    uint16_t phasecal_result__phase_output_ref;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3873,8 +3892,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = phasecal_result__normalised_phase_ref
 */
-	uint16_t  dss_result__total_rate_per_spad;
-/*!<
+    uint16_t dss_result__total_rate_per_spad;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3883,8 +3902,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = dss_result__total_rate_per_spad
 */
-	uint8_t   dss_result__enabled_blocks;
-/*!<
+    uint8_t dss_result__enabled_blocks;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -3893,8 +3912,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = dss_result__enabled_blocks
 */
-	uint16_t  dss_result__num_requested_spads;
-/*!<
+    uint16_t dss_result__num_requested_spads;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3903,8 +3922,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = dss_result__num_requested_spads (fixed point 8.8)
 */
-	uint16_t  mm_result__inner_intersection_rate;
-/*!<
+    uint16_t mm_result__inner_intersection_rate;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3913,8 +3932,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = mm_result__inner_intersection_rate
 */
-	uint16_t  mm_result__outer_complement_rate;
-/*!<
+    uint16_t mm_result__outer_complement_rate;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3923,8 +3942,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = mm_result__outer_complement_rate
 */
-	uint16_t  mm_result__total_offset;
-/*!<
+    uint16_t mm_result__total_offset;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -3933,8 +3952,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = mm_result__total_offset
 */
-	uint32_t  xtalk_calc__xtalk_for_enabled_spads;
-/*!<
+    uint32_t xtalk_calc__xtalk_for_enabled_spads;
+    /*!<
 	info: \n
 		- msb = 23
 		- lsb =  0
@@ -3943,8 +3962,8 @@ typedef struct {
 	fields: \n
 		- [23:0] = xtalk_calc__xtalk_for_enabled_spads (fixed point 11.13)
 */
-	uint32_t  xtalk_result__avg_xtalk_user_roi_kcps;
-/*!<
+    uint32_t xtalk_result__avg_xtalk_user_roi_kcps;
+    /*!<
 	info: \n
 		- msb = 23
 		- lsb =  0
@@ -3953,8 +3972,8 @@ typedef struct {
 	fields: \n
 		- [23:0] = xtalk_result__avg_xtalk_user_roi_kcps (fixed point 11.13)
 */
-	uint32_t  xtalk_result__avg_xtalk_mm_inner_roi_kcps;
-/*!<
+    uint32_t xtalk_result__avg_xtalk_mm_inner_roi_kcps;
+    /*!<
 	info: \n
 		- msb = 23
 		- lsb =  0
@@ -3963,8 +3982,8 @@ typedef struct {
 	fields: \n
 		- [23:0] = xtalk_result__avg_xtalk_mm_inner_roi_kcps (fixed point 11.13)
 */
-	uint32_t  xtalk_result__avg_xtalk_mm_outer_roi_kcps;
-/*!<
+    uint32_t xtalk_result__avg_xtalk_mm_outer_roi_kcps;
+    /*!<
 	info: \n
 		- msb = 23
 		- lsb =  0
@@ -3973,8 +3992,8 @@ typedef struct {
 	fields: \n
 		- [23:0] = xtalk_result__avg_xtalk_mm_outer_roi_kcps (fixed point 11.13)
 */
-	uint32_t  range_result__accum_phase;
-/*!<
+    uint32_t range_result__accum_phase;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -3983,8 +4002,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = range_result__accum_phase
 */
-	uint16_t  range_result__offset_corrected_range;
-/*!<
+    uint16_t range_result__offset_corrected_range;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4005,9 +4024,10 @@ typedef struct {
  * - i2c_size     =     82
  */
 
-typedef struct {
-	uint8_t   shadow_phasecal_result__vcsel_start;
-/*!<
+typedef struct
+{
+    uint8_t shadow_phasecal_result__vcsel_start;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4016,8 +4036,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_phasecal_result__vcsel_start
 */
-	uint8_t   shadow_result__interrupt_status;
-/*!<
+    uint8_t shadow_result__interrupt_status;
+    /*!<
 	info: \n
 		- msb =  5
 		- lsb =  0
@@ -4028,8 +4048,8 @@ typedef struct {
 		- [4:3] = shadow_int_error_status
 		-   [5] = shadow_gph_id_gpio_status
 */
-	uint8_t   shadow_result__range_status;
-/*!<
+    uint8_t shadow_result__range_status;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4041,8 +4061,8 @@ typedef struct {
 		-   [6] = shadow_min_threshold_hit
 		-   [7] = shadow_gph_id_range_status
 */
-	uint8_t   shadow_result__report_status;
-/*!<
+    uint8_t shadow_result__report_status;
+    /*!<
 	info: \n
 		- msb =  3
 		- lsb =  0
@@ -4051,8 +4071,8 @@ typedef struct {
 	fields: \n
 		- [3:0] = shadow_report_status
 */
-	uint8_t   shadow_result__stream_count;
-/*!<
+    uint8_t shadow_result__stream_count;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4061,8 +4081,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_result__stream_count
 */
-	uint16_t  shadow_result__dss_actual_effective_spads_sd0;
-/*!<
+    uint16_t shadow_result__dss_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4071,8 +4091,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__dss_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  shadow_result__peak_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t shadow_result__peak_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4081,8 +4101,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__peak_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  shadow_result__ambient_count_rate_mcps_sd0;
-/*!<
+    uint16_t shadow_result__ambient_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4091,8 +4111,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__ambient_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  shadow_result__sigma_sd0;
-/*!<
+    uint16_t shadow_result__sigma_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4101,8 +4121,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__sigma_sd0 (fixed point 14.2)
 */
-	uint16_t  shadow_result__phase_sd0;
-/*!<
+    uint16_t shadow_result__phase_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4111,8 +4131,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__phase_sd0 (fixed point 5.11)
 */
-	uint16_t  shadow_result__final_crosstalk_corrected_range_mm_sd0;
-/*!<
+    uint16_t shadow_result__final_crosstalk_corrected_range_mm_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4121,8 +4141,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__final_crosstalk_corrected_range_mm_sd0
 */
-	uint16_t  shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
-/*!<
+    uint16_t shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4131,8 +4151,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__peak_signal_count_rate_crosstalk_corrected_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  shadow_result__mm_inner_actual_effective_spads_sd0;
-/*!<
+    uint16_t shadow_result__mm_inner_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4141,8 +4161,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__mm_inner_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  shadow_result__mm_outer_actual_effective_spads_sd0;
-/*!<
+    uint16_t shadow_result__mm_outer_actual_effective_spads_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4151,8 +4171,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__mm_outer_actual_effective_spads_sd0 (fixed point 8.8)
 */
-	uint16_t  shadow_result__avg_signal_count_rate_mcps_sd0;
-/*!<
+    uint16_t shadow_result__avg_signal_count_rate_mcps_sd0;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4161,8 +4181,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__avg_signal_count_rate_mcps_sd0 (fixed point 9.7)
 */
-	uint16_t  shadow_result__dss_actual_effective_spads_sd1;
-/*!<
+    uint16_t shadow_result__dss_actual_effective_spads_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4171,8 +4191,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__dss_actual_effective_spads_sd1 (fixed point 8.8)
 */
-	uint16_t  shadow_result__peak_signal_count_rate_mcps_sd1;
-/*!<
+    uint16_t shadow_result__peak_signal_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4181,8 +4201,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__peak_signal_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  shadow_result__ambient_count_rate_mcps_sd1;
-/*!<
+    uint16_t shadow_result__ambient_count_rate_mcps_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4191,8 +4211,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__ambient_count_rate_mcps_sd1 (fixed point 9.7)
 */
-	uint16_t  shadow_result__sigma_sd1;
-/*!<
+    uint16_t shadow_result__sigma_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4201,8 +4221,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__sigma_sd1 (fixed point 14.2)
 */
-	uint16_t  shadow_result__phase_sd1;
-/*!<
+    uint16_t shadow_result__phase_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4211,8 +4231,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__phase_sd1 (fixed point 5.11)
 */
-	uint16_t  shadow_result__final_crosstalk_corrected_range_mm_sd1;
-/*!<
+    uint16_t shadow_result__final_crosstalk_corrected_range_mm_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4221,8 +4241,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__final_crosstalk_corrected_range_mm_sd1
 */
-	uint16_t  shadow_result__spare_0_sd1;
-/*!<
+    uint16_t shadow_result__spare_0_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4231,8 +4251,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__spare_0_sd1
 */
-	uint16_t  shadow_result__spare_1_sd1;
-/*!<
+    uint16_t shadow_result__spare_1_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4241,8 +4261,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__spare_1_sd1
 */
-	uint16_t  shadow_result__spare_2_sd1;
-/*!<
+    uint16_t shadow_result__spare_2_sd1;
+    /*!<
 	info: \n
 		- msb = 15
 		- lsb =  0
@@ -4251,8 +4271,8 @@ typedef struct {
 	fields: \n
 		- [15:0] = shadow_result__spare_2_sd1
 */
-	uint8_t   shadow_result__spare_3_sd1;
-/*!<
+    uint8_t shadow_result__spare_3_sd1;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4261,8 +4281,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_result__spare_3_sd1
 */
-	uint8_t   shadow_result__thresh_info;
-/*!<
+    uint8_t shadow_result__thresh_info;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4272,8 +4292,8 @@ typedef struct {
 		- [3:0] = shadow_result__distance_int_info
 		- [7:4] = shadow_result__rate_int_info
 */
-	uint8_t   shadow_phasecal_result__reference_phase_hi;
-/*!<
+    uint8_t shadow_phasecal_result__reference_phase_hi;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4282,8 +4302,8 @@ typedef struct {
 	fields: \n
 		- [7:0] = shadow_phasecal_result__reference_phase_hi
 */
-	uint8_t   shadow_phasecal_result__reference_phase_lo;
-/*!<
+    uint8_t shadow_phasecal_result__reference_phase_lo;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0
@@ -4304,9 +4324,10 @@ typedef struct {
  * - i2c_size     =     33
  */
 
-typedef struct {
-	uint32_t  shadow_result_core__ambient_window_events_sd0;
-/*!<
+typedef struct
+{
+    uint32_t shadow_result_core__ambient_window_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4315,8 +4336,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__ambient_window_events_sd0
 */
-	uint32_t  shadow_result_core__ranging_total_events_sd0;
-/*!<
+    uint32_t shadow_result_core__ranging_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4325,8 +4346,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__ranging_total_events_sd0
 */
-	int32_t   shadow_result_core__signal_total_events_sd0;
-/*!<
+    int32_t shadow_result_core__signal_total_events_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4335,8 +4356,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__signal_total_events_sd0
 */
-	uint32_t  shadow_result_core__total_periods_elapsed_sd0;
-/*!<
+    uint32_t shadow_result_core__total_periods_elapsed_sd0;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4345,8 +4366,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__total_periods_elapsed_sd0
 */
-	uint32_t  shadow_result_core__ambient_window_events_sd1;
-/*!<
+    uint32_t shadow_result_core__ambient_window_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4355,8 +4376,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__ambient_window_events_sd1
 */
-	uint32_t  shadow_result_core__ranging_total_events_sd1;
-/*!<
+    uint32_t shadow_result_core__ranging_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4365,8 +4386,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__ranging_total_events_sd1
 */
-	int32_t   shadow_result_core__signal_total_events_sd1;
-/*!<
+    int32_t shadow_result_core__signal_total_events_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4375,8 +4396,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__signal_total_events_sd1
 */
-	uint32_t  shadow_result_core__total_periods_elapsed_sd1;
-/*!<
+    uint32_t shadow_result_core__total_periods_elapsed_sd1;
+    /*!<
 	info: \n
 		- msb = 31
 		- lsb =  0
@@ -4385,8 +4406,8 @@ typedef struct {
 	fields: \n
 		- [31:0] = shadow_result_core__total_periods_elapsed_sd1
 */
-	uint8_t   shadow_result_core__spare_0;
-/*!<
+    uint8_t shadow_result_core__spare_0;
+    /*!<
 	info: \n
 		- msb =  7
 		- lsb =  0

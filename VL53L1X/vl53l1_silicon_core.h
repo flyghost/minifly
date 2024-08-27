@@ -89,8 +89,8 @@ extern "C" {
  */
 
 VL53L1_Error VL53L1_is_firmware_ready_silicon(
-	VL53L1_DEV      Dev,
-	uint8_t        *pready);
+    VL53L1_DEV Dev,
+    uint8_t   *pready);
 
 
 #ifdef __cplusplus

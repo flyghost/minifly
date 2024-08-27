@@ -54,11 +54,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 
-#if !defined(STDINT_H) && !defined(_STDINT_H) && !defined(_GCC_STDINT_H) && !defined(__STDINT_DECLS) && !defined(_GCC_WRAP_STDINT_H)  && !defined(_STDINT)
+#if !defined(STDINT_H) && !defined(_STDINT_H) && !defined(_GCC_STDINT_H) && !defined(__STDINT_DECLS) && !defined(_GCC_WRAP_STDINT_H) && !defined(_STDINT)
 
- #pragma message("Please review  type definition of STDINT define for your platform and add to list above ")
+#pragma message("Please review  type definition of STDINT define for your platform and add to list above ")
 
- /*
+/*
   *  target platform do not provide stdint or use a different #define than above
   *  to avoid seeing the message below addapt the #define list above or implement
   *  all type and delete these pragma
