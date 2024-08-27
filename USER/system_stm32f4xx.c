@@ -253,8 +253,8 @@
 
 /** @addtogroup stm32f4xx_system
   * @{
-  */  
-  
+  */
+
 /** @addtogroup STM32F4xx_System_Private_Includes
   * @{
   */
@@ -279,16 +279,16 @@
 
 /************************* Miscellaneous Configuration ************************/
 /*!< Uncomment the following line if you need to use external SRAM or SDRAM mounted
-     on STM324xG_EVAL/STM324x7I_EVAL/STM324x9I_EVAL boards as data memory  */     
-#if defined (STM32F40_41xxx) || defined (STM32F427_437xx) || defined (STM32F429_439xx)
+     on STM324xG_EVAL/STM324x7I_EVAL/STM324x9I_EVAL boards as data memory  */
+#if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx)
 /* #define DATA_IN_ExtSRAM */
 #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx */
 
-#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
+#if defined(STM32F427_437xx) || defined(STM32F429_439xx)
 /* #define DATA_IN_ExtSDRAM */
-#endif /* STM32F427_437x || STM32F429_439xx */ 
+#endif /* STM32F427_437x || STM32F429_439xx */
 
-#if defined (STM32F411xE)    
+#if defined(STM32F411xE)
 /*!< Uncomment the following line if you need to clock the STM32F411xE by HSE Bypass
      through STLINK MCO pin of STM32F103 microcontroller. The frequency cannot be changed
      and is fixed at 8 MHz. 
@@ -296,58 +296,58 @@
      ?SB54, SB55 OFF
      ?R35 removed
      ?SB16, SB50 ON */
-	#define USE_HSE_BYPASS
+#define USE_HSE_BYPASS
 
-#if defined (USE_HSE_BYPASS)     
-#define HSE_BYPASS_INPUT_FREQUENCY   8000000
-#endif /* USE_HSE_BYPASS */    
+#if defined(USE_HSE_BYPASS)
+#define HSE_BYPASS_INPUT_FREQUENCY 8000000
+#endif /* USE_HSE_BYPASS */
 #endif /* STM32F411xE */
-    
+
 /*!< Uncomment the following line if you need to relocate your vector Table in
      Internal SRAM. */
 /* #define VECT_TAB_SRAM */
-#define VECT_TAB_OFFSET  0x0 /*!< Vector Table base offset field. 
+#define VECT_TAB_OFFSET 0x0 /*!< Vector Table base offset field. 
                                    This value must be a multiple of 0x200. */
 /******************************************************************************/
 
 /************************* PLL Parameters *************************************/
-#if defined (STM32F40_41xxx) || defined (STM32F427_437xx) || defined (STM32F429_439xx) || defined (STM32F401xx)
+#if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F401xx)
 /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
-#define PLL_M      8
+#define PLL_M 8
 #else /* STM32F411xE */
-#if defined (USE_HSE_BYPASS)
-#define PLL_M      8    
-#else /* STM32F411xE */   
-#define PLL_M      16
+#if defined(USE_HSE_BYPASS)
+#define PLL_M 8
+#else  /* STM32F411xE */
+#define PLL_M 16
 #endif /* USE_HSE_BYPASS */
-#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */  
+#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */
 
 /* USB OTG FS, SDIO and RNG Clock =  PLL_VCO / PLLQ */
-#define PLL_Q      4	/* USB OTG FS=192/4=48MHz  */
+#define PLL_Q 4 /* USB OTG FS=192/4=48MHz  */
 
-#if defined (STM32F40_41xxx)
-#define PLL_N      336
+#if defined(STM32F40_41xxx)
+#define PLL_N 336
 /* SYSCLK = PLL_VCO / PLL_P */
-#define PLL_P      2
+#define PLL_P 2
 #endif /* STM32F40_41xxx */
 
-#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
-#define PLL_N      360
+#if defined(STM32F427_437xx) || defined(STM32F429_439xx)
+#define PLL_N 360
 /* SYSCLK = PLL_VCO / PLL_P */
-#define PLL_P      2
+#define PLL_P 2
 #endif /* STM32F427_437x || STM32F429_439xx */
 
-#if defined (STM32F401xx)
-#define PLL_N      336
+#if defined(STM32F401xx)
+#define PLL_N 336
 /* SYSCLK = PLL_VCO / PLL_P */
-#define PLL_P      4
+#define PLL_P 4
 #endif /* STM32F401xx */
 
-#if defined (STM32F411xE)
-#define PLL_N      192	/* 96*2  50 °‹PLLN °‹432  */
+#if defined(STM32F411xE)
+#define PLL_N 192 /* 96*2  50 °‹PLLN °‹432  */
 /* SYSCLK = PLL_VCO / PLL_P */
-#define PLL_P      2	/* PLLP = 2, 4, 6, or 8  */   
-#endif /* STM32F411xx */
+#define PLL_P 2 /* PLLP = 2, 4, 6, or 8  */
+#endif          /* STM32F411xx */
 
 /******************************************************************************/
 
@@ -367,20 +367,20 @@
   * @{
   */
 
-#if defined (STM32F40_41xxx)
-  uint32_t SystemCoreClock = 168000000;
+#if defined(STM32F40_41xxx)
+uint32_t SystemCoreClock = 168000000;
 #endif /* STM32F40_41xxx */
 
-#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
-  uint32_t SystemCoreClock = 180000000;
+#if defined(STM32F427_437xx) || defined(STM32F429_439xx)
+uint32_t SystemCoreClock = 180000000;
 #endif /* STM32F427_437x || STM32F429_439xx */
 
-#if defined (STM32F401xx)
-  uint32_t SystemCoreClock = 84000000;
+#if defined(STM32F401xx)
+uint32_t SystemCoreClock = 84000000;
 #endif /* STM32F401xx */
 
-#if defined (STM32F411xE)
-  uint32_t SystemCoreClock = 96000000;
+#if defined(STM32F411xE)
+uint32_t SystemCoreClock = 96000000;
 #endif /* STM32F401xx */
 
 __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
@@ -395,8 +395,8 @@ __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9}
 
 static void SetSysClock(void);
 
-#if defined (DATA_IN_ExtSRAM) || defined (DATA_IN_ExtSDRAM)
-static void SystemInit_ExtMemCtl(void); 
+#if defined(DATA_IN_ExtSRAM) || defined(DATA_IN_ExtSDRAM)
+static void SystemInit_ExtMemCtl(void);
 #endif /* DATA_IN_ExtSRAM || DATA_IN_ExtSDRAM */
 
 /**
@@ -416,42 +416,42 @@ static void SystemInit_ExtMemCtl(void);
   */
 void SystemInit(void)
 {
-  /* FPU settings ------------------------------------------------------------*/
-  #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-    SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
-  #endif
-  /* Reset the RCC clock configuration to the default reset state ------------*/
-  /* Set HSION bit */
-  RCC->CR |= (uint32_t)0x00000001;
+/* FPU settings ------------------------------------------------------------*/
+#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+    SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2)); /* set CP10 and CP11 Full Access */
+#endif
+    /* Reset the RCC clock configuration to the default reset state ------------*/
+    /* Set HSION bit */
+    RCC->CR |= (uint32_t)0x00000001;
 
-  /* Reset CFGR register */
-  RCC->CFGR = 0x00000000;
+    /* Reset CFGR register */
+    RCC->CFGR = 0x00000000;
 
-  /* Reset HSEON, CSSON and PLLON bits */
-  RCC->CR &= (uint32_t)0xFEF6FFFF;
+    /* Reset HSEON, CSSON and PLLON bits */
+    RCC->CR &= (uint32_t)0xFEF6FFFF;
 
-  /* Reset PLLCFGR register */
-  RCC->PLLCFGR = 0x24003010;
+    /* Reset PLLCFGR register */
+    RCC->PLLCFGR = 0x24003010;
 
-  /* Reset HSEBYP bit */
-  RCC->CR &= (uint32_t)0xFFFBFFFF;
+    /* Reset HSEBYP bit */
+    RCC->CR &= (uint32_t)0xFFFBFFFF;
 
-  /* Disable all interrupts */
-  RCC->CIR = 0x00000000;
+    /* Disable all interrupts */
+    RCC->CIR = 0x00000000;
 
-#if defined (DATA_IN_ExtSRAM) || defined (DATA_IN_ExtSDRAM)
-  SystemInit_ExtMemCtl(); 
+#if defined(DATA_IN_ExtSRAM) || defined(DATA_IN_ExtSDRAM)
+    SystemInit_ExtMemCtl();
 #endif /* DATA_IN_ExtSRAM || DATA_IN_ExtSDRAM */
-         
-  /* Configure the System clock source, PLL Multiplier and Divider factors, 
-     AHB/APBx prescalers and Flash settings ----------------------------------*/
-  SetSysClock();
 
-  /* Configure the Vector Table location add offset address ------------------*/
+    /* Configure the System clock source, PLL Multiplier and Divider factors, 
+     AHB/APBx prescalers and Flash settings ----------------------------------*/
+    SetSysClock();
+
+    /* Configure the Vector Table location add offset address ------------------*/
 #ifdef VECT_TAB_SRAM
-  SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+    SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
 #else
-  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+    SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
 #endif
 }
 
@@ -493,64 +493,64 @@ void SystemInit(void)
   */
 void SystemCoreClockUpdate(void)
 {
-  uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
-  
-  /* Get SYSCLK source -------------------------------------------------------*/
-  tmp = RCC->CFGR & RCC_CFGR_SWS;
+    uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
 
-  switch (tmp)
-  {
-    case 0x00:  /* HSI used as system clock source */
-      SystemCoreClock = HSI_VALUE;
-      break;
-    case 0x04:  /* HSE used as system clock source */
-      SystemCoreClock = HSE_VALUE;
-      break;
-    case 0x08:  /* PLL used as system clock source */
-       /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
+    /* Get SYSCLK source -------------------------------------------------------*/
+    tmp = RCC->CFGR & RCC_CFGR_SWS;
+
+    switch (tmp)
+    {
+    case 0x00: /* HSI used as system clock source */
+        SystemCoreClock = HSI_VALUE;
+        break;
+    case 0x04: /* HSE used as system clock source */
+        SystemCoreClock = HSE_VALUE;
+        break;
+    case 0x08: /* PLL used as system clock source */
+               /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
          SYSCLK = PLL_VCO / PLL_P
-         */    
-      pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
-      pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
-      
-#if defined (STM32F40_41xxx) || defined (STM32F427_437xx) || defined (STM32F429_439xx) || defined (STM32F401xx)
-      if (pllsource != 0)
-      {
-        /* HSE used as PLL clock source */
-        pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
-      }
-      else
-      {
-        /* HSI used as PLL clock source */
-        pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);      
-      }
-#elif defined (STM32F411xE)
-#if defined (USE_HSE_BYPASS)
-      if (pllsource != 0)
-      {
-        /* HSE used as PLL clock source */
-        pllvco = (HSE_BYPASS_INPUT_FREQUENCY / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
-      }  
-#else  
-      if (pllsource == 0)
-      {
-        /* HSI used as PLL clock source */
-        pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
-      }  
-#endif /* USE_HSE_BYPASS */  
-#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */  
-      pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
-      SystemCoreClock = pllvco/pllp;      
-      break;
+         */
+        pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+        pllm      = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+
+#if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F401xx)
+        if (pllsource != 0)
+        {
+            /* HSE used as PLL clock source */
+            pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+        }
+        else
+        {
+            /* HSI used as PLL clock source */
+            pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+        }
+#elif defined(STM32F411xE)
+#if defined(USE_HSE_BYPASS)
+        if (pllsource != 0)
+        {
+            /* HSE used as PLL clock source */
+            pllvco = (HSE_BYPASS_INPUT_FREQUENCY / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+        }
+#else
+        if (pllsource == 0)
+        {
+            /* HSI used as PLL clock source */
+            pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+        }
+#endif /* USE_HSE_BYPASS */
+#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */
+        pllp            = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >> 16) + 1) * 2;
+        SystemCoreClock = pllvco / pllp;
+        break;
     default:
-      SystemCoreClock = HSI_VALUE;
-      break;
-  }
-  /* Compute HCLK frequency --------------------------------------------------*/
-  /* Get HCLK prescaler */
-  tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
-  /* HCLK frequency */
-  SystemCoreClock >>= tmp;
+        SystemCoreClock = HSI_VALUE;
+        break;
+    }
+    /* Compute HCLK frequency --------------------------------------------------*/
+    /* Get HCLK prescaler */
+    tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
+    /* HCLK frequency */
+    SystemCoreClock >>= tmp;
 }
 
 /**
@@ -563,214 +563,212 @@ void SystemCoreClockUpdate(void)
   */
 static void SetSysClock(void)
 {
-#if defined (STM32F40_41xxx) || defined (STM32F427_437xx) || defined (STM32F429_439xx) || defined (STM32F401xx)
-/******************************************************************************/
-/*            PLL (clocked by HSE) used as System clock source                */
-/******************************************************************************/
-  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
-  
-  /* Enable HSE */
-  RCC->CR |= ((uint32_t)RCC_CR_HSEON);
- 
-  /* Wait till HSE is ready and if Time out is reached exit */
-  do
-  {
-    HSEStatus = RCC->CR & RCC_CR_HSERDY;
-    StartUpCounter++;
-  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+#if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx) || defined(STM32F401xx)
+    /******************************************************************************/
+    /*            PLL (clocked by HSE) used as System clock source                */
+    /******************************************************************************/
+    __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
 
-  if ((RCC->CR & RCC_CR_HSERDY) != RESET)
-  {
-    HSEStatus = (uint32_t)0x01;
-  }
-  else
-  {
-    HSEStatus = (uint32_t)0x00;
-  }
+    /* Enable HSE */
+    RCC->CR |= ((uint32_t)RCC_CR_HSEON);
 
-  if (HSEStatus == (uint32_t)0x01)
-  {
-    /* Select regulator voltage output Scale 1 mode */
-    RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-    PWR->CR |= PWR_CR_VOS;
+    /* Wait till HSE is ready and if Time out is reached exit */
+    do
+    {
+        HSEStatus = RCC->CR & RCC_CR_HSERDY;
+        StartUpCounter++;
+    } while ((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
 
-    /* HCLK = SYSCLK / 1*/
-    RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+    if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+    {
+        HSEStatus = (uint32_t)0x01;
+    }
+    else
+    {
+        HSEStatus = (uint32_t)0x00;
+    }
 
-#if defined (STM32F40_41xxx) || defined (STM32F427_437xx) || defined (STM32F429_439xx)      
-    /* PCLK2 = HCLK / 2*/
-    RCC->CFGR |= RCC_CFGR_PPRE2_DIV2;
-    
-    /* PCLK1 = HCLK / 4*/
-    RCC->CFGR |= RCC_CFGR_PPRE1_DIV4;
+    if (HSEStatus == (uint32_t)0x01)
+    {
+        /* Select regulator voltage output Scale 1 mode */
+        RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+        PWR->CR      |= PWR_CR_VOS;
+
+        /* HCLK = SYSCLK / 1*/
+        RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+
+#if defined(STM32F40_41xxx) || defined(STM32F427_437xx) || defined(STM32F429_439xx)
+        /* PCLK2 = HCLK / 2*/
+        RCC->CFGR |= RCC_CFGR_PPRE2_DIV2;
+
+        /* PCLK1 = HCLK / 4*/
+        RCC->CFGR |= RCC_CFGR_PPRE1_DIV4;
 #endif /* STM32F40_41xxx || STM32F427_437x || STM32F429_439xx */
 
-#if defined (STM32F401xx)
-    /* PCLK2 = HCLK / 2*/
-    RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
-    
-    /* PCLK1 = HCLK / 4*/
-    RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
+#if defined(STM32F401xx)
+        /* PCLK2 = HCLK / 2*/
+        RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+
+        /* PCLK1 = HCLK / 4*/
+        RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
 #endif /* STM32F401xx */
-   
-    /* Configure the main PLL */
-    RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
-                   (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
 
-    /* Enable the main PLL */
-    RCC->CR |= RCC_CR_PLLON;
+        /* Configure the main PLL */
+        RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) - 1) << 16) | (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
 
-    /* Wait till the main PLL is ready */
-    while((RCC->CR & RCC_CR_PLLRDY) == 0)
-    {
-    }
-   
-#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
-    /* Enable the Over-drive to extend the clock frequency to 180 Mhz */
-    PWR->CR |= PWR_CR_ODEN;
-    while((PWR->CSR & PWR_CSR_ODRDY) == 0)
-    {
-    }
-    PWR->CR |= PWR_CR_ODSWEN;
-    while((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
-    {
-    }      
-    /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
-    FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_5WS;
+        /* Enable the main PLL */
+        RCC->CR |= RCC_CR_PLLON;
+
+        /* Wait till the main PLL is ready */
+        while ((RCC->CR & RCC_CR_PLLRDY) == 0)
+        {
+        }
+
+#if defined(STM32F427_437xx) || defined(STM32F429_439xx)
+        /* Enable the Over-drive to extend the clock frequency to 180 Mhz */
+        PWR->CR |= PWR_CR_ODEN;
+        while ((PWR->CSR & PWR_CSR_ODRDY) == 0)
+        {
+        }
+        PWR->CR |= PWR_CR_ODSWEN;
+        while ((PWR->CSR & PWR_CSR_ODSWRDY) == 0)
+        {
+        }
+        /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+        FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_LATENCY_5WS;
 #endif /* STM32F427_437x || STM32F429_439xx  */
 
-#if defined (STM32F40_41xxx)     
-    /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
-    FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_5WS;
+#if defined(STM32F40_41xxx)
+        /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+        FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_LATENCY_5WS;
 #endif /* STM32F40_41xxx  */
 
-#if defined (STM32F401xx)
-    /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
-    FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_2WS;
+#if defined(STM32F401xx)
+        /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+        FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_LATENCY_2WS;
 #endif /* STM32F401xx */
 
-    /* Select the main PLL as system clock source */
-    RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
-    RCC->CFGR |= RCC_CFGR_SW_PLL;
+        /* Select the main PLL as system clock source */
+        RCC->CFGR &= (uint32_t)((uint32_t) ~(RCC_CFGR_SW));
+        RCC->CFGR |= RCC_CFGR_SW_PLL;
 
-    /* Wait till the main PLL is used as system clock source */
-    while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
-    {
+        /* Wait till the main PLL is used as system clock source */
+        while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
+        {
+        }
     }
-  }
-  else
-  { /* If HSE fails to start-up, the application will have wrong clock
+    else
+    { /* If HSE fails to start-up, the application will have wrong clock
          configuration. User can add here some code to deal with this error */
-  }
-#elif defined (STM32F411xE)
-#if defined (USE_HSE_BYPASS) 
-/******************************************************************************/
-/*            PLL (clocked by HSE) used as System clock source                */
-/******************************************************************************/
-  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
-  
-//  /* Enable HSE and HSE BYPASS */
-//  RCC->CR |= ((uint32_t)RCC_CR_HSEON | RCC_CR_HSEBYP);
-  /* Enable HSE */
-  RCC->CR |= ((uint32_t)RCC_CR_HSEON);
- 
-  /* Wait till HSE is ready and if Time out is reached exit */
-  do
-  {
-    HSEStatus = RCC->CR & RCC_CR_HSERDY;
-    StartUpCounter++;
-  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+    }
+#elif defined(STM32F411xE)
+#if defined(USE_HSE_BYPASS)
+    /******************************************************************************/
+    /*            PLL (clocked by HSE) used as System clock source                */
+    /******************************************************************************/
+    __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
 
-  if ((RCC->CR & RCC_CR_HSERDY) != RESET)
-  {
-    HSEStatus = (uint32_t)0x01;
-  }
-  else
-  {
-    HSEStatus = (uint32_t)0x00;
-  }
+    //  /* Enable HSE and HSE BYPASS */
+    //  RCC->CR |= ((uint32_t)RCC_CR_HSEON | RCC_CR_HSEBYP);
+    /* Enable HSE */
+    RCC->CR |= ((uint32_t)RCC_CR_HSEON);
 
-  if (HSEStatus == (uint32_t)0x01)
-  {
+    /* Wait till HSE is ready and if Time out is reached exit */
+    do
+    {
+        HSEStatus = RCC->CR & RCC_CR_HSERDY;
+        StartUpCounter++;
+    } while ((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+
+    if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+    {
+        HSEStatus = (uint32_t)0x01;
+    }
+    else
+    {
+        HSEStatus = (uint32_t)0x00;
+    }
+
+    if (HSEStatus == (uint32_t)0x01)
+    {
+        /* Select regulator voltage output Scale 1 mode */
+        RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+        PWR->CR      |= PWR_CR_VOS;
+
+        /* HCLK = SYSCLK / 1*/
+        RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+
+        /* PCLK2 = HCLK / 1*/
+        RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+
+        /* PCLK1 = HCLK / 2*/
+        RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
+
+        /* Configure the main PLL */
+        RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) - 1) << 16) | (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+
+        /* Enable the main PLL */
+        RCC->CR |= RCC_CR_PLLON;
+
+        /* Wait till the main PLL is ready */
+        while ((RCC->CR & RCC_CR_PLLRDY) == 0)
+        {
+        }
+
+        /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+        FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_LATENCY_2WS;
+
+        /* Select the main PLL as system clock source */
+        RCC->CFGR &= (uint32_t)((uint32_t) ~(RCC_CFGR_SW));
+        RCC->CFGR |= RCC_CFGR_SW_PLL;
+
+        /* Wait till the main PLL is used as system clock source */
+        while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
+        {
+        }
+    }
+    else
+    { /* If HSE fails to start-up, the application will have wrong clock
+         configuration. User can add here some code to deal with this error */
+    }
+#else  /* HSI will be used as PLL clock source */
     /* Select regulator voltage output Scale 1 mode */
     RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-    PWR->CR |= PWR_CR_VOS;
+    PWR->CR      |= PWR_CR_VOS;
 
     /* HCLK = SYSCLK / 1*/
     RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
 
-    /* PCLK2 = HCLK / 1*/
+    /* PCLK2 = HCLK / 2*/
     RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
-    
-    /* PCLK1 = HCLK / 2*/
+
+    /* PCLK1 = HCLK / 4*/
     RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
 
     /* Configure the main PLL */
-    RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
-                   (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
-    
+    RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) - 1) << 16) | (PLL_Q << 24);
+
     /* Enable the main PLL */
     RCC->CR |= RCC_CR_PLLON;
 
     /* Wait till the main PLL is ready */
-    while((RCC->CR & RCC_CR_PLLRDY) == 0)
+    while ((RCC->CR & RCC_CR_PLLRDY) == 0)
     {
     }
 
     /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
-    FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_2WS;
+    FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_LATENCY_2WS;
 
     /* Select the main PLL as system clock source */
-    RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
+    RCC->CFGR &= (uint32_t)((uint32_t) ~(RCC_CFGR_SW));
     RCC->CFGR |= RCC_CFGR_SW_PLL;
 
     /* Wait till the main PLL is used as system clock source */
-    while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+    while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
     {
     }
-  }
-  else
-  { /* If HSE fails to start-up, the application will have wrong clock
-         configuration. User can add here some code to deal with this error */
-  }
-#else /* HSI will be used as PLL clock source */
-  /* Select regulator voltage output Scale 1 mode */
-  RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-  PWR->CR |= PWR_CR_VOS;
-  
-  /* HCLK = SYSCLK / 1*/
-  RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
-  
-  /* PCLK2 = HCLK / 2*/
-  RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
-  
-  /* PCLK1 = HCLK / 4*/
-  RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
-  
-  /* Configure the main PLL */
-  RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) | (PLL_Q << 24); 
-  
-  /* Enable the main PLL */
-  RCC->CR |= RCC_CR_PLLON;
-  
-  /* Wait till the main PLL is ready */
-  while((RCC->CR & RCC_CR_PLLRDY) == 0)
-  {
-  }
-  
-  /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
-  FLASH->ACR = FLASH_ACR_PRFTEN | FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_2WS;
-  
-  /* Select the main PLL as system clock source */
-  RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
-  RCC->CFGR |= RCC_CFGR_SW_PLL;
-  
-  /* Wait till the main PLL is used as system clock source */
-  while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
-  {
-  }
-#endif /* USE_HSE_BYPASS */  
-#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */  
+#endif /* USE_HSE_BYPASS */
+#endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx */
 }
 
 /**
@@ -778,7 +776,7 @@ static void SetSysClock(void)
   *          before jump to __main
   * @param  None
   * @retval None
-  */ 
+  */
 #ifdef DATA_IN_ExtSRAM
 /**
   * @brief  Setup the external memory controller.
@@ -790,8 +788,8 @@ static void SetSysClock(void)
   */
 void SystemInit_ExtMemCtl(void)
 {
-/*-- GPIOs Configuration -----------------------------------------------------*/
-/*
+    /*-- GPIOs Configuration -----------------------------------------------------*/
+    /*
  +-------------------+--------------------+------------------+--------------+
  +                       SRAM pins assignment                               +
  +-------------------+--------------------+------------------+--------------+
@@ -810,76 +808,76 @@ void SystemInit_ExtMemCtl(void)
  |                  | PE15 <-> FMC_D12  |
  +------------------+------------------+
 */
-   /* Enable GPIOD, GPIOE, GPIOF and GPIOG interface clock */
-  RCC->AHB1ENR   |= 0x00000078;
-  
-  /* Connect PDx pins to FMC Alternate function */
-  GPIOD->AFR[0]  = 0x00cc00cc;
-  GPIOD->AFR[1]  = 0xcccccccc;
-  /* Configure PDx pins in Alternate function mode */  
-  GPIOD->MODER   = 0xaaaa0a0a;
-  /* Configure PDx pins speed to 100 MHz */  
-  GPIOD->OSPEEDR = 0xffff0f0f;
-  /* Configure PDx pins Output type to push-pull */  
-  GPIOD->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PDx pins */ 
-  GPIOD->PUPDR   = 0x00000000;
+    /* Enable GPIOD, GPIOE, GPIOF and GPIOG interface clock */
+    RCC->AHB1ENR |= 0x00000078;
 
-  /* Connect PEx pins to FMC Alternate function */
-  GPIOE->AFR[0]  = 0xcccccccc;
-  GPIOE->AFR[1]  = 0xcccccccc;
-  /* Configure PEx pins in Alternate function mode */ 
-  GPIOE->MODER   = 0xaaaaaaaa;
-  /* Configure PEx pins speed to 100 MHz */ 
-  GPIOE->OSPEEDR = 0xffffffff;
-  /* Configure PEx pins Output type to push-pull */  
-  GPIOE->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PEx pins */ 
-  GPIOE->PUPDR   = 0x00000000;
+    /* Connect PDx pins to FMC Alternate function */
+    GPIOD->AFR[0] = 0x00cc00cc;
+    GPIOD->AFR[1] = 0xcccccccc;
+    /* Configure PDx pins in Alternate function mode */
+    GPIOD->MODER = 0xaaaa0a0a;
+    /* Configure PDx pins speed to 100 MHz */
+    GPIOD->OSPEEDR = 0xffff0f0f;
+    /* Configure PDx pins Output type to push-pull */
+    GPIOD->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PDx pins */
+    GPIOD->PUPDR = 0x00000000;
 
-  /* Connect PFx pins to FMC Alternate function */
-  GPIOF->AFR[0]  = 0x00cccccc;
-  GPIOF->AFR[1]  = 0xcccc0000;
-  /* Configure PFx pins in Alternate function mode */   
-  GPIOF->MODER   = 0xaa000aaa;
-  /* Configure PFx pins speed to 100 MHz */ 
-  GPIOF->OSPEEDR = 0xff000fff;
-  /* Configure PFx pins Output type to push-pull */  
-  GPIOF->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PFx pins */ 
-  GPIOF->PUPDR   = 0x00000000;
+    /* Connect PEx pins to FMC Alternate function */
+    GPIOE->AFR[0] = 0xcccccccc;
+    GPIOE->AFR[1] = 0xcccccccc;
+    /* Configure PEx pins in Alternate function mode */
+    GPIOE->MODER = 0xaaaaaaaa;
+    /* Configure PEx pins speed to 100 MHz */
+    GPIOE->OSPEEDR = 0xffffffff;
+    /* Configure PEx pins Output type to push-pull */
+    GPIOE->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PEx pins */
+    GPIOE->PUPDR = 0x00000000;
 
-  /* Connect PGx pins to FMC Alternate function */
-  GPIOG->AFR[0]  = 0x00cccccc;
-  GPIOG->AFR[1]  = 0x000000c0;
-  /* Configure PGx pins in Alternate function mode */ 
-  GPIOG->MODER   = 0x00080aaa;
-  /* Configure PGx pins speed to 100 MHz */ 
-  GPIOG->OSPEEDR = 0x000c0fff;
-  /* Configure PGx pins Output type to push-pull */  
-  GPIOG->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PGx pins */ 
-  GPIOG->PUPDR   = 0x00000000;
-  
-/*-- FMC Configuration ------------------------------------------------------*/
-  /* Enable the FMC/FSMC interface clock */
-  RCC->AHB3ENR         |= 0x00000001;
-  
-#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
-  /* Configure and enable Bank1_SRAM2 */
-  FMC_Bank1->BTCR[2]  = 0x00001011;
-  FMC_Bank1->BTCR[3]  = 0x00000201;
-  FMC_Bank1E->BWTR[2] = 0x0fffffff;
-#endif /* STM32F427_437xx || STM32F429_439xx */ 
+    /* Connect PFx pins to FMC Alternate function */
+    GPIOF->AFR[0] = 0x00cccccc;
+    GPIOF->AFR[1] = 0xcccc0000;
+    /* Configure PFx pins in Alternate function mode */
+    GPIOF->MODER = 0xaa000aaa;
+    /* Configure PFx pins speed to 100 MHz */
+    GPIOF->OSPEEDR = 0xff000fff;
+    /* Configure PFx pins Output type to push-pull */
+    GPIOF->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PFx pins */
+    GPIOF->PUPDR = 0x00000000;
 
-#if defined (STM32F40_41xxx)
-  /* Configure and enable Bank1_SRAM2 */
-  FSMC_Bank1->BTCR[2]  = 0x00001011;
-  FSMC_Bank1->BTCR[3]  = 0x00000201;
-  FSMC_Bank1E->BWTR[2] = 0x0fffffff;
-#endif  /* STM32F40_41xxx */
+    /* Connect PGx pins to FMC Alternate function */
+    GPIOG->AFR[0] = 0x00cccccc;
+    GPIOG->AFR[1] = 0x000000c0;
+    /* Configure PGx pins in Alternate function mode */
+    GPIOG->MODER = 0x00080aaa;
+    /* Configure PGx pins speed to 100 MHz */
+    GPIOG->OSPEEDR = 0x000c0fff;
+    /* Configure PGx pins Output type to push-pull */
+    GPIOG->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PGx pins */
+    GPIOG->PUPDR = 0x00000000;
 
-/*
+    /*-- FMC Configuration ------------------------------------------------------*/
+    /* Enable the FMC/FSMC interface clock */
+    RCC->AHB3ENR |= 0x00000001;
+
+#if defined(STM32F427_437xx) || defined(STM32F429_439xx)
+    /* Configure and enable Bank1_SRAM2 */
+    FMC_Bank1->BTCR[2]  = 0x00001011;
+    FMC_Bank1->BTCR[3]  = 0x00000201;
+    FMC_Bank1E->BWTR[2] = 0x0fffffff;
+#endif /* STM32F427_437xx || STM32F429_439xx */
+
+#if defined(STM32F40_41xxx)
+    /* Configure and enable Bank1_SRAM2 */
+    FSMC_Bank1->BTCR[2]  = 0x00001011;
+    FSMC_Bank1->BTCR[3]  = 0x00000201;
+    FSMC_Bank1E->BWTR[2] = 0x0fffffff;
+#endif /* STM32F40_41xxx */
+
+    /*
   Bank1_SRAM2 is configured as follow:
   In case of FSMC configuration 
   NORSRAMTimingStructure.FSMC_AddressSetupTime = 1;
@@ -932,10 +930,9 @@ void SystemInit_ExtMemCtl(void)
   FMC_NORSRAMInitStructure.FMC_ReadWriteTimingStruct = &NORSRAMTimingStructure;
   FMC_NORSRAMInitStructure.FMC_WriteTimingStruct = &NORSRAMTimingStructure;
 */
-  
 }
 #endif /* DATA_IN_ExtSRAM */
-  
+
 #ifdef DATA_IN_ExtSDRAM
 /**
   * @brief  Setup the external memory controller.
@@ -947,150 +944,150 @@ void SystemInit_ExtMemCtl(void)
   */
 void SystemInit_ExtMemCtl(void)
 {
-  register uint32_t tmpreg = 0, timeout = 0xFFFF;
-  register uint32_t index;
+    register uint32_t tmpreg = 0, timeout = 0xFFFF;
+    register uint32_t index;
 
-  /* Enable GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH and GPIOI interface 
+    /* Enable GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH and GPIOI interface 
       clock */
-  RCC->AHB1ENR |= 0x000001FC;
-  
-  /* Connect PCx pins to FMC Alternate function */
-  GPIOC->AFR[0]  = 0x0000000c;
-  GPIOC->AFR[1]  = 0x00007700;
-  /* Configure PCx pins in Alternate function mode */  
-  GPIOC->MODER   = 0x00a00002;
-  /* Configure PCx pins speed to 50 MHz */  
-  GPIOC->OSPEEDR = 0x00a00002;
-  /* Configure PCx pins Output type to push-pull */  
-  GPIOC->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PCx pins */ 
-  GPIOC->PUPDR   = 0x00500000;
-  
-  /* Connect PDx pins to FMC Alternate function */
-  GPIOD->AFR[0]  = 0x000000CC;
-  GPIOD->AFR[1]  = 0xCC000CCC;
-  /* Configure PDx pins in Alternate function mode */  
-  GPIOD->MODER   = 0xA02A000A;
-  /* Configure PDx pins speed to 50 MHz */  
-  GPIOD->OSPEEDR = 0xA02A000A;
-  /* Configure PDx pins Output type to push-pull */  
-  GPIOD->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PDx pins */ 
-  GPIOD->PUPDR   = 0x00000000;
+    RCC->AHB1ENR |= 0x000001FC;
 
-  /* Connect PEx pins to FMC Alternate function */
-  GPIOE->AFR[0]  = 0xC00000CC;
-  GPIOE->AFR[1]  = 0xCCCCCCCC;
-  /* Configure PEx pins in Alternate function mode */ 
-  GPIOE->MODER   = 0xAAAA800A;
-  /* Configure PEx pins speed to 50 MHz */ 
-  GPIOE->OSPEEDR = 0xAAAA800A;
-  /* Configure PEx pins Output type to push-pull */  
-  GPIOE->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PEx pins */ 
-  GPIOE->PUPDR   = 0x00000000;
+    /* Connect PCx pins to FMC Alternate function */
+    GPIOC->AFR[0] = 0x0000000c;
+    GPIOC->AFR[1] = 0x00007700;
+    /* Configure PCx pins in Alternate function mode */
+    GPIOC->MODER = 0x00a00002;
+    /* Configure PCx pins speed to 50 MHz */
+    GPIOC->OSPEEDR = 0x00a00002;
+    /* Configure PCx pins Output type to push-pull */
+    GPIOC->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PCx pins */
+    GPIOC->PUPDR = 0x00500000;
 
-  /* Connect PFx pins to FMC Alternate function */
-  GPIOF->AFR[0]  = 0xcccccccc;
-  GPIOF->AFR[1]  = 0xcccccccc;
-  /* Configure PFx pins in Alternate function mode */   
-  GPIOF->MODER   = 0xAA800AAA;
-  /* Configure PFx pins speed to 50 MHz */ 
-  GPIOF->OSPEEDR = 0xAA800AAA;
-  /* Configure PFx pins Output type to push-pull */  
-  GPIOF->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PFx pins */ 
-  GPIOF->PUPDR   = 0x00000000;
+    /* Connect PDx pins to FMC Alternate function */
+    GPIOD->AFR[0] = 0x000000CC;
+    GPIOD->AFR[1] = 0xCC000CCC;
+    /* Configure PDx pins in Alternate function mode */
+    GPIOD->MODER = 0xA02A000A;
+    /* Configure PDx pins speed to 50 MHz */
+    GPIOD->OSPEEDR = 0xA02A000A;
+    /* Configure PDx pins Output type to push-pull */
+    GPIOD->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PDx pins */
+    GPIOD->PUPDR = 0x00000000;
 
-  /* Connect PGx pins to FMC Alternate function */
-  GPIOG->AFR[0]  = 0xcccccccc;
-  GPIOG->AFR[1]  = 0xcccccccc;
-  /* Configure PGx pins in Alternate function mode */ 
-  GPIOG->MODER   = 0xaaaaaaaa;
-  /* Configure PGx pins speed to 50 MHz */ 
-  GPIOG->OSPEEDR = 0xaaaaaaaa;
-  /* Configure PGx pins Output type to push-pull */  
-  GPIOG->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PGx pins */ 
-  GPIOG->PUPDR   = 0x00000000;
-  
-  /* Connect PHx pins to FMC Alternate function */
-  GPIOH->AFR[0]  = 0x00C0CC00;
-  GPIOH->AFR[1]  = 0xCCCCCCCC;
-  /* Configure PHx pins in Alternate function mode */ 
-  GPIOH->MODER   = 0xAAAA08A0;
-  /* Configure PHx pins speed to 50 MHz */ 
-  GPIOH->OSPEEDR = 0xAAAA08A0;
-  /* Configure PHx pins Output type to push-pull */  
-  GPIOH->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PHx pins */ 
-  GPIOH->PUPDR   = 0x00000000;
-  
-  /* Connect PIx pins to FMC Alternate function */
-  GPIOI->AFR[0]  = 0xCCCCCCCC;
-  GPIOI->AFR[1]  = 0x00000CC0;
-  /* Configure PIx pins in Alternate function mode */ 
-  GPIOI->MODER   = 0x0028AAAA;
-  /* Configure PIx pins speed to 50 MHz */ 
-  GPIOI->OSPEEDR = 0x0028AAAA;
-  /* Configure PIx pins Output type to push-pull */  
-  GPIOI->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PIx pins */ 
-  GPIOI->PUPDR   = 0x00000000;
-  
-/*-- FMC Configuration ------------------------------------------------------*/
-  /* Enable the FMC interface clock */
-  RCC->AHB3ENR |= 0x00000001;
-  
-  /* Configure and enable SDRAM bank1 */
-  FMC_Bank5_6->SDCR[0] = 0x000039D0;
-  FMC_Bank5_6->SDTR[0] = 0x01115351;      
-  
-  /* SDRAM initialization sequence */
-  /* Clock enable command */
-  FMC_Bank5_6->SDCMR = 0x00000011; 
-  tmpreg = FMC_Bank5_6->SDSR & 0x00000020; 
-  while((tmpreg != 0) & (timeout-- > 0))
-  {
-    tmpreg = FMC_Bank5_6->SDSR & 0x00000020; 
-  }
-  
-  /* Delay */
-  for (index = 0; index<1000; index++);
-  
-  /* PALL command */
-  FMC_Bank5_6->SDCMR = 0x00000012;           
-  timeout = 0xFFFF;
-  while((tmpreg != 0) & (timeout-- > 0))
-  {
-  tmpreg = FMC_Bank5_6->SDSR & 0x00000020; 
-  }
-  
-  /* Auto refresh command */
-  FMC_Bank5_6->SDCMR = 0x00000073;
-  timeout = 0xFFFF;
-  while((tmpreg != 0) & (timeout-- > 0))
-  {
-  tmpreg = FMC_Bank5_6->SDSR & 0x00000020; 
-  }
- 
-  /* MRD register program */
-  FMC_Bank5_6->SDCMR = 0x00046014;
-  timeout = 0xFFFF;
-  while((tmpreg != 0) & (timeout-- > 0))
-  {
-  tmpreg = FMC_Bank5_6->SDSR & 0x00000020; 
-  } 
-  
-  /* Set refresh count */
-  tmpreg = FMC_Bank5_6->SDRTR;
-  FMC_Bank5_6->SDRTR = (tmpreg | (0x0000027C<<1));
-  
-  /* Disable write protection */
-  tmpreg = FMC_Bank5_6->SDCR[0]; 
-  FMC_Bank5_6->SDCR[0] = (tmpreg & 0xFFFFFDFF);
-  
-/*
+    /* Connect PEx pins to FMC Alternate function */
+    GPIOE->AFR[0] = 0xC00000CC;
+    GPIOE->AFR[1] = 0xCCCCCCCC;
+    /* Configure PEx pins in Alternate function mode */
+    GPIOE->MODER = 0xAAAA800A;
+    /* Configure PEx pins speed to 50 MHz */
+    GPIOE->OSPEEDR = 0xAAAA800A;
+    /* Configure PEx pins Output type to push-pull */
+    GPIOE->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PEx pins */
+    GPIOE->PUPDR = 0x00000000;
+
+    /* Connect PFx pins to FMC Alternate function */
+    GPIOF->AFR[0] = 0xcccccccc;
+    GPIOF->AFR[1] = 0xcccccccc;
+    /* Configure PFx pins in Alternate function mode */
+    GPIOF->MODER = 0xAA800AAA;
+    /* Configure PFx pins speed to 50 MHz */
+    GPIOF->OSPEEDR = 0xAA800AAA;
+    /* Configure PFx pins Output type to push-pull */
+    GPIOF->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PFx pins */
+    GPIOF->PUPDR = 0x00000000;
+
+    /* Connect PGx pins to FMC Alternate function */
+    GPIOG->AFR[0] = 0xcccccccc;
+    GPIOG->AFR[1] = 0xcccccccc;
+    /* Configure PGx pins in Alternate function mode */
+    GPIOG->MODER = 0xaaaaaaaa;
+    /* Configure PGx pins speed to 50 MHz */
+    GPIOG->OSPEEDR = 0xaaaaaaaa;
+    /* Configure PGx pins Output type to push-pull */
+    GPIOG->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PGx pins */
+    GPIOG->PUPDR = 0x00000000;
+
+    /* Connect PHx pins to FMC Alternate function */
+    GPIOH->AFR[0] = 0x00C0CC00;
+    GPIOH->AFR[1] = 0xCCCCCCCC;
+    /* Configure PHx pins in Alternate function mode */
+    GPIOH->MODER = 0xAAAA08A0;
+    /* Configure PHx pins speed to 50 MHz */
+    GPIOH->OSPEEDR = 0xAAAA08A0;
+    /* Configure PHx pins Output type to push-pull */
+    GPIOH->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PHx pins */
+    GPIOH->PUPDR = 0x00000000;
+
+    /* Connect PIx pins to FMC Alternate function */
+    GPIOI->AFR[0] = 0xCCCCCCCC;
+    GPIOI->AFR[1] = 0x00000CC0;
+    /* Configure PIx pins in Alternate function mode */
+    GPIOI->MODER = 0x0028AAAA;
+    /* Configure PIx pins speed to 50 MHz */
+    GPIOI->OSPEEDR = 0x0028AAAA;
+    /* Configure PIx pins Output type to push-pull */
+    GPIOI->OTYPER = 0x00000000;
+    /* No pull-up, pull-down for PIx pins */
+    GPIOI->PUPDR = 0x00000000;
+
+    /*-- FMC Configuration ------------------------------------------------------*/
+    /* Enable the FMC interface clock */
+    RCC->AHB3ENR |= 0x00000001;
+
+    /* Configure and enable SDRAM bank1 */
+    FMC_Bank5_6->SDCR[0] = 0x000039D0;
+    FMC_Bank5_6->SDTR[0] = 0x01115351;
+
+    /* SDRAM initialization sequence */
+    /* Clock enable command */
+    FMC_Bank5_6->SDCMR = 0x00000011;
+    tmpreg             = FMC_Bank5_6->SDSR & 0x00000020;
+    while ((tmpreg != 0) & (timeout-- > 0))
+    {
+        tmpreg = FMC_Bank5_6->SDSR & 0x00000020;
+    }
+
+    /* Delay */
+    for (index = 0; index < 1000; index++);
+
+    /* PALL command */
+    FMC_Bank5_6->SDCMR = 0x00000012;
+    timeout            = 0xFFFF;
+    while ((tmpreg != 0) & (timeout-- > 0))
+    {
+        tmpreg = FMC_Bank5_6->SDSR & 0x00000020;
+    }
+
+    /* Auto refresh command */
+    FMC_Bank5_6->SDCMR = 0x00000073;
+    timeout            = 0xFFFF;
+    while ((tmpreg != 0) & (timeout-- > 0))
+    {
+        tmpreg = FMC_Bank5_6->SDSR & 0x00000020;
+    }
+
+    /* MRD register program */
+    FMC_Bank5_6->SDCMR = 0x00046014;
+    timeout            = 0xFFFF;
+    while ((tmpreg != 0) & (timeout-- > 0))
+    {
+        tmpreg = FMC_Bank5_6->SDSR & 0x00000020;
+    }
+
+    /* Set refresh count */
+    tmpreg             = FMC_Bank5_6->SDRTR;
+    FMC_Bank5_6->SDRTR = (tmpreg | (0x0000027C << 1));
+
+    /* Disable write protection */
+    tmpreg               = FMC_Bank5_6->SDCR[0];
+    FMC_Bank5_6->SDCR[0] = (tmpreg & 0xFFFFFDFF);
+
+    /*
   Bank1_SDRAM is configured as follow:
 
   FMC_SDRAMTimingInitStructure.FMC_LoadToActiveDelay = 2;      
@@ -1113,7 +1110,6 @@ void SystemInit_ExtMemCtl(void)
   FMC_SDRAMInitStructure.FMC_ReadPipeDelay = FMC_ReadPipe_Delay_1;
   FMC_SDRAMInitStructure.FMC_SDRAMTimingStruct = &FMC_SDRAMTimingInitStructure;
 */
-  
 }
 #endif /* DATA_IN_ExtSDRAM */
 
@@ -1125,8 +1121,8 @@ void SystemInit_ExtMemCtl(void)
 /**
   * @}
   */
-  
+
 /**
   * @}
-  */    
+  */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

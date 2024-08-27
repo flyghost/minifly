@@ -17,11 +17,11 @@
 ********************************************************************************/
 
 // Based on 48MHz peripheral clock
-#define SPI_BAUDRATE_24MHZ  SPI_BaudRatePrescaler_2		// 24MHz
-#define SPI_BAUDRATE_12MHZ  SPI_BaudRatePrescaler_4		// 12MHz
-#define SPI_BAUDRATE_6MHZ   SPI_BaudRatePrescaler_8		// 6MHz
-#define SPI_BAUDRATE_3MHZ   SPI_BaudRatePrescaler_16	// 3MHz
-#define SPI_BAUDRATE_2MHZ   SPI_BaudRatePrescaler_32	// 1.5MHz
+#define SPI_BAUDRATE_24MHZ SPI_BaudRatePrescaler_2  // 24MHz
+#define SPI_BAUDRATE_12MHZ SPI_BaudRatePrescaler_4  // 12MHz
+#define SPI_BAUDRATE_6MHZ  SPI_BaudRatePrescaler_8  // 6MHz
+#define SPI_BAUDRATE_3MHZ  SPI_BaudRatePrescaler_16 // 3MHz
+#define SPI_BAUDRATE_2MHZ  SPI_BaudRatePrescaler_32 // 1.5MHz
 
 /**
  * 初始化SPI.

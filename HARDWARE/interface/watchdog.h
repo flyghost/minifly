@@ -16,13 +16,13 @@
  * All rights reserved
 ********************************************************************************/
 
-#define WATCHDOG_RESET_MS 	150	/*看门狗复位时间*/
-#define watchdogReset() 	(IWDG_ReloadCounter())
+#define WATCHDOG_RESET_MS 150 /*看门狗复位时间*/
+#define watchdogReset()   (IWDG_ReloadCounter())
 
 
 void watchdogInit(u16 xms);
 bool watchdogTest(void);
 
 
-#endif 
+#endif
 

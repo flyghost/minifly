@@ -17,6 +17,6 @@
 
 
 void nvicInit(void);
-u32 getSysTickCnt(void);	
+u32  getSysTickCnt(void);
 
 #endif /* __NVIC_H */

@@ -18,11 +18,11 @@
 ********************************************************************************/
 
 
-#define I2CDEV_NO_MEM_ADDR  0xFF
+#define I2CDEV_NO_MEM_ADDR 0xFF
 
-typedef I2cDrv    I2C_Dev;
-#define I2C1_DEV  &sensorsBus
-#define I2C3_DEV  &deckBus
+typedef I2cDrv I2C_Dev;
+#define I2C1_DEV &sensorsBus
+#define I2C3_DEV &deckBus
 
 /**
  * Read bytes from an I2C peripheral

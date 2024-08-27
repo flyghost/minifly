@@ -23,7 +23,7 @@
   * limitations under the License.
   *
   ******************************************************************************  
-  */ 
+  */
 
 /** @addtogroup CMSIS
   * @{
@@ -31,8 +31,8 @@
 
 /** @addtogroup stm32f4xx_system
   * @{
-  */  
-  
+  */
+
 /**
   * @brief Define to prevent recursive inclusion
   */
@@ -40,8 +40,8 @@
 #define __SYSTEM_STM32F4XX_H
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
 
 /** @addtogroup STM32F4xx_System_Includes
   * @{
@@ -56,7 +56,7 @@
   * @{
   */
 
-extern uint32_t SystemCoreClock;          /*!< System Clock Frequency (Core Clock) */
+extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock) */
 
 
 /**
@@ -82,7 +82,7 @@ extern uint32_t SystemCoreClock;          /*!< System Clock Frequency (Core Cloc
 /** @addtogroup STM32F4xx_System_Exported_Functions
   * @{
   */
-  
+
 extern void SystemInit(void);
 extern void SystemCoreClockUpdate(void);
 /**
@@ -98,8 +98,8 @@ extern void SystemCoreClockUpdate(void);
 /**
   * @}
   */
-  
+
 /**
   * @}
-  */  
+  */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

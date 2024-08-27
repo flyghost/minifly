@@ -24,24 +24,24 @@ static bool isInit = false;
 
 typedef struct
 {
-    GPIO_TypeDef* port;
-    u16 pin;
-    int polarity;
+    GPIO_TypeDef *port;
+    u16           pin;
+    int           polarity;
 } led_t;
 
 static led_t leds[LED_NUM] =
-{
-    [LED_BLUE_L]	= {GPIOB, GPIO_Pin_12, LED_POL_POS},
-    [LED_GREEN_L]	= {GPIOA, GPIO_Pin_6,  LED_POL_NEG},
-    [LED_RED_L] 	= {GPIOA, GPIO_Pin_7,  LED_POL_NEG},
-    [LED_GREEN_R]	= {GPIOC, GPIO_Pin_13, LED_POL_NEG},
-    [LED_RED_R] 	= {GPIOC, GPIO_Pin_14, LED_POL_NEG},
+    {
+        [LED_BLUE_L]  = {GPIOB, GPIO_Pin_12, LED_POL_POS},
+        [LED_GREEN_L] = {GPIOA,  GPIO_Pin_6, LED_POL_NEG},
+        [LED_RED_L]   = {GPIOA,  GPIO_Pin_7, LED_POL_NEG},
+        [LED_GREEN_R] = {GPIOC, GPIO_Pin_13, LED_POL_NEG},
+        [LED_RED_R]   = {GPIOC, GPIO_Pin_14, LED_POL_NEG},
 };
 
 /* LED初始化 */
 void ledInit(void)
 {
-    if(isInit)	return;
+    if (isInit) return;
 
     GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -51,8 +51,8 @@ void ledInit(void)
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
     /*LED_GREEN_L PA6	LED_RED_L PA7*/
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_6 | GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -68,7 +68,6 @@ void ledInit(void)
     ledClearAll();
 
     isInit = true;
-
 }
 
 /* LED测试 */
@@ -96,7 +95,7 @@ bool ledTest(void)
 /*关闭所有LED*/
 void ledClearAll(void)
 {
-    for(u8 i = 0; i < LED_NUM; i++)
+    for (u8 i = 0; i < LED_NUM; i++)
     {
         ledSet((led_e)i, 0);
     }
@@ -105,7 +104,7 @@ void ledClearAll(void)
 /*打开所有LED*/
 void ledSetAll(void)
 {
-    for(u8 i = 0; i < LED_NUM; i++)
+    for (u8 i = 0; i < LED_NUM; i++)
     {
         ledSet((led_e)i, 1);
     }
@@ -128,7 +127,7 @@ void ledSet(led_e led, bool value)
     if (leds[led].polarity == LED_POL_NEG)
         value = !value;
 
-    if(value)
+    if (value)
         GPIO_SetBits(leds[led].port, leds[led].pin);
     else
         GPIO_ResetBits(leds[led].port, leds[led].pin);
