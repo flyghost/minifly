@@ -31,9 +31,13 @@
 ********************************************************************************/
 
 #define SENSORS_GYRO_FS_CFG     MPU6500_GYRO_FS_2000
+
+// 陀螺仪量程转换：转为度/秒
 #define SENSORS_DEG_PER_LSB_CFG MPU6500_DEG_PER_LSB_2000
 
 #define SENSORS_ACCEL_FS_CFG  MPU6500_ACCEL_FS_16
+
+// 加速度计量程转化：单位 g(9.8m/s^2)
 #define SENSORS_G_PER_LSB_CFG MPU6500_G_PER_LSB_16
 
 #define SENSORS_NBR_OF_BIAS_SAMPLES 1024 /* 计算方差的采样样本个数 */
@@ -50,24 +54,24 @@
 typedef struct
 {
     Axis3f    bias;
-    bool      isBiasValueFound;
-    bool      isBufferFilled;
-    Axis3i16 *bufHead;
-    Axis3i16  buffer[SENSORS_NBR_OF_BIAS_SAMPLES];
+    bool      isBiasValueFound;                         // 是否已经找到有效的bias值，用于一开始buffer未满的时候，得到无效值
+    bool      isBufferFilled;                           // 是否已经填充满buffer
+    Axis3i16 *bufHead;                                  // 指向最新的buffer索引
+    Axis3i16  buffer[SENSORS_NBR_OF_BIAS_SAMPLES];      // 保存陀螺仪的原始值
 } BiasObj;
 
-BiasObj       gyroBiasRunning;
+static BiasObj gyroBiasRunning;
 static Axis3f gyroBias;
 
 static bool  gyroBiasFound = false;
-static float accScaleSum   = 0;
-static float accScale      = 1;
+static float accScaleSum   = 0;                         // 加速度计缩放因子总和
+static float accScale      = 1;                         // 加速度计缩放因子
 
 static bool         isInit = false;
 static sensorData_t sensors;
-static Axis3i16     gyroRaw;
-static Axis3i16     accRaw;
-static Axis3i16     magRaw;
+static Axis3i16     gyroRaw;                            // 陀螺仪原始值（减去了陀螺仪偏置）
+static Axis3i16     accRaw;                             // 加速度计原始值
+static Axis3i16     magRaw;                             // 磁力计原始值
 
 /*低通滤波参数*/
 #define GYRO_LPF_CUTOFF_FREQ  80
@@ -122,6 +126,7 @@ bool sensorsReadBaro(baro_t *baro)
     return (pdTRUE == xQueueReceive(barometerDataQueue, baro, 0));
 }
 /*传感器中断初始化*/
+// 中断回调接口： void __attribute__((used)) EXTI4_Callback(void)
 static void sensorsInterruptInit(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -246,7 +251,13 @@ bool sensorsTest(void)
     return testStatus;
 }
 
-/*计算方差和平均值*/
+/**
+ * @brief 计算方差和平均值
+ * 
+ * @param bias 
+ * @param varOut        方差
+ * @param meanOut       平均值
+ */
 static void sensorsCalculateVarianceAndMean(BiasObj *bias, Axis3f *varOut, Axis3f *meanOut)
 {
     u32     i;
@@ -371,7 +382,12 @@ static void sensorsSetupSlaveRead(void)
 }
 
 /**
- * 往方差缓冲区（循环缓冲区）添加一个新值，缓冲区满后，替换旧的的值
+ * @brief 往方差缓冲区（循环缓冲区）添加一个新值，缓冲区满后，替换旧的的值
+ * 
+ * @param bias 
+ * @param x         陀螺仪原始值
+ * @param y 
+ * @param z 
  */
 static void sensorsAddBiasValue(BiasObj *bias, int16_t x, int16_t y, int16_t z)
 {
@@ -411,7 +427,14 @@ static bool processAccScale(int16_t ax, int16_t ay, int16_t az)
 }
 
 /**
- * 计算陀螺方差
+ * @brief 计算陀螺仪方差
+ * 
+ * @param gx                角速度原始值
+ * @param gy 
+ * @param gz 
+ * @param gyroBiasOut       计算出来的陀螺仪偏置值
+ * @return true 
+ * @return false 
  */
 static bool processGyroBias(int16_t gx, int16_t gy, int16_t gz, Axis3f *gyroBiasOut)
 {
@@ -419,9 +442,11 @@ static bool processGyroBias(int16_t gx, int16_t gy, int16_t gz, Axis3f *gyroBias
 
     if (!gyroBiasRunning.isBiasValueFound)
     {
+        // 更新偏置值
         sensorsFindBiasValue(&gyroBiasRunning);
     }
 
+    // 如果未更新，返回上一个值
     gyroBiasOut->x = gyroBiasRunning.bias.x;
     gyroBiasOut->y = gyroBiasRunning.bias.y;
     gyroBiasOut->z = gyroBiasRunning.bias.z;
@@ -442,7 +467,12 @@ void processBarometerMeasurements(const u8 *buffer)
         {
             s32 rawPressure = (s32)((((u32)(buffer[1])) << 12) | (((u32)(buffer[2])) << 4) | ((u32)buffer[3] >> 4));
             s32 rawTemp     = (s32)((((u32)(buffer[4])) << 12) | (((u32)(buffer[5])) << 4) | ((u32)buffer[6] >> 4));
+            
+            // 返回的数据是放大了100倍的
             temp            = bmp280CompensateT(rawTemp) / 100.0f;
+
+            // 将气压数据转换成hPa（1 百帕（hPa） = 100 帕斯卡（Pa））
+            // 同时由于返回的是放大了256倍的
             pressure        = bmp280CompensateP(rawPressure) / 25600.0f;
 
             //			pressureFilter(&pressure, &sensors.baro.pressure);
@@ -529,6 +559,7 @@ void sensorsTask(void *param)
 
     while (1)
     {
+        // 在mpu6500的INT管脚触发的中断回调里，会释放该信号量
         if (pdTRUE == xSemaphoreTake(sensorsDataReady, portMAX_DELAY))
         {
             /*确定数据长度*/

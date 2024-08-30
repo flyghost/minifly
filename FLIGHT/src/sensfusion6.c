@@ -22,11 +22,11 @@
 
 #define ACCZ_SAMPLE 350
 
-float Kp    = 0.4f;   /*比例增益*/
-float Ki    = 0.001f; /*积分增益*/
-float exInt = 0.0f;
-float eyInt = 0.0f;
-float ezInt = 0.0f;     /*积分误差累计*/
+static float Kp    = 0.4f;   /*比例增益*/
+static float Ki    = 0.001f; /*积分增益*/
+static float exInt = 0.0f;
+static float eyInt = 0.0f;
+static float ezInt = 0.0f;     /*积分误差累计*/
 
 static float q0 = 1.0f; /*四元数*/
 static float q1 = 0.0f;
@@ -35,11 +35,22 @@ static float q3 = 0.0f;
 static float rMat[3][3];                             /*旋转矩阵*/
 
 static float maxError            = 0.f;              /*最大误差*/
-bool         isGravityCalibrated = false;            /*是否校校准完成*/
+static bool isGravityCalibrated  = false;            /*是否校校准完成*/
 static float baseAcc[3]          = {0.f, 0.f, 1.0f}; /*静态加速度*/
 
 
-static float invSqrt(float x);     /*快速开平方求倒*/
+// Fast inverse square-root
+// See: http://en.wikipedia.org/wiki/Fast_inverse_square_root
+static float invSqrt(float x) /*快速开平方求倒*/
+{
+    float halfx = 0.5f * x;
+    float y     = x;
+    long  i     = *(long *)&y;
+    i           = 0x5f3759df - (i >> 1);
+    y           = *(float *)&i;
+    y           = y * (1.5f - (halfx * y * y));
+    return y;
+}
 
 static void calBaseAcc(float *acc) /*计算静态加速度*/
 {
@@ -77,7 +88,7 @@ static void calBaseAcc(float *acc) /*计算静态加速度*/
 }
 
 /*计算旋转矩阵*/
-void imuComputeRotationMatrix(void)
+static void imuComputeRotationMatrix(void)
 {
     float q1q1 = q1 * q1;
     float q2q2 = q2 * q2;
@@ -103,7 +114,17 @@ void imuComputeRotationMatrix(void)
     rMat[2][2] = 1.0f - 2.0f * q1q1 - 2.0f * q2q2;
 }
 
-void imuUpdate(Axis3f acc, Axis3f gyro, state_t *state, float dt) /*数据融合 互补滤波*/
+/**
+ * @brief 姿态解算
+ * 
+ * 数据融合 互补滤波
+ * 
+ * @param acc       加速度
+ * @param gyro      陀螺仪
+ * @param state     状态：计算得到的俯仰角，俯仰角，偏航角保存在里面
+ * @param dt 
+ */
+void imuUpdate(Axis3f acc, Axis3f gyro, state_t *state, float dt)
 {
     float  normalise;
     float  ex, ey, ez;
@@ -204,19 +225,6 @@ void imuTransformVectorEarthToBody(Axis3f *v)
     v->x = x;
     v->y = y;
     v->z = z;
-}
-
-// Fast inverse square-root
-// See: http://en.wikipedia.org/wiki/Fast_inverse_square_root
-float invSqrt(float x) /*快速开平方求倒*/
-{
-    float halfx = 0.5f * x;
-    float y     = x;
-    long  i     = *(long *)&y;
-    i           = 0x5f3759df - (i >> 1);
-    y           = *(float *)&i;
-    y           = y * (1.5f - (halfx * y * y));
-    return y;
 }
 
 bool getIsCalibrated(void)

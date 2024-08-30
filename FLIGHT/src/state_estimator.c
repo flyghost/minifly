@@ -82,6 +82,13 @@ static void inavFilterCorrectVel(int axis, float dt, float e, float w)
     estimator.vel[axis] += e * w * dt;
 }
 
+/**
+ * @brief 位置估计
+ * 
+ * @param sensorData 
+ * @param state             更新状态量：加速度、速度、位置
+ * @param dt 
+ */
 void positionEstimate(sensorData_t *sensorData, state_t *state, float dt)
 {
     static float rangeLpf  = 0.f;
@@ -90,11 +97,12 @@ void positionEstimate(sensorData_t *sensorData, state_t *state, float dt)
 
     float relateHight = sensorData->baro.asl - startBaroAsl;      /*气压相对高度*/
 
-    if (getModuleID() == OPTICAL_FLOW && isEnableVl53lxx == true) /*光流模块可用,且使用激光*/
+    // 光流模块可用,且使用激光，则将气压计和激光数据融合
+    if (getModuleID() == OPTICAL_FLOW && isEnableVl53lxx == true)
     {
         vl53lxxReadRange(&sensorData->zrange);                    /*读取激光数据*/
 
-                                                                  //		rangeLpf = sensorData->zrange.distance;
+        // rangeLpf = sensorData->zrange.distance;
         rangeLpf += (sensorData->zrange.distance - rangeLpf) * 0.1f; /*低通 单位cm*/
 
         float quality = sensorData->zrange.quality;
@@ -114,6 +122,8 @@ void positionEstimate(sensorData_t *sensorData, state_t *state, float dt)
     {
         fusedHeight = relateHight;                                         /*融合高度*/
     }
+
+    // 融合后的高度，进行低通滤波
     fusedHeightLpf += (fusedHeight - fusedHeightLpf) * 0.1f;               /*融合高度 低通*/
 
     if (isRstHeight)
@@ -171,17 +181,20 @@ void positionEstimate(sensorData_t *sensorData, state_t *state, float dt)
     estimator.acc[Y] = applyDeadbandf(accelBF.y, estimator.vAccDeadband); /*去除死区的加速度*/
     estimator.acc[Z] = applyDeadbandf(accelBF.z, estimator.vAccDeadband); /*去除死区的加速度*/
 
+    // 加速度低通
     for (u8 i = 0; i < 3; i++)
-        accLpf[i] += (estimator.acc[i] - accLpf[i]) * 0.1f;                                        /*加速度低通*/
+        accLpf[i] += (estimator.acc[i] - accLpf[i]) * 0.1f;
 
     bool isKeyFlightLand = ((getCommanderKeyFlight() == true) || (getCommanderKeyland() == true)); /*定高飞或者降落状态*/
 
+    // 定高飞或者降落状态，状态的加速度为滤波后的加速度
     if (isKeyFlightLand == true)                                                                   /*定高飞或者降落状态*/
     {
         state->acc.x = constrainf(accLpf[X], -ACC_LIMIT, ACC_LIMIT);                               /*加速度限幅*/
         state->acc.y = constrainf(accLpf[Y], -ACC_LIMIT, ACC_LIMIT);                               /*加速度限幅*/
         state->acc.z = constrainf(accLpf[Z], -ACC_LIMIT, ACC_LIMIT);                               /*加速度限幅*/
     }
+    // 否则使用原始加速度
     else
     {
         state->acc.x = constrainf(estimator.acc[X], -ACC_LIMIT_MAX, ACC_LIMIT_MAX); /*最大加速度限幅*/

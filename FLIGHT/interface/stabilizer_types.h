@@ -111,9 +111,9 @@ typedef struct distanceMeasurement_s
 
 typedef struct zRange_s
 {
-    uint32_t timestamp; //时间戳
-    float    distance;  //测量距离
-    float    quality;   //可信度
+    uint32_t timestamp; // 时间戳
+    float    distance;  // 测量距离，单位[cm]
+    float    quality;   // 可信度
 } zRange_t;
 
 /** Flow measurement**/
@@ -144,29 +144,30 @@ typedef struct tofMeasurement_s
 
 typedef struct
 {
-    float pressure;
-    float temperature;
-    float asl;
+    float pressure;             // 气压：hPa
+    float temperature;          // 温度：摄氏度
+    float asl;                  // 海拔高度：米
 } baro_t;
 
 typedef struct
 {
-    Axis3f   acc;
-    Axis3f   gyro;
-    Axis3f   mag;
-    baro_t   baro;
-    point_t  position;
-    zRange_t zrange;
+    Axis3f   acc;               // 加速度计数据：单位：g(9.8m/s^2)，此时已经处理了加速度缩放因子
+                                // 接着再对该数据做二阶低通滤波
+    Axis3f   gyro;              // 陀螺仪数据：度/秒（此时已经减去了角速度偏移）
+    Axis3f   mag;               // 磁力计数据：单位：高斯
+    baro_t   baro;              // 气压计数据
+    point_t  position;          // 进行位置估算后的空间坐标
+    zRange_t zrange;            // 激光测量到的高度
 } sensorData_t;
 
 typedef struct
 {
-    attitude_t   attitude;
+    attitude_t   attitude;              // 姿态
     quaternion_t attitudeQuaternion;
-    point_t      position;
-    velocity_t   velocity;
-    acc_t        acc;
-    bool         isRCLocked;
+    point_t      position;              // 位置
+    velocity_t   velocity;              // 速度
+    acc_t        acc;                   // 加速度
+    bool         isRCLocked;            // 是否锁定遥控器
 } state_t;
 
 enum dir_e
@@ -196,21 +197,21 @@ typedef enum
 
 typedef struct
 {
-    mode_e x;
-    mode_e y;
+    mode_e x;       // 手动模式：关闭
+    mode_e y;       // 手动模式：关闭
     mode_e z;
-    mode_e roll;
-    mode_e pitch;
+    mode_e roll;    // 一直关闭
+    mode_e pitch;   // 一直关闭
     mode_e yaw;
 } mode_t;
 
 typedef struct
 {
-    attitude_t attitude;     // deg
+    attitude_t attitude;     // 姿态：deg
     attitude_t attitudeRate; // deg/s
-    point_t    position;     // m
-    velocity_t velocity;     // m/s
-    mode_t     mode;
+    point_t    position;     // 位置：m
+    velocity_t velocity;     // 速度：m/s
+    mode_t     mode;         // 模式
     float      thrust;
 } setpoint_t;
 

@@ -231,7 +231,13 @@ static float errorPosX        = 0.f;   /*X位移误差*/
 static float errorPosY        = 0.f;   /*Y位移误差*/
 static float errorPosZ        = 0.f;   /*Z位移误差*/
 
-
+/**
+ * @brief 获取目标状态
+ * 
+ * @param setpoint  输出：目标姿态角、位置、速度、油门
+ * @param state     输入：xxx
+ *                  输出：更新遥控器锁定状态
+ */
 void commanderGetSetpoint(setpoint_t *setpoint, state_t *state)
 {
     static float maxAccZ = 0.f;
