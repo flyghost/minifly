@@ -22,7 +22,13 @@ static float      actualThrust;
 static attitude_t attitudeDesired;
 static attitude_t rateDesired;
 
-
+/**
+ * @brief PID初始化
+ * 
+ * 1.姿态PID
+ * 2.位置PID
+ * 
+ */
 void stateControlInit(void)
 {
     attitudeControlInit(RATE_PID_DT, ANGEL_PID_DT);        /*初始化姿态PID*/
@@ -36,10 +42,20 @@ bool stateControlTest(void)
     return pass;
 }
 
+/**
+ * @brief 姿态控制，获取输出的PWM
+ * 
+ * @param control 
+ * @param sensors 
+ * @param state 
+ * @param setpoint 
+ * @param tick 
+ */
 void stateControl(control_t *control, sensorData_t *sensors, state_t *state, setpoint_t *setpoint, const u32 tick)
 {
     static u16 cnt = 0;
 
+    // 250HZ
     if (RATE_DO_EXECUTE(POSITION_PID_RATE, tick))
     {
         if (setpoint->mode.x != modeDisable || setpoint->mode.y != modeDisable || setpoint->mode.z != modeDisable)

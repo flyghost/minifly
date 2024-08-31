@@ -15,8 +15,8 @@
  * All rights reserved
 ********************************************************************************/
 
-void imuUpdate(Axis3f acc, Axis3f gyro, state_t *state, float dt); /*数据融合 互补滤波*/
-bool getIsCalibrated(void);
+void imuUpdate(Axis3f acc, Axis3f gyro, attitude_t *attitude, float dt); // 获取姿态角
+bool imuIsCalibrated(void);
 void imuTransformVectorBodyToEarth(Axis3f *v);                     /*机体到地球*/
 void imuTransformVectorEarthToBody(Axis3f *v);                     /*地球到机体*/
 

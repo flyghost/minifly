@@ -142,7 +142,7 @@ void stabilizerTask(void *param)
         //四元数和欧拉角计算（250Hz）
         if (RATE_DO_EXECUTE(ATTITUDE_ESTIMAT_RATE, tick))
         {
-            imuUpdate(sensorData.acc, sensorData.gyro, &state, ATTITUDE_ESTIMAT_DT);
+            imuUpdate(sensorData.acc, sensorData.gyro, &state.attitude, ATTITUDE_ESTIMAT_DT);
         }
 
         //位置预估计算（250Hz）
@@ -152,7 +152,7 @@ void stabilizerTask(void *param)
         }
 
         //目标姿态和飞行模式设定（100Hz）
-        if (RATE_DO_EXECUTE(RATE_100_HZ, tick) && getIsCalibrated() == true)
+        if (RATE_DO_EXECUTE(RATE_100_HZ, tick) && imuIsCalibrated() == true)
         {
             commanderGetSetpoint(&setpoint, &state); /*目标数据和飞行模式设定*/
         }

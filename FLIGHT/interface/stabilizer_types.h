@@ -25,9 +25,9 @@ typedef struct
 {
     u32 timestamp; /*时间戳*/
 
-    float roll;
-    float pitch;
-    float yaw;
+    float roll;     // 横滚角
+    float pitch;    // 俯仰角
+    float yaw;      // 航向角
 } attitude_t;
 
 struct vec3_s

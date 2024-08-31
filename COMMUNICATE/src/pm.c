@@ -166,7 +166,7 @@ void pmTask(void *param) /* 电源管理任务 */
             case charging:
                 isLowpower = false;
                 ledseqStop(LOWBAT_LED, seq_lowbat);
-                if (getIsCalibrated())
+                if (imuIsCalibrated())
                     ledseqRun(SYS_LED, seq_calibrated);
                 else
                     ledseqRun(SYS_LED, seq_alive);

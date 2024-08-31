@@ -43,7 +43,7 @@ void sendMsgACK(void)
     msg.version      = configParam.version;
     msg.mpu_selfTest = getIsMPU9250Present();
     msg.baro_slfTest = getIsBaroPresent();
-    msg.isCanFly     = getIsCalibrated();
+    msg.isCanFly     = imuIsCalibrated();
     if (msg.isCanFly == true) /*校准通过之后发送微调值*/
     {
         if (reSendTimes > 0)  /*微调重发次数*/
