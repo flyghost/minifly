@@ -427,7 +427,7 @@ static bool processAccScale(int16_t ax, int16_t ay, int16_t az)
 }
 
 /**
- * @brief 计算陀螺仪方差
+ * @brief 计算陀螺仪偏置
  * 
  * @param gx                角速度原始值
  * @param gy 
@@ -454,7 +454,13 @@ static bool processGyroBias(int16_t gx, int16_t gy, int16_t gz, Axis3f *gyroBias
     return gyroBiasRunning.isBiasValueFound;
 }
 
-/*处理气压计数据*/
+/**
+ * @brief 处理气压计数据
+ * 
+ * 只做单位换算，不做滤波处理
+ * 
+ * @param buffer 
+ */
 void processBarometerMeasurements(const u8 *buffer)
 {
     static float temp;
@@ -496,7 +502,14 @@ void processBarometerMeasurements(const u8 *buffer)
         sensors.baro.asl         = SPL06PressureToAltitude(sensors.baro.pressure) * 100.f; //cm
     }
 }
-/*处理磁力计数据*/
+
+/**
+ * @brief 处理磁力计数据
+ * 
+ * 只做单位换算，不做滤波
+ * 
+ * @param buffer 
+ */
 void processMagnetometerMeasurements(const uint8_t *buffer)
 {
     if (buffer[0] & (1 << AK8963_ST1_DRDY_BIT))
@@ -508,16 +521,45 @@ void processMagnetometerMeasurements(const uint8_t *buffer)
         sensors.mag.x = (float)headingx / MAG_GAUSS_PER_LSB;
         sensors.mag.y = (float)headingy / MAG_GAUSS_PER_LSB;
         sensors.mag.z = (float)headingz / MAG_GAUSS_PER_LSB;
-        magRaw.x      = headingx; /*用于上传到上位机*/
 
+        magRaw.x = headingx; /*用于上传到上位机*/
         magRaw.y = headingy;
         magRaw.z = headingz;
     }
 }
-/*处理加速计和陀螺仪数据*/
+
+/**
+ * @brief 读取数据后，处理加速计和陀螺仪数据
+ * 
+ * 1.传感器方向
+ * 
+ *     X <-----
+ *            |
+ *            |
+ *            Y
+ * 
+ * 2.交换XY轴，用该方向计算陀螺仪偏置和加速度计缩放因子
+ *     Y <-----
+ *            |
+ *            |
+ *            X
+ * 
+ * 3.根据偏置和缩放因子，计算得到三轴的加速度和角速度，x方向取反，将X轴指向机头方向
+ *   这个是机体坐标系（用来计算旋转矩阵ZYX方向旋转）
+ *            X
+ *            |
+ *            |
+ *     Y <-----
+ *  
+ * 4.单位换算
+ * 
+ * 5.二阶低通滤波，得到最后的结果，用于姿态解算
+ * 
+ * @param buffer 
+ */
 void processAccGyroMeasurements(const uint8_t *buffer)
 {
-    /*注意传感器读取方向(旋转270°x和y交换)*/
+    // 注意传感器读取方向(旋转270°x和y交换)
     int16_t ay = (((int16_t)buffer[0]) << 8) | buffer[1];
     int16_t ax = ((((int16_t)buffer[2]) << 8) | buffer[3]);
     int16_t az = (((int16_t)buffer[4]) << 8) | buffer[5];

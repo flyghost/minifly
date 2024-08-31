@@ -60,4 +60,52 @@ typedef union {
     float axis[3];
 } Axis3f;
 
+#define AXIS_X(a)       ((a)->x)
+#define AXIS_Y(a)       ((a)->y)
+#define AXIS_Z(a)       ((a)->z)
+
+#define AXIS_MEMSET(a, b) \
+    do {                  \
+        (a)->x = (b);     \
+        (a)->y = (b);     \
+        (a)->z = (b);     \
+    } while (0)
+
+// 向量自加
+#define AXIS_SELF_ADD(a, b) \
+    do {                    \
+        (a)->x += (b)->x;   \
+        (a)->y += (b)->y;   \
+        (a)->z += (b)->z;   \
+    } while (0)
+
+
+
+// 向量标量除
+#define AXIS_SCALAR_DIV(out, in, scalar)               \
+    do {                                               \
+        for (u8 i = 0; i < 3; i++)                     \
+            (out)->axis[i] = (in)->axis[i] / (scalar); \
+    } while (0)
+
+#define AXIS_SCALAR_DIV(out, in, scalar)               \
+    do {                                               \
+        for (u8 i = 0; i < 3; i++)                     \
+            (out)->axis[i] = (in)->axis[i] / (scalar); \
+    } while (0)
+
+#define AXIS_MEMCPY(des, src) \
+    do {                      \
+        (des)->x = (src)->x;  \
+        (des)->y = (src)->y;  \
+        (des)->z = (src)->z;  \
+    } while (0)
+
+// #define AXIS_SCALAR_DIV(out, in, scalar) 
+//     do {                                 
+//         (out)->x = (in)->x / (scalar);   
+//         (out)->y = (in)->y / (scalar);   
+//         (out)->z = (in)->z / (scalar);   
+//     } while (0)
+
 #endif /* __SENSORS_TYPES_H */
