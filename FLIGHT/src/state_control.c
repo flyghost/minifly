@@ -51,7 +51,7 @@ bool stateControlTest(void)
  * @param setpoint 
  * @param tick 
  */
-void stateControl(control_t *control, sensorData_t *sensors, state_t *state, setpoint_t *setpoint, const u32 tick)
+void stateControl(rosControl_t *control, sensorData_t *sensors, rosState_t *state, setpoint_t *setpoint, const u32 tick)
 {
     static u16 cnt = 0;
 

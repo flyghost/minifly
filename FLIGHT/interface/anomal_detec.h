@@ -25,7 +25,7 @@
 #define DETEC_TU_COUNT     100   /* 碰撞检测计数 1000Hz测试条件 */
 
 /*异常检测*/
-void anomalDetec(const sensorData_t *sensorData, const state_t *state, const control_t *control);
+void anomalDetec(const sensorData_t *sensorData, const rosState_t *state, const rosControl_t *control);
 
 #endif /*__ANOMAL_DETEC_H*/
 

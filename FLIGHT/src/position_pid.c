@@ -61,7 +61,7 @@ void positionControlInit(float velocityPidDt, float posPidDt)
     pidSetOutputLimit(&pidZ, PIDZ_OUTPUT_LIMIT);              /* 输出限幅 */
 }
 
-static void velocityController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const state_t *state)
+static void velocityController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const rosState_t *state)
 {
     static u16 altholdCount = 0;
 
@@ -99,7 +99,7 @@ static void velocityController(float *thrust, attitude_t *attitude, setpoint_t *
     }
 }
 
-void positionController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const state_t *state, float dt)
+void positionController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const rosState_t *state, float dt)
 {
     if (setpoint->mode.x == modeAbs || setpoint->mode.y == modeAbs)
     {

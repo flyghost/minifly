@@ -70,8 +70,8 @@ typedef enum
 void commanderInit(void);
 bool commanderTest(void);
 void flightCtrldataCache(ctrlSrc_e ctrlSrc, ctrlVal_t pk);
-void commanderGetSetpoint(setpoint_t *setpoint, state_t *state);
-void flyerAutoLand(setpoint_t *setpoint, const state_t *state);
+void commanderGetSetpoint(setpoint_t *setpoint, rosState_t *state);
+void flyerAutoLand(setpoint_t *setpoint, const rosState_t *state);
 
 void getAndUpdateTrim(float *pitch, float *roll);
 

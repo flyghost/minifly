@@ -168,7 +168,7 @@ typedef struct
     velocity_t   velocity;              // 速度
     acc_t        acc;                   // 加速度
     bool         isRCLocked;            // 是否锁定遥控器
-} state_t;
+} rosState_t;
 
 enum dir_e
 {
@@ -186,7 +186,7 @@ typedef struct
     s16        yaw;
     float      thrust;
     enum dir_e flipDir; /*翻滚方向*/
-} control_t;
+} rosControl_t;
 
 typedef enum
 {

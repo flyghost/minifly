@@ -32,10 +32,10 @@
 
 static bool isInit;
 
-static setpoint_t   setpoint;    /*设置目标状态*/
-static sensorData_t sensorData;  /*传感器数据*/
-static state_t      state;       /*四轴姿态*/
-static control_t    control;     /*四轴控制参数*/
+static setpoint_t   g_targetState;  /*设置目标状态*/
+static sensorData_t g_sensorData;   /*传感器数据*/
+static rosState_t   g_rosState;     /*四轴姿态*/
+static rosControl_t g_rosControl;   /*四轴控制参数*/
 
 static u16   velModeTimes = 0;   /*速率模式次数*/
 static u16   absModeTimes = 0;   /*绝对值模式次数*/
@@ -72,7 +72,7 @@ void setFastAdjustPosParam(u16 velTimes, u16 absTimes, float height)
 {
     if (velTimes != 0 && velModeTimes == 0)
     {
-        baroLast   = sensorData.baro.asl;
+        baroLast   = g_sensorData.baro.asl;
         baroVelLpf = 0.f;
 
         velModeTimes = velTimes;
@@ -92,28 +92,28 @@ static void fastAdjustPosZ(void)
         velModeTimes--;
         estRstHeight();                                             /*复位估测高度*/
 
-        float baroVel  = (sensorData.baro.asl - baroLast) / 0.004f; /*250Hz*/
-        baroLast       = sensorData.baro.asl;
+        float baroVel  = (g_sensorData.baro.asl - baroLast) / 0.004f; /*250Hz*/
+        baroLast       = g_sensorData.baro.asl;
         baroVelLpf    += (baroVel - baroVelLpf) * 0.35f;
 
-        setpoint.mode.z     = modeVelocity;
-        state.velocity.z    = baroVelLpf; /*气压计融合*/
-        setpoint.velocity.z = -1.0f * baroVelLpf;
+        g_targetState.mode.z     = modeVelocity;
+        g_rosState.velocity.z    = baroVelLpf; /*气压计融合*/
+        g_targetState.velocity.z = -1.0f * baroVelLpf;
 
         if (velModeTimes == 0)
         {
             if (getModuleID() == OPTICAL_FLOW)
                 setHeight = getFusedHeight();
             else
-                setHeight = state.position.z;
+                setHeight = g_rosState.position.z;
         }
     }
     else if (absModeTimes > 0)
     {
         absModeTimes--;
         estRstAll(); /*复位估测*/
-        setpoint.mode.z     = modeAbs;
-        setpoint.position.z = setHeight;
+        g_targetState.mode.z     = modeAbs;
+        g_targetState.position.z = setHeight;
     }
 }
 
@@ -136,25 +136,25 @@ void stabilizerTask(void *param)
         //获取6轴和气压数据（500Hz）
         if (RATE_DO_EXECUTE(RATE_500_HZ, tick))
         {
-            sensorsAcquire(&sensorData, tick); /*获取6轴和气压数据*/
+            sensorsAcquire(&g_sensorData, tick); /*获取6轴和气压数据*/
         }
 
         //四元数和欧拉角计算（250Hz）
         if (RATE_DO_EXECUTE(ATTITUDE_ESTIMAT_RATE, tick))
         {
-            imuUpdate(sensorData.acc, sensorData.gyro, &state.attitude, ATTITUDE_ESTIMAT_DT);
+            imuUpdate(g_sensorData.acc, g_sensorData.gyro, &g_rosState.attitude, ATTITUDE_ESTIMAT_DT);
         }
 
         //位置预估计算（250Hz）
         if (RATE_DO_EXECUTE(POSITION_ESTIMAT_RATE, tick))
         {
-            positionEstimate(&sensorData, &state.acc, &state.velocity, &state.position, POSITION_ESTIMAT_DT);
+            positionEstimate(&g_sensorData, &g_rosState.acc, &g_rosState.velocity, &g_rosState.position, POSITION_ESTIMAT_DT);
         }
 
         //目标姿态和飞行模式设定（100Hz）
         if (RATE_DO_EXECUTE(RATE_100_HZ, tick) && imuIsCalibrated() == true)
         {
-            commanderGetSetpoint(&setpoint, &state); /*目标数据和飞行模式设定*/
+            commanderGetSetpoint(&g_targetState, &g_rosState); /*目标数据和飞行模式设定*/
         }
 
         if (RATE_DO_EXECUTE(RATE_250_HZ, tick))
@@ -165,27 +165,27 @@ void stabilizerTask(void *param)
         /*读取光流数据(100Hz)*/
         if (RATE_DO_EXECUTE(RATE_100_HZ, tick))
         {
-            getOpFlowData(&state, 0.01f);
+            getOpFlowData(&g_rosState, 0.01f);
         }
 
         /*翻滚检测(500Hz) 非定点模式*/
         if (RATE_DO_EXECUTE(RATE_500_HZ, tick) && (getCommanderCtrlMode() != 0x03))
         {
-            flyerFlipCheck(&setpoint, &control, &state);
+            flyerFlipCheck(&g_targetState, &g_rosControl, &g_rosState);
         }
 
         /*异常检测*/
-        anomalDetec(&sensorData, &state, &control);
+        anomalDetec(&g_sensorData, &g_rosState, &g_rosControl);
 
         /*PID控制*/
 
-        stateControl(&control, &sensorData, &state, &setpoint, tick);
+        stateControl(&g_rosControl, &g_sensorData, &g_rosState, &g_targetState, tick);
 
 
         //控制电机输出（500Hz）
         if (RATE_DO_EXECUTE(RATE_500_HZ, tick))
         {
-            powerControl(&control);
+            powerControl(&g_rosControl);
         }
 
         tick++;
@@ -195,32 +195,32 @@ void stabilizerTask(void *param)
 
 void getAttitudeData(attitude_t *get)
 {
-    get->pitch = -state.attitude.pitch;
-    get->roll  = state.attitude.roll;
-    get->yaw   = -state.attitude.yaw;
+    get->pitch = -g_rosState.attitude.pitch;
+    get->roll  = g_rosState.attitude.roll;
+    get->yaw   = -g_rosState.attitude.yaw;
 }
 
 float getBaroData(void)
 {
-    return sensorData.baro.asl;
+    return g_sensorData.baro.asl;
 }
 
 void getSensorData(sensorData_t *get)
 {
-    *get = sensorData;
+    *get = g_sensorData;
 }
 
 void getStateData(Axis3f *acc, Axis3f *vel, Axis3f *pos)
 {
-    acc->x = 1.0f * state.acc.x;
-    acc->y = 1.0f * state.acc.y;
-    acc->z = 1.0f * state.acc.z;
-    vel->x = 1.0f * state.velocity.x;
-    vel->y = 1.0f * state.velocity.y;
-    vel->z = 1.0f * state.velocity.z;
-    pos->x = 1.0f * state.position.x;
-    pos->y = 1.0f * state.position.y;
-    pos->z = 1.0f * state.position.z;
+    acc->x = 1.0f * g_rosState.acc.x;
+    acc->y = 1.0f * g_rosState.acc.y;
+    acc->z = 1.0f * g_rosState.acc.z;
+    vel->x = 1.0f * g_rosState.velocity.x;
+    vel->y = 1.0f * g_rosState.velocity.y;
+    vel->z = 1.0f * g_rosState.velocity.z;
+    pos->x = 1.0f * g_rosState.position.x;
+    pos->y = 1.0f * g_rosState.position.y;
+    pos->z = 1.0f * g_rosState.position.z;
 }
 
 

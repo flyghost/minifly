@@ -131,7 +131,7 @@ static void ctrlDataUpdate(void)
 * 四轴carefree(无头模式)，参考世界坐标系，当四轴围绕YAW旋转后，
 * 四轴前方任然保持开始的方向，这个模式对新手非常实用
 ************************************************************************/
-static void rotateYawCarefree(setpoint_t *setpoint, const state_t *state)
+static void rotateYawCarefree(setpoint_t *setpoint, const rosState_t *state)
 {
     float yawRad = state->attitude.yaw * DEG2RAD;
     float cosy   = cosf(yawRad);
@@ -181,7 +181,7 @@ extern bool isExitFlip; /*是否退出空翻*/
 * flyerAutoLand()
 * 四轴自动降落
 *********************************************************/
-void flyerAutoLand(setpoint_t *setpoint, const state_t *state)
+void flyerAutoLand(setpoint_t *setpoint, const rosState_t *state)
 {
     static u8    lowThrustCnt = 0;
     static float stateVelLpf  = -30.f;
@@ -238,7 +238,7 @@ static float errorPosZ        = 0.f;   /*Z位移误差*/
  * @param state     输入：xxx
  *                  输出：更新遥控器锁定状态
  */
-void commanderGetSetpoint(setpoint_t *setpoint, state_t *state)
+void commanderGetSetpoint(setpoint_t *setpoint, rosState_t *state)
 {
     static float maxAccZ = 0.f;
 

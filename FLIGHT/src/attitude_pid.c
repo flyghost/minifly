@@ -68,7 +68,7 @@ bool attitudeControlTest()
     return true;
 }
 
-void attitudeRatePID(Axis3f *actualRate, attitude_t *desiredRate, control_t *output) /* 角速度环PID */
+void attitudeRatePID(Axis3f *actualRate, attitude_t *desiredRate, rosControl_t *output) /* 角速度环PID */
 {
     output->roll  = pidOutLimit(pidUpdate(&pidRateRoll, desiredRate->roll - actualRate->x));
     output->pitch = pidOutLimit(pidUpdate(&pidRatePitch, desiredRate->pitch - actualRate->y));

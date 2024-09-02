@@ -43,7 +43,7 @@ typedef struct opFlow_s
 extern opFlow_t opFlow;
 
 void opticalFlowPowerControl(bool state);     //光流电源控制
-bool getOpFlowData(state_t *state, float dt); //读取光流数据
+bool getOpFlowData(rosState_t *state, float dt); //读取光流数据
 void opticalFlowInit(void);                   /*初始化光流模块*/
 bool getOpDataState(void);                    /*光流数据状态*/
 

@@ -47,7 +47,7 @@ u16 limitThrust(int value)
     return (u16)value;
 }
 
-void powerControl(control_t *control) /*功率输出控制*/
+void powerControl(rosControl_t *control) /*功率输出控制*/
 {
     s16 r = control->roll / 2.0f;
     s16 p = control->pitch / 2.0f;

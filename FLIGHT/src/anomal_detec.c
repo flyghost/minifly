@@ -44,7 +44,7 @@ static bool detecFreeFall(float accZ, float accMAG) /*自由落体检测*/
     return false;
 }
 
-static bool detecTumbled(const state_t *state) /*碰撞检测*/
+static bool detecTumbled(const rosState_t *state) /*碰撞检测*/
 {
     static u16 cnt;
 
@@ -69,7 +69,7 @@ static bool detecTumbled(const state_t *state) /*碰撞检测*/
 #endif
 
 /*异常检测*/
-void anomalDetec(const sensorData_t *sensorData, const state_t *state, const control_t *control)
+void anomalDetec(const sensorData_t *sensorData, const rosState_t *state, const rosControl_t *control)
 {
 #if defined(DETEC_ENABLED)
 

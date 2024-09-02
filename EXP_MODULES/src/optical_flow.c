@@ -338,7 +338,7 @@ void velFilter(float *in, float *out)
 }
 #endif
 
-bool getOpFlowData(state_t *state, float dt)
+bool getOpFlowData(rosState_t *state, float dt)
 {
     static u8 cnt    = 0;
     float     height = 0.01f * getFusedHeight(); /*读取高度信息 单位m*/

@@ -26,7 +26,7 @@ extern PidObject pidZ;
 
 void  positionControlInit(float ratePidDt, float posPidDt);
 void  positionResetAllPID(void);
-void  positionController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const state_t *state, float dt);
+void  positionController(float *thrust, attitude_t *attitude, setpoint_t *setpoint, const rosState_t *state, float dt);
 void  positionPIDwriteToConfigParam(void);
 float getAltholdThrust(void);
 

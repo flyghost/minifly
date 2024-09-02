@@ -16,7 +16,7 @@
 ********************************************************************************/
 
 
-void flyerFlipCheck(setpoint_t *setpoint, control_t *control, state_t *state); /* Flyer 翻滚检测*/
+void flyerFlipCheck(setpoint_t *setpoint, rosControl_t *control, rosState_t *state); /* Flyer 翻滚检测*/
 
 void setFlipDir(u8 dir);
 

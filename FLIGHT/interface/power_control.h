@@ -26,7 +26,7 @@ typedef struct
 
 void powerControlInit(void);
 bool powerControlTest(void);
-void powerControl(control_t *control);
+void powerControl(rosControl_t *control);
 
 void getMotorPWM(motorPWM_t *get);
 void setMotorPWM(bool enable, u32 m1_set, u32 m2_set, u32 m3_set, u32 m4_set);

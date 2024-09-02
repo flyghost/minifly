@@ -54,7 +54,7 @@ bool         isExitFlip   = true;  /*是否退出空翻*/
 /********************************************************
 * Flyer 翻滚检测 
 *********************************************************/
-void flyerFlipCheck(setpoint_t *setpoint, control_t *control, state_t *state)
+void flyerFlipCheck(setpoint_t *setpoint, rosControl_t *control, rosState_t *state)
 {
     static u16   flipThrust    = 0;
     static u16   tempThrust    = 0;
