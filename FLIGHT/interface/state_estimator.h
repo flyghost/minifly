@@ -24,7 +24,7 @@ typedef struct
     float pos[3];       /* 估测位移 单位(cm)*/
 } estimator_t;
 
-void  positionEstimate(sensorData_t *sensorData, state_t *state, float dt);
+void  positionEstimate(sensorData_t *sensorData, acc_t *accOut, velocity_t *velocityOut, point_t *positionOut, float dt);
 float getFusedHeight(void); /*读取融合高度*/
 void  estRstHeight(void);   /*复位估测高度*/
 void  estRstAll(void);      /*复位所有估测*/

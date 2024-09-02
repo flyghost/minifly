@@ -148,7 +148,7 @@ void stabilizerTask(void *param)
         //位置预估计算（250Hz）
         if (RATE_DO_EXECUTE(POSITION_ESTIMAT_RATE, tick))
         {
-            positionEstimate(&sensorData, &state, POSITION_ESTIMAT_DT);
+            positionEstimate(&sensorData, &state.acc, &state.velocity, &state.position, POSITION_ESTIMAT_DT);
         }
 
         //目标姿态和飞行模式设定（100Hz）
