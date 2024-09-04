@@ -205,6 +205,34 @@ static void accEstimate(Axis3f *axisAcc, float *accLpf, acc_t *accOut)
     }
 }
 
+static void opflowEstimate(float dt)
+{
+    if (getModuleID() == OPTICAL_FLOW) /*光流模块可用*/
+    {
+        float opflowDt = dt;
+
+        float opResidualX    = opFlow.posSum[X] - estimator.pos[X];
+        float opResidualY    = opFlow.posSum[Y] - estimator.pos[Y];
+        float opResidualXVel = opFlow.velLpf[X] - estimator.vel[X];
+        float opResidualYVel = opFlow.velLpf[Y] - estimator.vel[Y];
+
+        float opWeightScaler = 1.0f;
+
+        float wXYPos = wOpflowP * opWeightScaler;
+        float wXYVel = wOpflowV * sq(opWeightScaler);
+
+        /* 位置预估: XY-axis */
+        inavFilterPredict(X, opflowDt, estimator.acc[X]);
+        inavFilterPredict(Y, opflowDt, estimator.acc[Y]);
+        /* 位置校正: XY-axis */
+        inavFilterCorrectPos(X, opflowDt, opResidualX, wXYPos);
+        inavFilterCorrectPos(Y, opflowDt, opResidualY, wXYPos);
+        /* 速度校正: XY-axis */
+        inavFilterCorrectVel(X, opflowDt, opResidualXVel, wXYVel);
+        inavFilterCorrectVel(Y, opflowDt, opResidualYVel, wXYVel);
+    }
+}
+
 static void calcAccBias(float errPosZ, float dt)
 {
     static float wAccBias = 0.01f;     /*加速度校正权重*/
@@ -256,30 +284,7 @@ void positionEstimate(sensorData_t *sensorData, acc_t *accOut, velocity_t *veloc
     /* 位置校正: Z-axis */
     inavFilterCorrectPos(Z, dt, errPosZ, weight);
 
-    if (getModuleID() == OPTICAL_FLOW) /*光流模块可用*/
-    {
-        float opflowDt = dt;
-
-        float opResidualX    = opFlow.posSum[X] - estimator.pos[X];
-        float opResidualY    = opFlow.posSum[Y] - estimator.pos[Y];
-        float opResidualXVel = opFlow.velLpf[X] - estimator.vel[X];
-        float opResidualYVel = opFlow.velLpf[Y] - estimator.vel[Y];
-
-        float opWeightScaler = 1.0f;
-
-        float wXYPos = wOpflowP * opWeightScaler;
-        float wXYVel = wOpflowV * sq(opWeightScaler);
-
-        /* 位置预估: XY-axis */
-        inavFilterPredict(X, opflowDt, estimator.acc[X]);
-        inavFilterPredict(Y, opflowDt, estimator.acc[Y]);
-        /* 位置校正: XY-axis */
-        inavFilterCorrectPos(X, opflowDt, opResidualX, wXYPos);
-        inavFilterCorrectPos(Y, opflowDt, opResidualY, wXYPos);
-        /* 速度校正: XY-axis */
-        inavFilterCorrectVel(X, opflowDt, opResidualXVel, wXYVel);
-        inavFilterCorrectVel(Y, opflowDt, opResidualYVel, wXYVel);
-    }
+    opflowEstimate(dt);
 
     calcAccBias(errPosZ, dt);
 

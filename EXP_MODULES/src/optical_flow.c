@@ -338,10 +338,18 @@ void velFilter(float *in, float *out)
 }
 #endif
 
-bool getOpFlowData(rosState_t *state, float dt)
+/**
+ * @brief Get the Op Flow Data object
+ * 
+ * @param attitude 
+ * @param height 高度，单位：米
+ * @param dt 
+ * @return true 
+ * @return false 
+ */
+bool getOpFlowData(attitude_t *attitude, float height, float dt)
 {
     static u8 cnt    = 0;
-    float     height = 0.01f * getFusedHeight(); /*读取高度信息 单位m*/
 
     if (opFlow.isOpFlowOk && height < 4.0f)      /*4m范围内，光流可用*/
     {
@@ -349,8 +357,8 @@ bool getOpFlowData(rosState_t *state, float dt)
         opFlow.isDataValid = true;
 
         float coeff    = RESOLUTION * height;
-        float tanRoll  = tanf(state->attitude.roll * DEG2RAD);
-        float tanPitch = tanf(state->attitude.pitch * DEG2RAD);
+        float tanRoll  = tanf(attitude->roll * DEG2RAD);
+        float tanPitch = tanf(attitude->pitch * DEG2RAD);
 
         opFlow.pixComp[X]  = 480.f * tanPitch;                       /*像素补偿，负方向*/
         opFlow.pixComp[Y]  = 480.f * tanRoll;

@@ -165,7 +165,7 @@ void stabilizerTask(void *param)
         /*读取光流数据(100Hz)*/
         if (RATE_DO_EXECUTE(RATE_100_HZ, tick))
         {
-            getOpFlowData(&g_rosState, 0.01f);
+            getOpFlowData(&g_rosState.attitude, 0.01f * getFusedHeight(), 0.01f);
         }
 
         /*翻滚检测(500Hz) 非定点模式*/
