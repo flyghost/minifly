@@ -10,14 +10,14 @@
       <TargetName>Firmware</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F411CEUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.7.0</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32F4xx_DFP.2.15.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x20000) IROM(0x08000000,0x80000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -339,7 +339,7 @@
               <MiscControls>--preinclude stm32f4xx_conf.h --diag_suppress=767</MiscControls>
               <Define>STM32F411xE,ARM_MATH_CM4,USE_STDPERIPH_DRIVER,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\CONFIG\interface;..\HARDWARE\interface;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\FLIGHT\interface;..\COMMON\interface;..\COMMUNICATE\interface;..\EXP_MODULES\interface;..\VL53L1X;..\VL53L1X\vl53l1_platform</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\CONFIG\interface;..\HARDWARE\interface;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\FLIGHT\interface;..\COMMON\interface;..\COMMUNICATE\interface;..\EXP_MODULES\interface;..\VL53L1X;..\VL53L1X\vl53l1_platform;..\plat\stm32\stm32f411</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -462,11 +462,6 @@
               <FileName>module_detect.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\src\module_detect.c</FilePath>
-            </File>
-            <File>
-              <FileName>exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\src\exti.c</FilePath>
             </File>
             <File>
               <FileName>i2cdev.c</FileName>
@@ -1050,6 +1045,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>plat</GroupName>
+          <Files>
+            <File>
+              <FileName>plat_interrupt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\plat_interrupt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -1063,12 +1068,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>&lt;Project Info&gt;</LayName>
-        <LayDesc></LayDesc>
-        <LayUrl></LayUrl>
-        <LayKeys></LayKeys>
-        <LayCat></LayCat>
-        <LayLic></LayLic>
+        <LayName>Firmware_F411</LayName>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>

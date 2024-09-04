@@ -11,7 +11,7 @@
 #include "filter.h"
 #include "axis.h"
 #include "spl06.h"
-#include "exti.h"
+#include "plat_interrupt.h"
 
 
 /*FreeRTOS相关头文件*/

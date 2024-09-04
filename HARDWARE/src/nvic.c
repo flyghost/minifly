@@ -1,4 +1,4 @@
-#include "exti.h"
+#include "plat_interrupt.h"
 #include "led.h"
 #include "motors.h"
 #include "debug_assert.h"

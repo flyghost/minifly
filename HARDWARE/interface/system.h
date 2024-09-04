@@ -14,7 +14,7 @@
 /* Project includes */
 #include "config.h"
 #include "nvic.h"
-#include "exti.h"
+#include "plat_interrupt.h"
 
 /*底层硬件驱动*/
 #include "sys.h"
