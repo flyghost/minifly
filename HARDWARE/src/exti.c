@@ -18,6 +18,35 @@
 
 static bool isInit;
 
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+
+
+typedef void (*exit_callback_func)(void *);
+
+typedef struct exti_function
+{
+    exit_callback_func func;
+    void *param;
+}exti_function_t;
+
+static exti_function_t exti_function[EXTI_IRQ_MAX] = {0};
+
+void exti_function_set(EXTI_IRQ_E irq, void (*func)(void *), void *param)
+{
+    exti_function[irq].func = func;
+    exti_function[irq].param = param;
+}
+
+static void __attribute__((used)) EXTI4_Callback(void)
+{
+    if(exti_function[EXTI_IRQ_4].func)
+    {
+        exti_function[EXTI_IRQ_4].func(exti_function[EXTI_IRQ_4].param);
+    }
+}
+
 /* Interruption initialisation */
 void extiInit()
 {
@@ -172,9 +201,9 @@ void __attribute__((weak)) EXTI2_Callback(void)
 void __attribute__((weak)) EXTI3_Callback(void)
 {
 }
-void __attribute__((weak)) EXTI4_Callback(void)
-{
-}
+// void __attribute__((weak)) EXTI4_Callback(void)
+// {
+// }
 void __attribute__((weak)) EXTI5_Callback(void)
 {
 }

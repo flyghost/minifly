@@ -11,6 +11,7 @@
 #include "filter.h"
 #include "axis.h"
 #include "spl06.h"
+#include "exti.h"
 
 
 /*FreeRTOS相关头文件*/
@@ -104,6 +105,16 @@ static void sensorsCalculateVarianceAndMean(BiasObj *bias, Axis3f *varOut, Axis3
 static bool sensorsFindBiasValue(BiasObj *bias);
 static void sensorsAddBiasValue(BiasObj *bias, int16_t x, int16_t y, int16_t z);
 
+static void sensorsInterruptServer(void *param)
+{
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    xSemaphoreGiveFromISR(sensorsDataReady, &xHigherPriorityTaskWoken);
+
+    if (xHigherPriorityTaskWoken)
+    {
+        portYIELD();
+    }
+}
 
 /*从队列读取陀螺数据*/
 bool sensorsReadGyro(Axis3f *gyro)
@@ -126,11 +137,12 @@ bool sensorsReadBaro(baro_t *baro)
     return (pdTRUE == xQueueReceive(barometerDataQueue, baro, 0));
 }
 /*传感器中断初始化*/
-// 中断回调接口： void __attribute__((used)) EXTI4_Callback(void)
 static void sensorsInterruptInit(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
     EXTI_InitTypeDef EXTI_InitStructure;
+
+    exti_function_set(EXTI_IRQ_4, sensorsInterruptServer, NULL);
 
     /*使能MPU6500中断*/
     GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_4;
@@ -645,16 +657,6 @@ void sensorsAcquire(sensorData_t *sensors, const u32 tick)
     sensorsReadBaro(&sensors->baro);
 }
 
-void __attribute__((used)) EXTI4_Callback(void)
-{
-    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-    xSemaphoreGiveFromISR(sensorsDataReady, &xHigherPriorityTaskWoken);
-
-    if (xHigherPriorityTaskWoken)
-    {
-        portYIELD();
-    }
-}
 /*二阶低通滤波*/
 static void applyAxis3fLpf(lpf2pData *data, Axis3f *in)
 {
