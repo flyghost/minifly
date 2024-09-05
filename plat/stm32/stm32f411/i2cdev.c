@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
-#include "plat_drv.h"
+#include "i2cdev.h"
 #include "i2c_drv.h"
 
 /********************************************************************************	 
