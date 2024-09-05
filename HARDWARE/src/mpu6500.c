@@ -34,7 +34,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "i2cdev.h"
+#include "plat_drv.h"
 
 #include "mpu6500.h"
 

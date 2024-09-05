@@ -1,7 +1,7 @@
 #ifndef _AK8963_H_
 #define _AK8963_H_
 #include <sys.h>
-#include "i2cdev.h"
+#include "plat_drv.h"
 #include <stdint.h>
 
 /********************************************************************************	 

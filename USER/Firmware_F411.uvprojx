@@ -464,16 +464,6 @@
               <FilePath>..\HARDWARE\src\module_detect.c</FilePath>
             </File>
             <File>
-              <FileName>i2cdev.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\src\i2cdev.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\src\i2c_drv.c</FilePath>
-            </File>
-            <File>
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\src\led.c</FilePath>
@@ -1052,6 +1042,16 @@
               <FileName>plat_interrupt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\plat\stm32\stm32f411\plat_interrupt.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\i2c_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2cdev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\i2cdev.c</FilePath>
             </File>
           </Files>
         </Group>
