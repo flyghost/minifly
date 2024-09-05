@@ -2,7 +2,6 @@
 #include "config.h"
 #include "config_param.h"
 #include "debug_assert.h"
-#include "iic1.h"
 #include "i2cdev.h"
 #include "mpu6500.h"
 #include "delay.h"
