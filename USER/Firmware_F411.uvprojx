@@ -514,11 +514,6 @@
               <FilePath>..\HARDWARE\src\ws2812.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\src\spi.c</FilePath>
-            </File>
-            <File>
               <FileName>spl06.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\src\spl06.c</FilePath>
@@ -1052,6 +1047,11 @@
               <FileName>i2cdev.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\plat\stm32\stm32f411\i2cdev.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\spi.c</FilePath>
             </File>
           </Files>
         </Group>

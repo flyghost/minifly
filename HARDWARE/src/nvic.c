@@ -4,7 +4,7 @@
 #include "debug_assert.h"
 #include "module_mgt.h"
 #include "ws2812.h"
-#include "spi.h"
+#include "drv_spi.h"
 
 
 /*FreeRTOS相关头文件*/

@@ -2,7 +2,7 @@
 #define __OPTICAL_FLOW_H
 #include "sys.h"
 #include <stdbool.h>
-#include "spi.h"
+#include "drv_spi.h"
 #include "stabilizer_types.h"
 #include "module_mgt.h"
 #include "vl53lxx.h"
