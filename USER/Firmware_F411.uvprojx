@@ -339,7 +339,7 @@
               <MiscControls>--preinclude stm32f4xx_conf.h --diag_suppress=767</MiscControls>
               <Define>STM32F411xE,ARM_MATH_CM4,USE_STDPERIPH_DRIVER,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\FWLIB\inc;..\CONFIG\interface;..\HARDWARE\interface;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\FLIGHT\interface;..\COMMON\interface;..\COMMUNICATE\interface;..\EXP_MODULES\interface;..\VL53L1X;..\VL53L1X\vl53l1_platform;..\plat\stm32\stm32f411</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\CONFIG\interface;..\HARDWARE\interface;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\FLIGHT\interface;..\COMMON\interface;..\COMMUNICATE\interface;..\EXP_MODULES\interface;..\VL53L1X;..\VL53L1X\vl53l1_platform;..\plat\stm32\stm32f411</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -407,11 +407,6 @@
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\sys\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\usart\usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1052,6 +1047,11 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\plat\stm32\stm32f411\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\usart.c</FilePath>
             </File>
           </Files>
         </Group>
