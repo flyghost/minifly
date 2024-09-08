@@ -80,7 +80,7 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>fromelf --bin !L -o .\BIN\Firmware_F411_V1.3.bin</UserProg1Name>
             <UserProg2Name></UserProg2Name>
@@ -1052,6 +1052,11 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\plat\stm32\stm32f411\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\plat\stm32\stm32f411\pwm.c</FilePath>
             </File>
           </Files>
         </Group>
