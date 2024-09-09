@@ -1,6 +1,6 @@
 #ifndef  __PROTOCOL_H
 #define  __PROTOCOL_H
-#include "stm32f4xx.h"
+#include <stdint.h>
 
 /********************************************************************************	 
  * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -23,17 +23,17 @@ typedef struct
 	//最小帧长度
 	#define MIN_FRAME_LENGTH  5	
 	//设备地址
-	u8 Device_Address;
+	uint8_t Device_Address;
 	//帧功能
-	u8 Function_Type;
+	uint8_t Function_Type;
 	//帧序列
-	u8 Sequence;
+	uint8_t Sequence;
 	//有效数据长度
-	u8 Data_Length;
+	uint8_t Data_Length;
 	//数据
-	u8 *Data;
+	uint8_t *Data;
 	//校验值
-	u16 Checksum;
+	uint16_t Checksum;
 
 }TransportProtocol_Typedef;
 
@@ -57,25 +57,25 @@ typedef struct
 	//传输帧
 	TransportProtocol_Typedef * TransportProtocol;
 	//接收的字节数
-	u32  RecieveByteCount;
+	uint32_t  RecieveByteCount;
 
 	//传输帧缓存
-	u8* Buf;
+	uint8_t* Buf;
 	//帧总长度
-	u16 FrameTotalLength;
+	uint16_t FrameTotalLength;
 	//解包函数
 	TransportProtocol_Result (*Unpacked)(void);
 	//打包函数
 	void (*Packed)(void);
 	//校验函数
-	u16 (*Check)(u8 *,u16 len);
+	uint16_t (*Check)(uint8_t *,uint16_t len);
 
 }TransportProtocol_Manager_Typedef;
 
 //外部声明协议管理器
 extern TransportProtocol_Manager_Typedef TransportProtocol_Manager;
 //初始化传输协议
-void  TransportProtocol_Init(TransportProtocol_Typedef *TransportProtocol,u8 *buf,u16 (*check)(u8 *,u16 len));
+void  TransportProtocol_Init(TransportProtocol_Typedef *TransportProtocol,uint8_t *buf,uint16_t (*check)(uint8_t *,uint16_t len));
 
 #endif
 

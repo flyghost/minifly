@@ -14,7 +14,7 @@
 ********************************************************************************/
 
 //CRC16 高位字节表
-const u8 CRC16HiTable[]={ 
+const uint8_t CRC16HiTable[]={ 
 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0,
 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41,
 0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0,
@@ -44,7 +44,7 @@ const u8 CRC16HiTable[]={
 };
 
 //CRC16低位字节表
-const u8 CRC16LoTable[]={
+const uint8_t CRC16LoTable[]={
 0x00, 0xC0, 0xC1, 0x01, 0xC3, 0x03, 0x02, 0xC2, 0xC6, 0x06,
 0x07, 0xC7, 0x05, 0xC5, 0xC4, 0x04, 0xCC, 0x0C, 0x0D, 0xCD,
 0x0F, 0xCF, 0xCE, 0x0E, 0x0A, 0xCA, 0xCB, 0x0B, 0xC9, 0x09,
@@ -74,7 +74,7 @@ const u8 CRC16LoTable[]={
 };
 
 //CRC8 字节表
-const u8 CRC8Table[]= { 
+const uint8_t CRC8Table[]= { 
 0,94,188,226,97,63,221,131,194,156,126,32,163,253,31,65, 
 157,195,33,127,252,162,64,30, 95,1,227,189,62,96,130,220,
 35,125,159,193,66,28,254,160,225,191,93,3,128,222,60,98,
@@ -96,9 +96,9 @@ const u8 CRC8Table[]= {
 
 
 //求和校验 所有字节之和为0
-u16 Checksum_Sum(u8* buf,u16 len)
+uint16_t Checksum_Sum(uint8_t* buf,uint16_t len)
 {	
-	u8 check = 0;
+	uint8_t check = 0;
 	while(len--)
 	{
 		check += *buf++;
@@ -108,10 +108,10 @@ u16 Checksum_Sum(u8* buf,u16 len)
 }
 
 //异或校验 所有字节异或
-u16 Checksum_XOR(u8* buf, u16 len)
+uint16_t Checksum_XOR(uint8_t* buf, uint16_t len)
 {
-	u8 check = 0;
-	u8 checkTemp = 0;
+	uint8_t check = 0;
+	uint8_t checkTemp = 0;
 	check = *buf;
 	buf++;
 	checkTemp = *buf;
@@ -126,9 +126,9 @@ u16 Checksum_XOR(u8* buf, u16 len)
 }
 
 //CRC8 校验
-u16 Checksum_CRC8(u8 *buf,u16 len)
+uint16_t Checksum_CRC8(uint8_t *buf,uint16_t len)
 {	
-	u8 check = 0;
+	uint8_t check = 0;
 	while(len--)
 	{
 		check = CRC8Table[check^(*buf++)];
@@ -138,12 +138,12 @@ u16 Checksum_CRC8(u8 *buf,u16 len)
 
 //CRC16 校验
 //高字节在前，低字节在后
-u16 Checksum_CRC16(u8 *buf,u16 len)
+uint16_t Checksum_CRC16(uint8_t *buf,uint16_t len)
 {
 	int index;
-	u16 check = 0;
-	u8 crc_low=0xff;
-	u8 crc_high=0xff;
+	uint16_t check = 0;
+	uint8_t crc_low=0xff;
+	uint8_t crc_high=0xff;
 	while(len--)
 	{
 		index = crc_high^(*buf++);

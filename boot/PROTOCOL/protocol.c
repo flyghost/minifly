@@ -22,9 +22,9 @@ TransportProtocol_Manager_Typedef TransportProtocol_Manager;
 static TransportProtocol_Result TransportProtocol_Unpacked()
 {	
 	int check_len=0;    //校验字节的长度   
-	u16 checksum=0;      //接收到的校验值
-	u16 checksum_cal=0;  //计算得到的校验值
-	u8 *checksum_pos=0; //校验值的偏移位置
+	uint16_t checksum=0;      //接收到的校验值
+	uint16_t checksum_cal=0;  //计算得到的校验值
+	uint8_t *checksum_pos=0; //校验值的偏移位置
 
 
 	//帧格式错误，非法长度
@@ -42,7 +42,7 @@ static TransportProtocol_Result TransportProtocol_Unpacked()
 		return CHECK_FORMAR_ERR;
 	}
 	//得到校验值的偏移地址
-	checksum_pos = (u8 *)(4+TransportProtocol_Manager.TransportProtocol->Data_Length +TransportProtocol_Manager.Buf);
+	checksum_pos = (uint8_t *)(4+TransportProtocol_Manager.TransportProtocol->Data_Length +TransportProtocol_Manager.Buf);
 	if(check_len==1)
 	{
 		checksum = (*checksum_pos)&0xff;
@@ -83,8 +83,8 @@ static TransportProtocol_Result TransportProtocol_Unpacked()
 //打包
 static void TransportProtocol_Packed()
 {
-	u16 checksum=0;
-	u8 *check_pos;  //校验值的偏移位置
+	uint16_t checksum=0;
+	uint8_t *check_pos;  //校验值的偏移位置
 	
 	//设备地址
 	TransportProtocol_Manager.Buf[0] = TransportProtocol_Manager.TransportProtocol->Device_Address;
@@ -108,9 +108,9 @@ static void TransportProtocol_Packed()
 		TransportProtocol_Manager.FrameTotalLength = 4+TransportProtocol_Manager.TransportProtocol->Data_Length+1;
 	}else  //CRC16
 	{	
-		(*check_pos) = (u8)(checksum>>8)&0xff;  //高字节
+		(*check_pos) = (uint8_t)(checksum>>8)&0xff;  //高字节
 		check_pos++;
-		(*check_pos) = (u8)(checksum&0xff);		//低字节
+		(*check_pos) = (uint8_t)(checksum&0xff);			//低字节
 		//记录帧总长度
 		TransportProtocol_Manager.FrameTotalLength = 4+TransportProtocol_Manager.TransportProtocol->Data_Length+2;
 	}	
@@ -126,7 +126,7 @@ static void TransportProtocol_Packed()
 //Checksum_CRC8:CRC8校验
 //Checksum_CRC16:CRC16校验
 
-void  TransportProtocol_Init(TransportProtocol_Typedef *TransportProtocol,u8 *buf,u16 (*check)(u8 *,u16 len))
+void  TransportProtocol_Init(TransportProtocol_Typedef *TransportProtocol,uint8_t *buf,uint16_t (*check)(uint8_t *,uint16_t len))
 {	
 	//协议包
 	TransportProtocol_Manager.TransportProtocol = TransportProtocol;

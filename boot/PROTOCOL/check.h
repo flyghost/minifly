@@ -1,6 +1,6 @@
 #ifndef __CHECK_H
 #define __CHECK_H
-#include "stm32f4xx.h"
+#include <stdint.h>
 
 /********************************************************************************	 
  * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -15,10 +15,10 @@
  * All rights reserved
 ********************************************************************************/
 
-u16 Checksum_Sum(u8* buf,u16 len);	//和校验 所有字节之和为0
-u16 Checksum_XOR(u8* buf, u16 len);	//异或校验，所有字节异或
-u16 Checksum_CRC8(u8 *buf,u16 len);	//CRC8 校验
-u16 Checksum_CRC16(u8 *buf,u16 len);//CRC16 校验
+uint16_t Checksum_Sum(uint8_t* buf,uint16_t len);	//和校验 所有字节之和为0
+uint16_t Checksum_XOR(uint8_t* buf, uint16_t len);	//异或校验，所有字节异或
+uint16_t Checksum_CRC8(uint8_t *buf,uint16_t len);	//CRC8 校验
+uint16_t Checksum_CRC16(uint8_t *buf,uint16_t len);//CRC16 校验
 
 #endif
 
