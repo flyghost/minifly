@@ -10,7 +10,7 @@
       <TargetName>Bootloader_F103</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\STMFLASH;..\USB\CONFIG;..\USB\STM32_USB-FS-Device_Driver\inc;..\IAP;..\PROTOCOL</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\STMFLASH;..\USB\CONFIG;..\USB\STM32_USB-FS-Device_Driver\inc;..\IAP;..\..\protocol</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -547,21 +547,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>PROTOCOL</GroupName>
-          <Files>
-            <File>
-              <FileName>check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\PROTOCOL\check.c</FilePath>
-            </File>
-            <File>
-              <FileName>protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\PROTOCOL\protocol.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>USB_CONFIG</GroupName>
           <Files>
             <File>
@@ -646,6 +631,21 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\protocol\check.c</FilePath>
+            </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\protocol\protocol.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -655,5 +655,14 @@
     <components/>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>Bootloader_F103</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

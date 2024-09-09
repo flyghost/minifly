@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F411xE,USE_STDPERIPH_DRIVER,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\FWLIB\inc;..\SYSTEM\interface;..\HARDWARE\interface;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\PROTOCOL;..\IAP</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\FWLIB\inc;..\SYSTEM\interface;..\HARDWARE\interface;..\USB\STM32_USB_Device_Library\Core\inc;..\USB\STM32_USB_Device_Library\Class\cdc\inc;..\USB\STM32_USB_OTG_Driver\inc;..\USB\USB_APP\interface;..\IAP;..\..\protocol</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -541,21 +541,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>PROTOCOL</GroupName>
-          <Files>
-            <File>
-              <FileName>check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\PROTOCOL\check.c</FilePath>
-            </File>
-            <File>
-              <FileName>protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\PROTOCOL\protocol.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>IAP</GroupName>
           <Files>
             <File>
@@ -575,6 +560,21 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\protocol\check.c</FilePath>
+            </File>
+            <File>
+              <FileName>protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\protocol\protocol.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -588,7 +588,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>&lt;Project Info&gt;</LayName>
+        <LayName>Bootloader_F411</LayName>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
