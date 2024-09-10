@@ -31,7 +31,7 @@
 #define __STM32F4xx_FLASH_RAMFUNC_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -43,14 +43,14 @@
 
 /** @addtogroup FLASH RAMFUNC
   * @{
-  */ 
+  */
 
 /* Exported types ------------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /** 
   * @brief  __RAM_FUNC definition
-  */ 
-#if defined ( __CC_ARM   )
+  */
+#if defined(__CC_ARM)
 /* ARM Compiler
    ------------
    RAM functions are defined using the toolchain options. 
@@ -60,22 +60,22 @@
    Available memory areas are declared in the 'Target' tab of the 'Options for Target'
    dialog. 
 */
-#define __RAM_FUNC void 
+#define __RAM_FUNC void
 
-#elif defined ( __ICCARM__ )
+#elif defined(__ICCARM__)
 /* ICCARM Compiler
    ---------------
    RAM functions are defined using a specific toolchain keyword "__ramfunc". 
 */
 #define __RAM_FUNC __ramfunc void
 
-#elif defined   (  __GNUC__  )
+#elif defined(__GNUC__)
 /* GNU Compiler
    ------------
   RAM functions are defined using a specific toolchain attribute 
    "__attribute__((section(".RamFunc")))".
 */
-#define __RAM_FUNC void  __attribute__((section(".RamFunc")))
+#define __RAM_FUNC void __attribute__((section(".RamFunc")))
 
 #endif
 /* Exported constants --------------------------------------------------------*/
@@ -93,11 +93,11 @@ __RAM_FUNC FLASH_FlashSleepModeCmd(FunctionalState NewState);
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
