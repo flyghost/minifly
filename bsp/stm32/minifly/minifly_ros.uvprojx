@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Firmware</TargetName>
+      <TargetName>minifly</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\OBJ\</OutputDirectory>
-          <OutputName>Firmware_F411</OutputName>
+          <OutputName>minifly_ros</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -82,7 +82,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf --bin !L -o .\BIN\Firmware_F411_V1.3.bin</UserProg1Name>
+            <UserProg1Name>fromelf --bin !L -o .\minifly_ros.bin</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1073,7 +1073,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>Firmware_F411</LayName>
+        <LayName>minifly_ros</LayName>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
