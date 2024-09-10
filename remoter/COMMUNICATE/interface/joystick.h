@@ -16,54 +16,54 @@
  * All rights reserved
 ********************************************************************************/
 
-#define MAX(a,b) a>=b? a:b
-#define MIN(a,b) a<=b? a:b
+#define MAX(a, b) a >= b ? a : b
+#define MIN(a, b) a <= b ? a : b
 
 enum dir_e
 {
-	CENTER,
-	FORWARD,
-	BACK,
-	LEFT,
-	RIGHT,
-	BACK_LEFT,
-	BACK_RIGHT,
+    CENTER,
+    FORWARD,
+    BACK,
+    LEFT,
+    RIGHT,
+    BACK_LEFT,
+    BACK_RIGHT,
 };
 
 //摇杆单方向量程参数
 struct range_s
 {
-	s16 range_pos;	//摇杆正量程
-	u16 mid;
-	s16 range_neg;	//摇杆负量程
+    s16 range_pos; //摇杆正量程
+    u16 mid;
+    s16 range_neg; //摇杆负量程
 };
 
 //摇杆量程参数
 typedef struct
 {
-	struct range_s thrust;
-	struct range_s roll;
-	struct range_s pitch;
-	struct range_s yaw;
-}joystickParam_t;
+    struct range_s thrust;
+    struct range_s roll;
+    struct range_s pitch;
+    struct range_s yaw;
+} joystickParam_t;
 
 //飞控数据结构
-typedef struct 
+typedef struct
 {
-	float roll;
-	float pitch;
-	float yaw;
-	float thrust;
-}joystickFlyf_t;
+    float roll;
+    float pitch;
+    float yaw;
+    float thrust;
+} joystickFlyf_t;
 
 //飞控数据结构
-typedef struct 
+typedef struct
 {
-	u16 roll;
-	u16 pitch;
-	u16 yaw;
-	u16 thrust;
-}joystickFlyui16_t;
+    u16 roll;
+    u16 pitch;
+    u16 yaw;
+    u16 thrust;
+} joystickFlyui16_t;
 
 
 void joystickInit(void);

@@ -23,7 +23,7 @@ bool usblinkSendPacket(const atkp_t *p);
 bool usblinkSendPacketBlocking(const atkp_t *p);
 bool usblinkReceivePacket(atkp_t *p);
 bool usblinkReceivePacketBlocking(atkp_t *p);
-void usblinkTxTask(void* param);
+void usblinkTxTask(void *param);
 void usblinkRxTask(void *param);
 
 

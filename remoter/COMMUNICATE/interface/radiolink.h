@@ -8,13 +8,13 @@
 #include "task.h"
 
 /*上行指令*/
-#define  U_RADIO_RSSI		0x01
-#define  U_RADIO_CONFIG		0x02	
+#define U_RADIO_RSSI   0x01
+#define U_RADIO_CONFIG 0x02
 
 /*下行指令*/
-#define  D_RADIO_HEARTBEAT	0xFF
-#define  D_RADIO_GET_CONFIG	0x01
-#define  D_RADIO_SET_CONFIG	0x02
+#define D_RADIO_HEARTBEAT  0xFF
+#define D_RADIO_GET_CONFIG 0x01
+#define D_RADIO_SET_CONFIG 0x02
 
 /********************************************************************************	 
  * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -36,8 +36,8 @@ bool radiolinkSendPacket(const atkp_t *p);
 bool radiolinkSendPacketBlocking(const atkp_t *p);
 bool radiolinkReceivePacket(atkp_t *p);
 bool radiolinkReceivePacketBlocking(atkp_t *p);
-void radiolinkTask(void* param);
-u16 radioinkFailRxcount(void);
+void radiolinkTask(void *param);
+u16  radioinkFailRxcount(void);
 bool radioinkConnectStatus(void);
 void radiolinkEnable(FunctionalState state);
 
