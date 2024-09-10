@@ -19,8 +19,8 @@
 /*遥控数据类别*/
 typedef enum
 {
-    REMOTOR_CMD,
-    REMOTOR_DATA,
+    REMOTER_CMD,
+    REMOTER_DATA,
 } remoterType_e;
 
 /*下行命令*/

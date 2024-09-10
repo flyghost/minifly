@@ -46,7 +46,7 @@ static void atkpAnalyze(atkp_t *p)
         plane_bat = (s16)(*(p->data + 0) << 8) | *(p->data + 1);
         plane_bat = plane_bat / 100;
     }
-    else if (p->msgID == UP_REMOTOR)
+    else if (p->msgID == UP_REMOTER)
     {
         switch (p->data[0])
         {

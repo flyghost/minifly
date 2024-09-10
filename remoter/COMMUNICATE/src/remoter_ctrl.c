@@ -48,9 +48,9 @@ void sendRmotorCmd(u8 cmd, u8 data)
     if (radioinkConnectStatus() == false)
         return;
     atkp_t p;
-    p.msgID   = DOWN_REMOTOR;
+    p.msgID   = DOWN_REMOTER;
     p.dataLen = 3;
-    p.data[0] = REMOTOR_CMD;
+    p.data[0] = REMOTER_CMD;
     p.data[1] = cmd;
     p.data[2] = data;
     radiolinkSendPacketBlocking(&p);
@@ -61,9 +61,9 @@ void sendRmotorData(u8 *data, u8 len)
     if (radioinkConnectStatus() == false)
         return;
     atkp_t p;
-    p.msgID   = DOWN_REMOTOR;
+    p.msgID   = DOWN_REMOTER;
     p.dataLen = len + 1;
-    p.data[0] = REMOTOR_DATA;
+    p.data[0] = REMOTER_DATA;
     memcpy(p.data + 1, data, len);
     radiolinkSendPacket(&p);
 }
