@@ -8,6 +8,7 @@
 #include "check.h"
 #include "stmflash.h"
 #include "usbd_cdc_vcp.h"
+#include "byte2string.h"
 
 /********************************************************************************	 
  * 本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -25,9 +26,7 @@
 extern uint16_t usb_rx_ptr_in;
 extern uint8_t usb_rx_buf[];
 
-const u8 HexTable[] ={
-'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
-};
+
 
 
 #define IAP_BUFFER_SIZE 2048
@@ -76,31 +75,7 @@ void getDeviceInfo(void)
 }
 
 
-//一个字节转换为16进制字符形式的字符串
-void  OneByteToStr(u8 byte,u8* str)
-{
-	*str = HexTable[byte/16];
-	str++;
-	*str = HexTable[byte%16];	
-	str++;
-	*str = 0;
-}
 
-//多个字节转化为16进制字符形式的字符串并以空格隔开
-void MultiByteToStr(u8 *byteBuf,u16 len,u8 *str)
-{
-	while(len--)
-	{
-		*str = HexTable[(*byteBuf)/16];
-		str++;
-		*str = HexTable[(*byteBuf)%16];
-		str++;
-		*str = ' ';
-		str++;
-		byteBuf++;
-	}
-	*str = 0;
-}
 
 extern void usbIapResponse(uint8_t* buf, uint32_t len);
 

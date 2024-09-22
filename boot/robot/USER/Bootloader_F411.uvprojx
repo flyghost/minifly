@@ -573,6 +573,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\protocol\protocol.c</FilePath>
             </File>
+            <File>
+              <FileName>byte2string.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\protocol\byte2string.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
