@@ -63,18 +63,16 @@ void isUpgradeFirmware(void)
 }
 
 //得到设备信息
-void getDeviceInfo(void)
+void getDeviceInfo(uint8_t *buffer, uint8_t len)
 {
-	u32 buf;
-	
-	STMFLASH_Read(CONFIG_PARAM_ADDR, (u32 *)&buf, 1);
-	DeviceInfoBuffer[0] = (u8)buf;  //软件版本 11表示V1.1
+    uint32_t buf;
 
-	for(u8 i=1; i<13; i++)
-		DeviceInfoBuffer[i]=*(vu32*)(0x1FFF7A10+i); //软件序列号
+    STMFLASH_Read(CONFIG_PARAM_ADDR, (uint32_t *)&buf, 1);
+    buffer[0] = (uint8_t)buf; //软件版本 11表示V1.1
+
+    for (uint8_t i = 1; i < len; i++)
+        buffer[i] = *(volatile uint32_t *)(0x1FFF7A10 + i); //软件序列号
 }
-
-
 
 
 extern void usbIapResponse(uint8_t* buf, uint32_t len);
@@ -152,7 +150,7 @@ int main()
 
 					}else if(TransportProtocol.Function_Type==0x05) //该帧为查询设备信息的功能
 					{	
-						getDeviceInfo();
+						getDeviceInfo(DeviceInfoBuffer, DEVICE_INFO_BUFFER_SIZE);
 						TransportProtocol.Data_Length = DEVICE_INFO_BUFFER_SIZE;       //有效数据大小
 						TransportProtocol.Data = (u8*)DeviceInfoBuffer;	            //要发送的设备信息   
 						TransportProtocol.Function_Type = 0x05;				             //帧功能			           
