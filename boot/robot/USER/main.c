@@ -75,16 +75,16 @@ void getDeviceInfo(uint8_t *buffer, uint8_t len)
 }
 
 
-extern void usbIapResponse(uint8_t* buf, uint32_t len);
+extern void usbsendData(uint8_t* buf, uint32_t len);
 
 //用来响应上位机
-void iapResponse()
+static void IAP_Response()
 {
 	TransportProtocol.Device_Address = 0x01;	//设备地址
 	TransportProtocol.Sequence = TransportProtocol.Sequence;	//帧序列 和收到的一致，这里不改变
 	TransportProtocol_Manager.Packed();			//打包	
 
-	usbIapResponse(TransportProtocol_Manager.Buf, TransportProtocol_Manager.FrameTotalLength);	
+	usbsendData(TransportProtocol_Manager.Buf, TransportProtocol_Manager.FrameTotalLength);	
 }
 
 int main()
@@ -155,7 +155,7 @@ int main()
 						TransportProtocol.Data = (u8*)DeviceInfoBuffer;	            //要发送的设备信息   
 						TransportProtocol.Function_Type = 0x05;				             //帧功能			           
 					}	
-					iapResponse();  //响应上位机						
+					IAP_Response();  //响应上位机						
 				}	
 
 				usb_rx_ptr_in=0;								

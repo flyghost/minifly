@@ -246,7 +246,7 @@ void usb_printf(char* fmt,...)
 	}
 } 
 
-void usbIapResponse(uint8_t* buf, uint32_t len)
+void usbsendData(uint8_t* buf, uint32_t len)
 {
 	for(uint32_t i=0; i<len; i++)//循环发送数据
 	{

@@ -74,10 +74,10 @@ void GetDeviceInfo(uint8_t *buffer, uint8_t len)
 }
 
 
-//extern void usbIapResponse(uint8_t* buf, uint32_t len);
+//extern void usbsendData(uint8_t* buf, uint32_t len);
 
 //用来响应上位机
-void IAP_Response()
+static void IAP_Response()
 {
 	TransportProtocol.Device_Address = 0x01;	//设备地址
 	TransportProtocol.Sequence = TransportProtocol.Sequence;	//帧序列 和收到的一致，这里不改变
